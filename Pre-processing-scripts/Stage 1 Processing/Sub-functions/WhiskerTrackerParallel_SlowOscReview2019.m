@@ -1,6 +1,6 @@
 function [angle] = WhiskerTrackerParallel_SlowOscReview2019(fileName)
 %________________________________________________________________________________________________________________________
-% Written by Kevin L. Turner
+% Edited by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
 % https://github.com/KL-Turner
 %

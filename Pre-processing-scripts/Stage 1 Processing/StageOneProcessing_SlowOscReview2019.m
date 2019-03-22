@@ -46,7 +46,6 @@ disp('Analyzing Block [1] Preparing to create LabVIEWData file(s).'); disp(' ')
 % Load in each file one at a time, looping through the list
 for a = 1:length(fileNames)
     disp(['Analyzing file ' num2str(a) ' of ' num2str(length(fileNames)) '...']); disp(' ')
-    
     % Adapt to list or single file. The purpose of this is control the way uigetfile handles an instance of a
     % single file input (character string) vs. multiple files, which it puts in cells
     if iscell(fileNames) == 1

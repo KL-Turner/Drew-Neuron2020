@@ -29,9 +29,15 @@ Stage Two Processing
     Correct any offset between the MScan data and LabVIEW data by analyzing the cross correlation of the duplicated force sensor signals. Align the data in time, and trim the first 10 and last 10 seconds
         down to the expected length based on the respective signal's sampling rate. Typically, the delay between the MScan trigger and the LabVIEW acquisition start was less than 1 second.
 
-    Calculate the spectrogram for each session using the raw neural data. The raw data is detrended, trimmed to expected length, and applied a 60 Hz notch filter. One-second spectrograms with [1 1] tapers and a 0.1
-        second step size are calculated, along with five-second spectrograms with [5 9] tapers and 0.2 second step size.
-
     Combine the important MScan and LabVIEW data into a 'MergedData' structure. 
 
 Stage Three Processing
+
+    
+
+
+
+
+
+    Calculate the spectrogram for each session using the raw neural data. The raw data is detrended, trimmed to expected length, and applied a 60 Hz notch filter. One-second spectrograms with [1 1] tapers and a 0.1
+        second step size are calculated, along with five-second spectrograms with [5 9] tapers and 0.2 second step size.
