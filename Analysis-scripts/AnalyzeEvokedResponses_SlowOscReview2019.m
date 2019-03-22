@@ -27,9 +27,6 @@ load(EventDataFile.name);
 RestingBaselinesFile = dir('*_RestingBaselines.mat');
 load(RestingBaselinesFile.name);
 
-SpectrogramDataFile = dir('*_SpectrogramData.mat');
-load(SpectrogramDataFile.name);
-
 %%
 whiskCriteria.Fieldname{1,1} = {'duration', 'duration', 'puffDistance'};
 whiskCriteria.Comparison{1,1} = {'gt','lt','gt'};
@@ -51,14 +48,14 @@ for x = 1:length(whiskCriteria.Fieldname)
     criteria.Fieldname = whiskCriteria.Fieldname{x,1};
     criteria.Comparison = whiskCriteria.Comparison{x,1};
     criteria.Value = whiskCriteria.Value{x,1};
-    whiskFilter = FilterEvents(EventData.Vessel_Diameter.whisk, criteria);
-    [tempWhiskData] = EventData.Vessel_Diameter.whisk.data(whiskFilter, :);
+    whiskFilter = FilterEvents(EventData.vesselDiameter.whisk, criteria);
+    [tempWhiskData] = EventData.vesselDiameter.whisk.data(whiskFilter, :);
     whiskData{x,1} = tempWhiskData;
-    [tempWhiskVesselIDs] = EventData.Vessel_Diameter.whisk.vesselIDs(whiskFilter, :);
+    [tempWhiskVesselIDs] = EventData.vesselDiameter.whisk.vesselIDs(whiskFilter, :);
     whiskVesselIDs{x,1} = tempWhiskVesselIDs;
-    [tempWhiskEventTimes] = EventData.Vessel_Diameter.whisk.eventTime(whiskFilter, :);
+    [tempWhiskEventTimes] = EventData.vesselDiameter.whisk.eventTime(whiskFilter, :);
     whiskEventTimes{x,1} = tempWhiskEventTimes;
-    [tempWhiskFileIDs] = EventData.Vessel_Diameter.whisk.fileIDs(whiskFilter, :);
+    [tempWhiskFileIDs] = EventData.vesselDiameter.whisk.fileIDs(whiskFilter, :);
     whiskFileIDs{x,1} = tempWhiskFileIDs;
 end
 
@@ -75,9 +72,9 @@ for x = 1:length(whiskData)
                 fileID = whiskFileIDs{x,1}{z,1};
                 strDay = ConvertDate(fileID(1:6));
                 vesselDiam = whiskData{x,1}(z,:);
-                normVesselDiam = (vesselDiam - RestingBaselines.(uniqueVesselID).(strDay).Vessel_Diameter.baseLine)./(RestingBaselines.(vesselID).(strDay).Vessel_Diameter.baseLine);
+                normVesselDiam = (vesselDiam - RestingBaselines.(uniqueVesselID).(strDay).vesselDiameter.baseLine)./(RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine);
                 filtVesselDiam = sgolayfilt(normVesselDiam, 3, 17)*100;
-                processedWhiskData.data{x,1}{y,1}(w,:) = filtVesselDiam;
+                processedWhiskData.data{x,1}{y,1}(w,:) = filtVesselDiam - mean(filtVesselDiam(1:offset*p2Fs));
                 processedWhiskData.vesselIDs{x,1}{y,1}{w} = vesselID;
                 w = w + 1;
             end
