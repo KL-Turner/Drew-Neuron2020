@@ -23,11 +23,11 @@ RestCriteria.Fieldname = {'durations'};
 RestCriteria.Comparison = {'gt'};
 RestCriteria.Value = {5};
 
-[restLogical] = FilterEvents(RestData.Vessel_Diameter, RestCriteria);   % RestData output is a logical
-allRestFileIDs = RestData.Vessel_Diameter.fileIDs(restLogical, :);
-allRestDurations = RestData.Vessel_Diameter.durations(restLogical, :);
-allRestEventTimes = RestData.Vessel_Diameter.eventTimes(restLogical, :);
-allRestVesselIDs = RestData.Vessel_Diameter.vesselIDs(restLogical, :);
+[restLogical] = FilterEvents(RestData.vesselDiameter, RestCriteria);   % RestData output is a logical
+allRestFileIDs = RestData.vesselDiameter.fileIDs(restLogical, :);
+allRestDurations = RestData.vesselDiameter.durations(restLogical, :);
+allRestEventTimes = RestData.vesselDiameter.eventTimes(restLogical, :);
+allRestVesselIDs = RestData.vesselDiameter.vesselIDs(restLogical, :);
 
 uniqueVessels = unique(allRestVesselIDs);   % Total number of unique days in this folder under a single animal
 dataTypes = fieldnames(RestData);
@@ -38,7 +38,7 @@ mergedDataFiles = char(mergedDataFiles);
 
 for a = 1:size(mergedDataFiles)
     mergedDataFile = mergedDataFiles(a, :);
-    [~, ~, fileID, vesselID] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
+    [~, ~, fileID, vesselID, ~] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
     allFileDates{a,1} = fileID;
     allVesselIDs{a,1} = vesselID;
 end

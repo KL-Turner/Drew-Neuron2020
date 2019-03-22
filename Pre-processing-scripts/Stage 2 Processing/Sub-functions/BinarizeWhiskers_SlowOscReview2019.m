@@ -1,4 +1,4 @@
-function  [bin_wwf] = BinarizeWhiskers(angl, fs, thresh1, thresh2)
+function  [bin_wwf] = BinarizeWhiskers_SlowOscReview2019(angl, fs, thresh1, thresh2)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -7,12 +7,12 @@ function  [bin_wwf] = BinarizeWhiskers(angl, fs, thresh1, thresh2)
 % Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
 %________________________________________________________________________________________________________________________
 %
-%   Purpose:
+%   Purpose: Apply threshold value to whisk acceleration for binarization.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs:
+%   Inputs: Whisker angle, sampling rate, threshold values.
 %
-%   Outputs: 
+%   Outputs: Binarized waveform.
 %
 %   Last Revised: February 29th, 2019
 %________________________________________________________________________________________________________________________

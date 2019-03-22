@@ -1,4 +1,4 @@
-function [binPSWF] = BinarizeForceSensor(PSWF, thresh)
+function [binForceSensor] = BinarizeForceSensor_SlowOscReview2019(forceSensor, thresh)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -7,18 +7,18 @@ function [binPSWF] = BinarizeForceSensor(PSWF, thresh)
 % Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
 %________________________________________________________________________________________________________________________
 %
-%   Purpose:
+%   Purpose: Binarize the Force sensor with a given threshold.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs:
+%   Inputs: Force sensor data and threshold value.
 %
-%   Outputs: 
+%   Outputs: Binarized value for each array point.
 %
 %   Last Revised: February 29th, 2019
 %________________________________________________________________________________________________________________________
 
-y = hilbert(diff(PSWF));
+y = hilbert(diff(forceSensor));
 env = abs(y);
-binPSWF = gt(env, thresh);
+binForceSensor = gt(env, thresh);
 
 end

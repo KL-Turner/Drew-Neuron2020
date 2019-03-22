@@ -8,6 +8,7 @@
 %            2) A RestData.mat structure with periods of rest.
 %            3) A EventData.mat structure with event-related information.
 %            4) Find the resting baseline for vessel diameter and neural data.
+%            5) Analyzing the spectrogram for each file and normalize by the resting baseline.
 %________________________________________________________________________________________________________________________
 %
 %   Inputs: MergedData files, followed by newly created RestData and EventData structs for normalization 
@@ -17,6 +18,7 @@
 %            2) A RestData.mat structure with periods of rest.
 %            3) A EventData.mat structure with event-related information.
 %            4) A Baselines.mat structure with resting baselines.
+%            5) A SpecData.mat structure for each merged data file.
 %
 %   Last Revised: March 21st, 2019
 %________________________________________________________________________________________________________________________
@@ -30,15 +32,18 @@ disp('Analyzing Block [0] Preparing the workspace and loading variables.'); disp
 mergedDirectory = dir('*_MergedData.mat');
 mergedDataFiles = {mergedDirectory.name}';
 mergedDataFiles = char(mergedDataFiles);
+[animalID, ~, ~, ~, ~] = GetFileInfo2_SlowOscReview2019(mergedDataFiles(1,:));
+load(mergedDataFiles(1,:), '-mat');
+trialDuration_Sec = MergedData.notes.trialDuration_Sec;
 dataTypes = {'vesselDiameter', 'deltaPower', 'thetaPower', 'alphaPower', 'betaPower', 'gammaPower', 'muaPower'};
 
 disp('Block [0] structs loaded.'); disp(' ')
 
 %% BLOCK PURPOSE: [1] Categorize data 
 disp('Analyzing Block [1] Categorizing behavioral data, adding flags to MergedData structures.'); disp(' ')
-for fileNumber = 1:size(mergedDataFiles, 1)
-    fileName = mergedDataFiles(fileNumber, :);
-    disp(['Analyzing file ' num2str(fileNumber) ' of ' num2str(size(mergedDataFiles, 1)) '...']); disp(' ')
+for a = 1:size(mergedDataFiles, 1)
+    fileName = mergedDataFiles(a, :);
+    disp(['Analyzing file ' num2str(a) ' of ' num2str(size(mergedDataFiles, 1)) '...']); disp(' ')
     CategorizeData_SlowOscReview2019(fileName)
 end
 
@@ -55,14 +60,17 @@ disp('Analyzing Block [4] Finding the resting baseline for vessel diameter and n
 targetMinutes = 30;
 [RestingBaselines] = CalculateRestingBaselines_SlowOscReview2019(animalID, targetMinutes, RestData);
 
-disp('Two Photon Stage Three Processing - Complete.'); disp(' ')
-
 %% BLOCK PURPOSE [5] 
 disp('Analyzing Block [5] Analyzing the spectrogram for each file and normalizing by the resting baseline.'); disp(' ')
-[SpectrogramData] = CreateTrialSpectrograms_SlowOscReview2019(animalID, mergedDataFiles, SpectrogramData);
+CreateTrialSpectrograms_SlowOscReview2019(mergedDataFiles);
 
 % Find spectrogram baselines for each day
-[RestingBaselines] = CalculateSpectrogramBaselines_SlowOscReview2019(animalID, RestingBaselines, SpectrogramData);
+specDirectory = dir('*_SpecData.mat');
+specDataFiles = {specDirectory.name}';
+specDataFiles = char(specDataFiles);
+[RestingBaselines] = CalculateSpectrogramBaselines_SlowOscReview2019(animalID, trialDuration_Sec, specDataFiles, RestingBaselines);
 
 % Normalize spectrogram by baseline
-[SpectrogramData] = NormalizeSpectrograms_SlowOscReview2019(animalID, RestingBaselines, SpectrogramData);
+NormalizeSpectrograms_SlowOscReview2019(specDataFiles, RestingBaselines);
+
+disp('Two Photon Stage Three Processing - Complete.'); disp(' ')

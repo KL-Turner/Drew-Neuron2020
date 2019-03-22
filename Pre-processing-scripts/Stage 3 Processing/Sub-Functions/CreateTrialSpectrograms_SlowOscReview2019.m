@@ -1,4 +1,4 @@
-function [SpectrogramData] = CreateTrialSpectrograms_SlowOscReview2019(animalID, mergedDataFiles, SpectrogramData)
+function CreateTrialSpectrograms_SlowOscReview2019(mergedDataFiles)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % Ph.D. Candidate, Department of Bioengineering
@@ -13,53 +13,49 @@ function [SpectrogramData] = CreateTrialSpectrograms_SlowOscReview2019(animalID,
 %   Outputs: //
 %________________________________________________________________________________________________________________________
 
-for fileNumber = 1:size(mergedDataFiles, 1)
-    mergedDataFileID = mergedDataFiles(fileNumber, :);
+for a = 1:size(mergedDataFiles, 1)
+    mergedDataFileID = mergedDataFiles(a, :);
     load(mergedDataFileID);
-    duration = MergedData.Notes.trialDuration_Sec;
-    analogFs = MergedData.Notes.MScan.MScan_analogSamplingRate;
-    expectedLength = duration*analogFs;
-    [~, ~, fileID, vesselID] = GetFileInfo_2P(mergedDataFileID);
-    RawNeuro = detrend(MergedData.Data.Raw_NeuralData(1:expectedLength), 'constant');
+    duration = MergedData.notes.trialDuration_Sec;
+    anFs = MergedData.notes.anFs;
+    expectedLength = duration*anFs;
+    [animalID, ~, fileID, vesselID, imageID] = GetFileInfo2_SlowOscReview2019(mergedDataFileID);
+    rawNeuro = detrend(MergedData.data.rawNeuralData(1:expectedLength), 'constant');
     
-    w0 = 60/(analogFs/2);  bw = w0/35;
+    w0 = 60/(anFs/2);
+    bw = w0/35;
     [num,den] = iirnotch(w0, bw);
-    RawNeuro2 = filtfilt(num, den, RawNeuro);
+    rawNeuro2 = filtfilt(num, den, rawNeuro);
 
     % Spectrogram parameters
     params1.tapers = [1 1];
-    params1.Fs = MergedData.Notes.MScan.MScan_analogSamplingRate;
+    params1.Fs = anFs;
     params1.fpass = [1 100];
     movingwin1 = [1 1/10];    
     
     params5.tapers = [5 9];
-    params5.Fs = MergedData.Notes.MScan.MScan_analogSamplingRate;
+    params5.Fs = anFs;
     params5.fpass = [1 100];
     movingwin5 = [5 1/5];
 
-    disp(['Creating spectrogram for file number ' num2str(fileNumber) ' of ' num2str(size(mergedDataFiles, 1)) '...']); disp(' ')
+    disp(['Creating spectrogram for file number ' num2str(a) ' of ' num2str(size(mergedDataFiles, 1)) '...']); disp(' ')
     
-    [Neural_S1, Neural_T1, Neural_F1] = mtspecgramc(RawNeuro2, movingwin1, params1);
-    [Neural_S5, Neural_T5, Neural_F5] = mtspecgramc(RawNeuro2, movingwin5, params5);
+    [S1, T1, F1] = mtspecgramc(rawNeuro2, movingwin1, params1);
+    [S5, T5, F5] = mtspecgramc(rawNeuro2, movingwin5, params5);
     
-    SpectrogramData.FiveSec.S{fileNumber, 1} = Neural_S5';
-    SpectrogramData.FiveSec.T{fileNumber, 1} = Neural_T5;
-    SpectrogramData.FiveSec.F{fileNumber, 1} = Neural_F5;
-    SpectrogramData.VesselIDs{fileNumber, 1} = vesselID;
-    SpectrogramData.FileIDs{fileNumber, 1} = fileID;
-    SpectrogramData.Notes.params1 = params1;
-    SpectrogramData.Notes.params5 = params5;
-    SpectrogramData.Notes.movingwin5 = movingwin5;
+    SpecData.fiveSec.S = S5';
+    SpecData.fiveSec.T = T5;
+    SpecData.fiveSec.F = F5;
+    SpecData.fiveSec.params = params5;
+    SpecData.fiveSec.movingwin = movingwin5;
     
-    SpectrogramData.OneSec.S{fileNumber, 1} = Neural_S1';
-    SpectrogramData.OneSec.T{fileNumber, 1} = Neural_T1;
-    SpectrogramData.OneSec.F{fileNumber, 1} = Neural_F1;
-    SpectrogramData.Notes.movingwin1 = movingwin1; 
+    SpecData.oneSec.S = S1';
+    SpecData.oneSec.T = T1;
+    SpecData.oneSec.F = F1;
+    SpecData.oneSec.params = params1;
+    SpecData.oneSec.movingwin = movingwin1;
+    
+    save([animalID '_' vesselID '_' fileID '_' imageID '_SpecData.mat'], 'SpecData');
 end
-
-for a = 1:length(SpectrogramData.FiveSec.F)
-    
-
-save([animalID '_SpectrogramData.mat'], 'SpectrogramData', '-v7.3');
 
 end

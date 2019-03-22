@@ -5,31 +5,32 @@ function CombineLabVIEWMScanFiles_SlowOscReview2019(labviewDataFiles, mscanDataF
 % https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
-%   Purpose:
+%   Purpose: Combine the MScan and LabVIEW data structures into one.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs:
+%   Inputs: List of MScan and LabVIEW data files.
 %
-%   Outputs: 
+%   Outputs: Single MergedData structure with the important information from both.
 %
 %   Last Revised: February 29th, 2019
 %________________________________________________________________________________________________________________________
 
-for f = 1:size(labviewDataFiles, 1)
-    disp(['Combining the data from LabVIEW and MScan file(s) number ' num2str(f) ' of ' num2str(size(labviewDataFiles, 1)) '...']); disp(' ');
-    labviewDataFile = labviewDataFiles(f, :);
-    mscanDataFile = mscanDataFiles(f, :);
+for a = 1:size(labviewDataFiles,1)
+    disp(['Combining the data from LabVIEW and MScan file(s) number ' num2str(a) ' of ' num2str(size(labviewDataFiles, 1)) '...']); disp(' ');
+    labviewDataFile = labviewDataFiles(a,:);
+    mscanDataFile = mscanDataFiles(a,:);
     load(labviewDataFile);
     load(mscanDataFile);
     
     [animalID, ~, ~, fileID] = GetFileInfo_SlowOscReview2019(labviewDataFile);
     vesselID = MScanData.notes.vesselID;
+    imageID = MScanData.notes.imageID;
     
     % Pull the notes and data from LabVIEW
     MergedData.notes.LabVIEW = LabVIEWData.notes;
     MergedData.data.whiskerAngle = LabVIEWData.data.dsWhiskerAngle_trim;
     MergedData.data.binWhiskerAngle = LabVIEWData.data.binWhiskerAngle_trim;
-    MergedData.data.forceSensorL = LabVIEWData.data.dsForceSensor_trim;
+    MergedData.data.forceSensorL = LabVIEWData.data.dsForceSensorL_trim;
     MergedData.data.binForceSensorL = LabVIEWData.data.binForceSensorL_trim;
     
     % Pull the notes and data from MScan
@@ -44,14 +45,14 @@ for f = 1:size(labviewDataFiles, 1)
     MergedData.data.forceSensorM = MScanData.data.dsForceSensorM_trim;
     MergedData.data.binForceSensorM = MScanData.data.binForceSensorM_trim;
     MergedData.data.vesselDiameter = MScanData.data.vesselDiameter_trim;
-    MergedData.data.EMG = MScanData.data.filtEMG2;
     
     % Most useful notes to be referenced in future analysis
     MergedData.notes.trialDuration_Sec = LabVIEWData.notes.trialDuration_Seconds_trim;
     MergedData.notes.p2Fs = MScanData.notes.frameRate;
-    MergedData.notes.dsFs = LabVIEWData.notes.downSampledFs;
+    MergedData.notes.dsFs = MScanData.notes.downSampledFs;
+    MergedData.notes.anFs = LabVIEWData.notes.analogSamplingRate_Hz;
     
-    save([animalID '_' vesselID '_' fileID '_MergedData'], 'MergedData')
+    save([animalID '_' vesselID '_' fileID '_' imageID '_MergedData'], 'MergedData')
 end
 
 end

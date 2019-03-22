@@ -1,4 +1,4 @@
-function [SpectrogramData] = NormalizeSpectrograms_SlowOscReview2019(animal, RestingBaselines, SpectrogramData)
+function [SpecData] = NormalizeSpectrograms_SlowOscReview2019(specDataFiles, RestingBaselines)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % Ph.D. Candidate, Department of Bioengineering
@@ -13,29 +13,26 @@ function [SpectrogramData] = NormalizeSpectrograms_SlowOscReview2019(animal, Res
 %   Outputs: //
 %________________________________________________________________________________________________________________________
 
-uniqueFileIDs = SpectrogramData.FileIDs;
+for a = 1:size(specDataFiles,1)
+    disp(['Normalizing spectrogram file ' num2str(a) ' of ' num2str(size(specDataFiles,1)) '...']); disp(' ')
+    load(specDataFiles(a,:), '-mat');
+    [~, fileDate, ~, ~, ~] = GetFileInfo2_SlowOscReview2019(specDataFiles(a,:));
+    strDay = ConvertDate_SlowOscReview2019(fileDate);
+    baseLine1 = RestingBaselines.Spectrograms.oneSec.(strDay);
+    baseLine5 = RestingBaselines.Spectrograms.fiveSec.(strDay);
 
-for ii = 1:length(uniqueFileIDs)
-    fileID = uniqueFileIDs{ii, :};
-    date = ConvertDate(fileID);
-    disp(['Normalizing spectrogram ' num2str(ii) ' of ' num2str(length(uniqueFileIDs)) '...']); disp(' ')
-    baseLine1 = RestingBaselines.Spectrograms.OneSec.(date);
-    baseLine5 = RestingBaselines.Spectrograms.FiveSec.(date);
-
-    S1 = SpectrogramData.OneSec.S{ii};
-    S5 = SpectrogramData.FiveSec.S{ii};
+    S1 = SpecData.oneSec.S;
+    S5 = SpecData.fiveSec.S;
     
-    hold_matrix1 = baseLine1.*ones(size(S1));
-    hold_matrix5 = baseLine5.*ones(size(S5));
+    holdMatrix1 = baseLine1.*ones(size(S1));
+    holdMatrix5 = baseLine5.*ones(size(S5));
     
-    S1_Norm = (S1 - hold_matrix1) ./ hold_matrix1;
-    S5_Norm = (S5 - hold_matrix5) ./ hold_matrix5;
+    normS1 = (S1 - holdMatrix1)./holdMatrix1;
+    normS5 = (S5 - holdMatrix5)./holdMatrix5;
 
-    SpectrogramData.OneSec.S_Norm{ii, 1} = S1_Norm;
-    SpectrogramData.FiveSec.S_Norm{ii, 1} = S5_Norm;
+    SpecData.oneSec.normS = normS1;
+    SpecData.fiveSec.normS = normS5;
+    save(specDataFiles(a,:), 'SpecData')
 end
-
-disp('Saving...'); disp(' ')
-save([animal '_SpectrogramData.mat'], '-v7.3', 'SpectrogramData');
 
 end

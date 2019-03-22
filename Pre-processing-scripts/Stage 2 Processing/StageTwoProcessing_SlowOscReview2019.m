@@ -45,11 +45,13 @@ labviewDataFiles = {labviewDirectory.name}';
 labviewDataFiles = char(labviewDataFiles);
 Process2PDataFiles_SlowOscReview2019(labviewDataFiles, mscanDataFiles)
 
-%% BLOCK PURPOSE: [4] Analyze vessel diameter and add it to MScanData.mat.
+%% BLOCK PURPOSE: [4] Correct the offset between the MScan and LabVIEW acquisiton.
 disp('Analyzing Block [4] Correcting LabVIEW time offset.'); disp(' ')
 trimTime = 10;   % sec
 CorrectLabVIEWOffset_SlowOscReview2019(labviewDataFiles, mscanDataFiles, trimTime)
 
-%% BLOCK PURPOSE: [5] Analyze vessel diameter and add it to MScanData.mat.
-disp('Analyzing Block [5] Combing LabVIEWData and MScan Data files to ceate MergedData.'); disp(' ')
+%% BLOCK PURPOSE: [5] Combine the MScan and LabVIEW structures into one.
+disp('Analyzing Block [5] Combing LabVIEWData and MScan Data files to create MergedData.'); disp(' ')
 CombineLabVIEWMScanFiles_SlowOscReview2019(labviewDataFiles, mscanDataFiles)
+
+disp('Two Photon Stage Two Processing - Complete.'); disp(' ')

@@ -1,4 +1,4 @@
-function [days] = ConvertDate(dateTag)
+function [days] = ConvertDate_SlowOscReview2019(dateTag)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -7,12 +7,12 @@ function [days] = ConvertDate(dateTag)
 % Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
 %________________________________________________________________________________________________________________________
 %
-%   Purpose:
+%   Purpose: Converts a numeric date string to the month/day.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs:
+%   Inputs: Date in YYMMDD format into 'Jun19' format.
 %
-%   Outputs: 
+%   Outputs: Date in 'Jun19' format, no year.
 %
 %   Last Revised: February 29th, 2019
 %________________________________________________________________________________________________________________________

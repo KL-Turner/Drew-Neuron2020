@@ -1,4 +1,4 @@
-function [] = CategorizeData_2P(fileName)
+function [] = CategorizeData_SlowOscReview2019(fileName)
 %___________________________________________________________________________________________________
 % Edited by Kevin L. Turner 
 % Ph.D. Candidate, Department of Bioengineering 
@@ -59,7 +59,7 @@ function [] = CategorizeData_2P(fileName)
 %% Load and Setup
 disp(['Categorizing data for: ' fileName]); disp(' ')
 load(fileName)
-whiskerSamplingRate = MergedData.Notes.dsFs;
+whiskerSamplingRate = MergedData.notes.dsFs;
 
 %% Process binary whisking waveform to detect whisking events
 % Setup parameters for link_binary_events
@@ -70,10 +70,10 @@ breakThresh = 0;   % seconds changed by atw on 2/6/18 from 0.07
 % trial time. This will link any event occurring within "link_thresh"
 % seconds to the beginning/end of the trial rather than assuming that it is
 % a new/isolated event.
-modBinWhiskers = MergedData.Data.binWhisker_Angle;
+modBinWhiskers = MergedData.data.binWhiskerAngle;
 
 % Link the binarized whisking for use in GetWhiskingData function
-binWhiskers = LinkBinaryEvents(gt(modBinWhiskers,0), [linkThresh breakThresh]*whiskerSamplingRate);
+binWhiskers = LinkBinaryEvents_SlowOscReview2019(gt(modBinWhiskers,0), [linkThresh breakThresh]*whiskerSamplingRate);
 
 % Added 2/6/18 with atw. Code throws errors if binWhiskers(1)=1 and binWhiskers(2) = 0, or if 
 % binWhiskers(1) = 0 and binWhiskers(2) = 1. This happens in GetWhiskingData because starts of 
@@ -93,15 +93,15 @@ end
 
 %% Categorize data by behavior
 % Retrieve details on whisking events
-[MergedData.Flags.whisk] = GetWhiskingData(MergedData, binWhiskers);
+[MergedData.flags.whisk] = GetWhiskingData_SlowOscReview2019(MergedData, binWhiskers);
 
 % Identify and separate resting data
-[MergedData.Flags.rest] = GetRestData(MergedData);
+[MergedData.flags.rest] = GetRestData_SlowOscReview2019(MergedData);
 
 % Save MergedData structure
 save(fileName, 'MergedData');
 
-function [puffTimes] = GetPuffTimes(~)
+function [puffTimes] = GetPuffTimes_SlowOscReview2019(~)
 %   function [Puff_Times] = GetPuffTimes(MergedData)
 %
 %   Author: Aaron Winder
@@ -123,7 +123,7 @@ function [puffTimes] = GetPuffTimes(~)
 puffList = [];
 puffTimes = cell2mat(puffList);
 
-function [Whisk] = GetWhiskingData(MergedData, binarizedWhiskers)
+function [Whisk] = GetWhiskingData_SlowOscReview2019(MergedData, binarizedWhiskers)
 %   function [Whisk] = GetWhiskingData(MergedData, Bin_wwf)
 %
 %   Author: Aaron Winder
@@ -159,11 +159,11 @@ function [Whisk] = GetWhiskingData(MergedData, binarizedWhiskers)
 %_______________________________________________________________
 
 %% Setup
-whiskerSamplingRate = MergedData.Notes.dsFs;
-forceSensorSamplingRate = MergedData.Notes.dsFs;
+whiskerSamplingRate = MergedData.notes.dsFs;
+forceSensorSamplingRate = MergedData.notes.dsFs;
 
 %% Get Puff Times
-[puffTimes] = GetPuffTimes(MergedData);
+[puffTimes] = GetPuffTimes_SlowOscReview2019(MergedData);
 
 %% Find the starts of whisking
 whiskEdge = diff(binarizedWhiskers);
@@ -210,13 +210,13 @@ movementInt = zeros(size(whiskStarts));
 for wS = 1:length(whiskSamples)
     % Whisking intensity
     whiskInds = whiskSamples(wS):whiskSamples(wS) + whiskLength(wS);
-    whiskInt(wS) = sum(MergedData.Data.binWhisker_Angle(whiskInds))/numel(whiskInds);
+    whiskInt(wS) = sum(MergedData.data.binWhiskerAngle(whiskInds))/numel(whiskInds);
     
     % Movement intensity
     movementStart = round(whiskStarts(wS)*forceSensorSamplingRate);
     movementDur = round(whiskDur(wS)*forceSensorSamplingRate);
-    movementInds = max(movementStart, 1):min(movementStart + movementDur, length(MergedData.Data.binForce_Sensor_M));
-    movementInt(wS) = sum(MergedData.Data.binForce_Sensor_M(movementInds))/numel(movementInds);
+    movementInds = max(movementStart, 1):min(movementStart + movementDur, length(MergedData.data.binForceSensorM));
+    movementInt(wS) = sum(MergedData.data.binForceSensorM(movementInds))/numel(movementInds);
 end
 
 % Calculate the time to the closest puff
@@ -247,7 +247,7 @@ Whisk.whiskScore = whiskInt';
 Whisk.movementScore = movementInt';
 Whisk.puffDistance = puffTimeCell;
 
-function [Rest] = GetRestData(MergedData)
+function [Rest] = GetRestData_SlowOscReview2019(MergedData)
 %   function [Rest] = GetRestData(MergedData)
 %
 %   Author: Aaron Winder
@@ -271,11 +271,11 @@ function [Rest] = GetRestData(MergedData)
 %_______________________________________________________________
 
 % Setup
-whiskerSamplingRate = MergedData.Notes.dsFs;
-forceSensorSamplingRate = MergedData.Notes.dsFs;
+whiskerSamplingRate = MergedData.notes.dsFs;
+forceSensorSamplingRate = MergedData.notes.dsFs;
 
 %% Get stimulation times
-[puffTimes] = GetPuffTimes(MergedData);
+[puffTimes] = GetPuffTimes_SlowOscReview2019(MergedData);
 
 %% Recalculate linked binarized wwf without omitting any possible whisks,
 % this avoids inclusion of brief whisker movements in periods of rest.
@@ -284,21 +284,18 @@ forceSensorSamplingRate = MergedData.Notes.dsFs;
 % trial time. This will link any event occurring within "link_thresh"
 % seconds to the beginning/end of the trial rather than assuming that it is
 % a new/isolated event.
-modBinarizedWhiskers = MergedData.Data.binWhisker_Angle;
+modBinarizedWhiskers = MergedData.data.binWhiskerAngle;
 modBinarizedWhiskers([1, end]) = 1;
 
-modBinarizedForceSensor = MergedData.Data.binForce_Sensor_M;
+modBinarizedForceSensor = MergedData.data.binForceSensorM;
 modBinarizedForceSensor([1, end]) = 1;
 
 linkThresh = 0.5; % seconds
 breakThresh = 0;% seconds
-binarizedWhiskers = LinkBinaryEvents(gt(modBinarizedWhiskers, 0),...
-    [linkThresh breakThresh]*whiskerSamplingRate);
-binarizedForceSensor = LinkBinaryEvents(modBinarizedForceSensor,...
-    [linkThresh breakThresh]*forceSensorSamplingRate);
+binarizedWhiskers = LinkBinaryEvents_SlowOscReview2019(gt(modBinarizedWhiskers, 0), [linkThresh breakThresh]*whiskerSamplingRate);
+binarizedForceSensor = LinkBinaryEvents_SlowOscReview2019(modBinarizedForceSensor, [linkThresh breakThresh]*forceSensorSamplingRate);
 
 %% Combine binarizedWhiskers, binarizedForceSensor, and puffTimes, to find periods of rest. 
-
 % Downsample bin_wwf to match length of bin_pswf
 sampleVec = 1:length(binarizedWhiskers); 
 whiskHigh = sampleVec(binarizedWhiskers)/whiskerSamplingRate;

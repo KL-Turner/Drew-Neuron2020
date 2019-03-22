@@ -31,9 +31,8 @@ disp('Analyzing vessel projections from defined polygons...'); disp(' ');
 
 try
     [MScanData] = FWHM_MovieProjection_SlowOscReview2019(MScanData, [MScanData.notes.startframe MScanData.notes.endframe]);
-catch error
-    disp([MScanData.notes.imageID ' FWHM calculation failed!'])
-    rethrow(error)
+catch
+    disp([MScanData.notes.imageID ' FWHM calculation failed!']); disp(' ')
 end
 
 try
@@ -48,9 +47,8 @@ try
     MScanData.notes.vessel.diamPerc = diamPerc;
     MScanData.notes.vessel.power_f = f;
     MScanData.notes.vessel.power_S = S;
-catch error
-    disp([MScanData.notes.imageID ' Diameter percentage analysis failed!'])
-    rethrow(error)
+catch
+    disp([MScanData.notes.imageID ' Diameter percentage analysis failed!']); disp(' ')
 end
 
 end
@@ -79,6 +77,7 @@ end
 
 %% Calculate diameter using FWHM and get the baseline diameter
 function [MScanData] = FWHM_MovieProjection_SlowOscReview2019(MScanData, theFrames)
+
 for f = min(theFrames):max(theFrames)
     % Add in a 5 pixel median filter
     MScanData.data.rawVesselDiameter(f) = CalcFWHM_SlowOscReview2019(medfilt1(MScanData.notes.vesselROI.projection(f, :), 5));
@@ -88,4 +87,5 @@ MScanData.data.tempVesselDiameter = MScanData.data.rawVesselDiameter*MScanData.n
 [holdHist, d] = hist(MScanData.data.tempVesselDiameter, 0:.25:100);
 [~, maxD] = max(holdHist);
 MScanData.notes.vesselROI.modalFixedDiameter = d(maxD);
+
 end

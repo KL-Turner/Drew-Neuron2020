@@ -7,12 +7,12 @@ function [ok] = CheckForThreshold(sfield, animal)
 % Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
 %________________________________________________________________________________________________________________________
 %
-%   Purpose:
+%   Purpose: Check to see if a threshold has already been created for a given field in a given day.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs:
+%   Inputs: Field name to be checked, animal ID.
 %
-%   Outputs: 
+%   Outputs: Logical T/F statement.
 %
 %   Last Revised: February 29th, 2019
 %________________________________________________________________________________________________________________________

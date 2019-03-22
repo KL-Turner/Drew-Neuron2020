@@ -1,4 +1,4 @@
-function [RestData] = ExtractRestingData_2P(mergedDataFiles, dataTypes)
+function [RestData] = ExtractRestingData_SlowOscReview2019(mergedDataFiles, dataTypes)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % Ph.D. Candidate, Department of Bioengineering
@@ -12,6 +12,8 @@ function [RestData] = ExtractRestingData_2P(mergedDataFiles, dataTypes)
 %
 %   Outputs: RestData.mat
 %________________________________________________________________________________________________________________________
+
+RestData = [];
 
 if not(iscell(dataTypes))
     dataTypes = {dataTypes};
@@ -33,22 +35,22 @@ for dT = 1:length(dataTypes)
         load(filename);
         
         % Get the date and file identifier for the data to be saved with each resting event
-        [animalID, fileDate, fileID, vesselID] = GetFileInfo_2P(filename);
+        [animalID, fileDate, fileID, vesselID, ~] = GetFileInfo2_SlowOscReview2019(filename);
         
         % Sampling frequency for element of dataTypes
-        if strcmp(dataType, 'Vessel_Diameter')
-            Fs = floor(MergedData.Notes.p2Fs);
+        if strcmp(dataType, 'vesselDiameter')
+            Fs = floor(MergedData.notes.p2Fs);
         else
-            Fs = floor(MergedData.Notes.dsFs);
+            Fs = floor(MergedData.notes.dsFs);
         end
         
         % Expected number of samples for element of dataType
-        expectedLength = MergedData.Notes.trialDuration_Sec*Fs;
+        expectedLength = MergedData.notes.trialDuration_Sec*Fs;
         
         % Get information about periods of rest from the loaded file
-        trialEventTimes = MergedData.Flags.rest.eventTime';
-        trialPuffDistances = MergedData.Flags.rest.puffDistance;
-        trialDurations = MergedData.Flags.rest.duration';
+        trialEventTimes = MergedData.flags.rest.eventTime';
+        trialPuffDistances = MergedData.flags.rest.puffDistance;
+        trialDurations = MergedData.flags.rest.duration';
         
         % Initialize cell array for all periods of rest from the loaded file
         trialRestVals = cell(size(trialEventTimes'));
@@ -66,7 +68,7 @@ for dT = 1:length(dataTypes)
             stopInd = min(startInd + dur, expectedLength - round(0.2*Fs));
             
             % Extract data from the trial and add to the cell array for the current loaded file
-            trialRestVals{tET} = MergedData.Data.(dataTypes{dT})(:, startInd:stopInd);
+            trialRestVals{tET} = MergedData.data.(dataTypes{dT})(:, startInd:stopInd);
         end
         % Add all periods of rest to a cell array for all files
         restVals{f} = trialRestVals';

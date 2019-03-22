@@ -1,4 +1,4 @@
-function [animalID, fileDate, fileID, vesselID] = GetFileInfo_2P(fileName)
+function [animalID, fileDate, fileID, vesselID, imageID] = GetFileInfo2_SlowOscReview2019(fileName)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -37,6 +37,7 @@ switch extension
         if numel(fileBreaks) > 3
             fileID = fileName(:, fileBreaks(2) + 1:fileBreaks(6) - 1);
             vesselID = fileName(:, fileBreaks(1) + 1:fileBreaks(2) - 1);
+            imageID = fileName(:, fileBreaks(6) + 1: fileBreaks(7) - 1);
         else
             fileDate = [];
             fileID = [];

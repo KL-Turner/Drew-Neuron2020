@@ -1,4 +1,4 @@
-function [linkedWF] = LinkBinaryEvents(binWF, dCrit)
+function [linkedWF] = LinkBinaryEvents_SlowOscReview2019(binWF, dCrit)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -7,12 +7,12 @@ function [linkedWF] = LinkBinaryEvents(binWF, dCrit)
 % Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
 %________________________________________________________________________________________________________________________
 %
-%   Purpose:
+%   Purpose: Link binary events that occur within a certain amount of time.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs:
+%   Inputs: Array to be binarized, and the criteria for linking.
 %
-%   Outputs: 
+%   Outputs: Linked array.
 %
 %   Last Revised: February 29th, 2019
 %________________________________________________________________________________________________________________________
