@@ -1,7 +1,7 @@
 %________________________________________________________________________________________________________________________
-% Written by Kevin L. Turner 
-% Ph.D. Candidate, Department of Bioengineering 
-% The Pennsylvania State University
+% Written by Kevin L. Turner
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
 %   Purpse:  1) Additions to the MergedData structure including flags and scores.
@@ -37,7 +37,8 @@ load(mergedDataFiles(1,:), '-mat');
 trialDuration_Sec = MergedData.notes.trialDuration_Sec;
 dataTypes = {'vesselDiameter', 'deltaPower', 'thetaPower', 'alphaPower', 'betaPower', 'gammaPower', 'muaPower'};
 
-%% BLOCK PURPOSE: [1] Categorize data 
+
+%% BLOCK PURPOSE: [1] Categorize data.
 disp('Analyzing Block [1] Categorizing behavioral data, adding flags to MergedData structures.'); disp(' ')
 for a = 1:size(mergedDataFiles, 1)
     fileName = mergedDataFiles(a, :);
@@ -45,20 +46,20 @@ for a = 1:size(mergedDataFiles, 1)
     CategorizeData_SlowOscReview2019(fileName)
 end
 
-%% BLOCK PURPOSE: [2] Create RestData data structure
+%% BLOCK PURPOSE: [2] Create RestData data structure.
 disp('Analyzing Block [2] Creating RestData struct for vessels and neural data.'); disp(' ')
 [RestData] = ExtractRestingData_SlowOscReview2019(mergedDataFiles, dataTypes);
     
-%% BLOCK PURPOSE: [3] Create EventData data structure
+%% BLOCK PURPOSE: [3] Create EventData data structure.
 disp('Analyzing Block [3] Creating EventData struct for vessels and neural data.'); disp(' ')
 [EventData] = ExtractEventTriggeredData_SlowOscReview2019(mergedDataFiles, dataTypes);
 
-%% BLOCK PURPOSE: [4] Create Baselines data structure
+%% BLOCK PURPOSE: [4] Create Baselines data structure.
 disp('Analyzing Block [4] Finding the resting baseline for vessel diameter and neural data.'); disp(' ')
 targetMinutes = 30;
 [RestingBaselines] = CalculateRestingBaselines_SlowOscReview2019(animalID, targetMinutes, RestData);
 
-%% BLOCK PURPOSE [5] 
+%% BLOCK PURPOSE [5] Analyze the spectrogram for each session.
 disp('Analyzing Block [5] Analyzing the spectrogram for each file and normalizing by the resting baseline.'); disp(' ')
 CreateTrialSpectrograms_SlowOscReview2019(mergedDataFiles);
 

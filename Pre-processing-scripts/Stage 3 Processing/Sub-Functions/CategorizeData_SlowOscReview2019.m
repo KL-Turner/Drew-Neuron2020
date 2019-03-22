@@ -1,60 +1,32 @@
 function [] = CategorizeData_SlowOscReview2019(fileName)
-%___________________________________________________________________________________________________
-% Edited by Kevin L. Turner 
-% Ph.D. Candidate, Department of Bioengineering 
-% The Pennsylvania State University
+%________________________________________________________________________________________________________________________
+% Edited by Kevin L. Turner
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
 %
-% Originally written by Aaron T. Winder
+% Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
+%________________________________________________________________________________________________________________________
 %
-%   Last Revised: August 8th, 2018
-%___________________________________________________________________________________________________
+%   Purpose: Identifies periods of sensory stimulation, volitional movement, and rest. Calculates relevant details for
+%            each behavioral period:
+
+%           Stimulation: Whisk Score - measure of the intensity of whisking before and after onset of a puff. A 0 indicates
+%                               no whisking, a 1 indicates maximum whisking over a 1 second period.
+%                        Movement Score - Same as whisk score except uses the force sensor beneath the animal to detect
+%                               body movment.
 %
-%   Author: Aaron Winder
-%   Affiliation: Engineering Science and Mechanics, Penn State University
-%   https://github.com/awinde
-%
-%   DESCRIPTION: Identifies periods of sensory stimulation, volitional
-%   movement, and rest. Calculates relevant details for each behavioral
-%   period:
-%           Stimulation:    Whisk Score - measure of the intensity of 
-%                           whisking before and after onset of a puff. 
-%                           A 0 indicates no whisking, a 1 indicates 
-%                           maximum whisking over a 1 second period.
-%                           Movement Score - Same as whisk score except
-%                           uses the force sensor beneath the animal to
-%                           detect body movment.
-%
-%           Whisking:       Duration - the time, in seconds, from onset to
-%                           cessation of a whisking event.
-%                           Rest Time - the duration of resting behavior
-%                           prior to onset of the volitional whisk
-%                           Whisk Score - a measure of the intensity of
-%                           whisking for the duration of the whisk a
-%                           maximum whisk for the whole duration will give
-%                           a score of 1. No whisking will give a score of
-%                           0.
-%                           Movement Score - Same as whisk score exept uses
-%                           the force sensor beneath the animal to detect
-%                           body movement over the duration of the
-%                           volitional whisk.
-%                           Puff Distance - The time, in seconds, between
-%                           the onset of each whisk an every puff
-%                           administered during the trial.
+%           Whisking: Duration - the time, in seconds, from onset to cessation of a whisking event.
+%                     Rest Time - the duration of resting behavior prior to onset of the volitional whisk
+%                     Whisk Score - a measure of the intensity of whisking for the duration of the whisk a maximum whisk
+%                              for the whole duration will give a score of 1. No whisking will give a score of 0.
+%                     Movement Score - Same as whisk score exept uses the force sensor beneath the animal to detect body
+%                                 movement over the duration of the volitional whisk.
+%                     Puff Distance - The time, in seconds, between the onset of each whisk an every puff administered.
 %
 %
-%          Rest:            Duration - the time, in seconds without any 
-%                           detected whisking or body movement.
-%                           Start Time - the trial time corresponding to
-%                           the cessation of all volitional movement.
-%   
-%_______________________________________________________________
-%   PARAMETERS:             
-%                           filename - [string] file identifier                      
-%_______________________________________________________________
-%   RETURN:                     
-%                           None, output of the script is additions to the
-%                           MergedData structure.
-%_______________________________________________________________
+%          Rest: Duration - the time, in seconds without any detected whisking or body movement.
+%                Start Time - the trial time corresponding to the cessation of all volitional movement.
+%________________________________________________________________________________________________________________________
 
 %% Load and Setup
 disp(['Categorizing data for: ' fileName]); disp(' ')
@@ -102,62 +74,11 @@ end
 save(fileName, 'MergedData');
 
 function [puffTimes] = GetPuffTimes_SlowOscReview2019(~)
-%   function [Puff_Times] = GetPuffTimes(MergedData)
-%
-%   Author: Aaron Winder
-%   Affiliation: Engineering Science and Mechanics, Penn State University
-%   https://github.com/awinde
-%
-%   DESCRIPTION: Gets the time in seconds of all puffs administered during
-%   a trial.
-%   
-%_______________________________________________________________
-%   PARAMETERS:             
-%                       MergedData - [struct] structure obtained using the 
-%                       function ProcessRawDataFile.
-%_______________________________________________________________
-%   RETURN:                     
-%                       Puff_Times - [array] time in seconds of all puffs              
-%_______________________________________________________________
 
 puffList = [];
 puffTimes = cell2mat(puffList);
 
 function [Whisk] = GetWhiskingData_SlowOscReview2019(MergedData, binarizedWhiskers)
-%   function [Whisk] = GetWhiskingData(MergedData, Bin_wwf)
-%
-%   Author: Aaron Winder
-%   Affiliation: Engineering Science and Mechanics, Penn State University
-%   https://github.com/awinde
-%
-%   DESCRIPTION: Returns details on whisks which occurred during a trial.
-%   Including:
-%                           Duration - the time, in seconds, from onset to
-%                           cessation of a whisking event.
-%                           Rest Time - the duration of resting behavior
-%                           prior to onset of the volitional whisk
-%                           Whisk Score - a measure of the intensity of
-%                           whisking for the duration of the whisk a
-%                           maximum whisk for the whole duration will give
-%                           a score of 1. No whisking will give a score of
-%                           0.
-%                           Movement Score - Same as whisk score exept uses
-%                           the force sensor beneath the animal to detect
-%                           body movement over the duration of the
-%                           volitional whisk.
-%                           Puff Distance - The time, in seconds, between
-%                           the onset of each whisk an every puff
-%                           administered during the trial.
-%_______________________________________________________________
-%   PARAMETERS:             
-%                       MergedData - [struct] structure obtained using the 
-%                       function ProcessRawDataFile.    
-%_______________________________________________________________
-%   RETURN:                     
-%                       Whisk - [struct] structure containing a nested 
-%                       structure for each whisk performed.
-%_______________________________________________________________
-
 %% Setup
 whiskerSamplingRate = MergedData.notes.dsFs;
 forceSensorSamplingRate = MergedData.notes.dsFs;
@@ -248,28 +169,6 @@ Whisk.movementScore = movementInt';
 Whisk.puffDistance = puffTimeCell;
 
 function [Rest] = GetRestData_SlowOscReview2019(MergedData)
-%   function [Rest] = GetRestData(MergedData)
-%
-%   Author: Aaron Winder
-%   Affiliation: Engineering Science and Mechanics, Penn State University
-%   https://github.com/awinde
-%
-%   DESCRIPTION: Returns details on periods of rest during a trial.
-%   Including:
-%          Rest:            Duration - the time, in seconds without any 
-%                           detected whisking or body movement.
-%                           Start Time - the trial time corresponding to
-%                           the cessation of all volitional movement.   
-%_______________________________________________________________
-%   PARAMETERS:             
-%                       MergedData - [struct] structure obtained using the 
-%                       function ProcessRawDataFile.    
-%_______________________________________________________________
-%   RETURN:                     
-%                       Rest - [struct] structure containing a nested 
-%                       structure for each period of rest.
-%_______________________________________________________________
-
 % Setup
 whiskerSamplingRate = MergedData.notes.dsFs;
 forceSensorSamplingRate = MergedData.notes.dsFs;

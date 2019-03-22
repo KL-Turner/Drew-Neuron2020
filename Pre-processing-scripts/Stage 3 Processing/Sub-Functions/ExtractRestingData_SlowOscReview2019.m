@@ -1,16 +1,22 @@
 function [RestData] = ExtractRestingData_SlowOscReview2019(mergedDataFiles, dataTypes)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
-% Ph.D. Candidate, Department of Bioengineering
-% The Pennsylvania State University
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
+%
+% Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
 %________________________________________________________________________________________________________________________
 %
-%   Purpose:
+%   Purpose: Evalute the flags from each MergedData file and pull out the corresponding rest data associated with each
+%            dataType.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs:
+%   Inputs: List of all MergedData.mat files and the dataTypes that should be analyzed.
 %
-%   Outputs: RestData.mat
+%   Outputs: A RestData.mat structure containing all periods of rest and their associated file IDs, event times, durations,
+%            and corresponding data. This structure can later be filtered to extract the events greater than a certain duration.
+%
+%   Last Revised: March 21st, 2019
 %________________________________________________________________________________________________________________________
 
 RestData = [];

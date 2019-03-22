@@ -1,44 +1,22 @@
-function [EventData] = ExtractEventTriggeredData_2P(mergedDataFiles, dataTypes)
-%___________________________________________________________________________________________________
-% Edited by Kevin L. Turner 
-% Ph.D. Candidate, Department of Bioengineering 
-% The Pennsylvania State University
+function [EventData] = ExtractEventTriggeredData_SlowOscReview2019(mergedDataFiles, dataTypes)
+%________________________________________________________________________________________________________________________
+% Written by Kevin L. Turner
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
 %
-% Originally written by Aaron T. Winder
+% Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
+%________________________________________________________________________________________________________________________
 %
-%   Last Revised: October 3rd, 2018
-%___________________________________________________________________________________________________
+%   Purpose: Separates data corresponding to various behaviors into structures
+%________________________________________________________________________________________________________________________
 %
-%   Author: Aaron Winder
-%   Affiliation: Engineering Science and Mechanics, Penn State University
-%   https://github.com/awinde
+%   Inputs: MergedDataFiles - [matrix] names of files organized as rows.
+%           dataTypes - [cell] the measurements to be chunked into data epochs
 %
-%   DESCRIPTION: Separates data corresponding to various behaviors into
-%   structures
-%   
-%_______________________________________________________________
-%   PARAMETERS:             
-%                   MergedDataFiles - [matrix] names of files organized as rows.
-%                   Files should already be processed using the script
-%                   "ProcessRawDataFile.m" or "CalculatePredictedCBV.m".
+%   Outputs:  EventData - [struct] data chunked around behavioral events
 %
-%                   EventData - [struct] structure of existing data chunked
-%                   around behavioral events
-%
-%                   dataTypes - [dataTypes] the measurements to be
-%                   chunked into data epochs
-%
-%                   epoch - [struct] contains fields:
-%                               duration - [double] the total time of the
-%                               data epoch
-%
-%                               offset - [double] the amount of pre-event
-%                               time (s) to include in the epoch.
-%_______________________________________________________________
-%   RETURN:                     
-%                   EventData - [struct] data chunked around behavioral
-%                   events
-%_______________________________________________________________
+%   Last Revised: March 21st, 2019
+%________________________________________________________________________________________________________________________
 
 EventData = [];
 epoch.duration = 14;

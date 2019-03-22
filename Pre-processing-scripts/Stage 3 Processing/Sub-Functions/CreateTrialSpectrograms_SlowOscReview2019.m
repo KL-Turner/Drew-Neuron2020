@@ -1,16 +1,18 @@
 function CreateTrialSpectrograms_SlowOscReview2019(mergedDataFiles)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
-% Ph.D. Candidate, Department of Bioengineering
-% The Pennsylvania State University
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: //
+%   Purpose: Analyzes the raw neural data from each MergedData.mat file and calculates two different spectrograms. 
 %________________________________________________________________________________________________________________________
 %
-%   Inputs: //
+%   Inputs: List of MergedData.mat files.
 %
-%   Outputs: //
+%   Outputs: Saves a SpecData.mat file of the same name as MergedData containing the analysis.      
+%
+%   Last Revised: February 21st, 2019    
 %________________________________________________________________________________________________________________________
 
 for a = 1:size(mergedDataFiles, 1)

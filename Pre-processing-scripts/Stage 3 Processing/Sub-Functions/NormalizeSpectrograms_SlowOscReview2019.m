@@ -1,16 +1,18 @@
 function [SpecData] = NormalizeSpectrograms_SlowOscReview2019(specDataFiles, RestingBaselines)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
-% Ph.D. Candidate, Department of Bioengineering
-% The Pennsylvania State University
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: //
+%   Purpose: Normalizes each spectrogram by the resting baseline for that day.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs: //
+%   Inputs: List of spectrogram files, and the RestingBaselines struct that contains the time indeces for each rest file.
 %
-%   Outputs: //
+%   Outputs: A normalized 'S' field for each Spectrogram.
+%
+%   Last Revised: March 22nd, 2019    
 %________________________________________________________________________________________________________________________
 
 for a = 1:size(specDataFiles,1)

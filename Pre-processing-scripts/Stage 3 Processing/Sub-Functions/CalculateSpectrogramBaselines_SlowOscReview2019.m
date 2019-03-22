@@ -5,12 +5,13 @@ function [RestingBaselines] = CalculateSpectrogramBaselines_SlowOscReview2019(an
 % The Pennsylvania State University
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: //
+%   Purpose: Uses the resting time indeces to extract the average resting power in each frequency bin during periods of
+%            rest to normalize the spectrogram data.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs: //
+%   Inputs: animal ID, trialDuration of the session, list of the SpecData.mat files, and the RestingBaselines.mat struct.
 %
-%   Outputs: //
+%   Outputs: Updates to the RestingBaselines.mat structure containing a resting frequency-dependent power for each day.
 %________________________________________________________________________________________________________________________
 
 dsFs = 30;
@@ -40,9 +41,9 @@ for c = 1:length(restFileList)
     S1_data = restS1{c,1};
     S5_data = restS5{c,1};
     s1Length = size(S1_data,2);
-    s5Length = size(S5_data,2);                                  % Length of the data across time (number of samples)
-    binSize1 = ceil(s1Length/trialDuration_Sec);                              % Find the number of bins needed to divide this into 290 seconds
-    binSize5 = ceil(s5Length/trialDuration_Sec);                              % Find the number of bins needed to divide this into 290 seconds
+    s5Length = size(S5_data,2);                               
+    binSize1 = ceil(s1Length/trialDuration_Sec); 
+    binSize5 = ceil(s5Length/trialDuration_Sec);
     samplingDiff1 = dsFs/binSize1;
     samplingDiff5 = dsFs/binSize5;  
     S1_trialRest = [];

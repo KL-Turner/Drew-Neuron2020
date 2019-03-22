@@ -1,28 +1,21 @@
-function [UniqueDays, dayIndex, dayID] = GetUniqueDays(DateList)
-%___________________________________________________________________________________________________
-% Edited by Kevin L. Turner 
-% Ph.D. Candidate, Department of Bioengineering 
-% The Pennsylvania State University
+function [UniqueDays, dayIndex, dayID] = GetUniqueDays_SlowOscReview2019(DateList)
+%________________________________________________________________________________________________________________________
+% Edited by Kevin L. Turner
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
 %
-% Originally written by Aaron T. Winder
+% Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
+%________________________________________________________________________________________________________________________
 %
-%   Last Revised: August 9th, 2018
-%___________________________________________________________________________________________________
+%   Purpse: Takes a list of fileDates and determines how many unique individual days there are. 
+%________________________________________________________________________________________________________________________
 %
-%   Author: Aaron Winder
-%   Affiliation: Engineering Science and Mechanics, Penn State University
-%   https://github.com/awinde
+%   Inputs: A list of dates (YYMMDD)
 %
-%   DESCRIPTION: Identifies the unique entries of a list containing
-%   timestamp identifiers.
-%   
-%_______________________________________________________________
-%   PARAMETERS:             
-%                   DateList - [matrix] list of dates or filenames            
-%_______________________________________________________________
-%   RETURN:                     
-%                   UniqueDays - [cell array] list of session dates.                    
-%_______________________________________________________________
+%   Outputs: Number of unique days in strDay format as well as the index.
+%
+%   Last Revised: March 22nd, 2019
+%________________________________________________________________________________________________________________________
 
 if iscellstr(DateList)
     temp = cell2mat(DateList);

@@ -1,32 +1,23 @@
-function [day_inds,day_logic] = GetDayInds(DateList,Ind_Day)
-%___________________________________________________________________________________________________
-% Edited by Kevin L. Turner 
-% Ph.D. Candidate, Department of Bioengineering 
-% The Pennsylvania State University
+function [day_inds,day_logic] = GetDayInds_SlowOscReview2019(DateList,Ind_Day)
+%________________________________________________________________________________________________________________________
+% Edited by Kevin L. Turner
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
 %
-% Originally written by Aaron T. Winder
+% Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
+%________________________________________________________________________________________________________________________
 %
-%   Last Revised: August 9th, 2018
-%___________________________________________________________________________________________________
+%   Purpse: Returns the indexes from the fileids list of a ChunkStruct field that match a given day.
+%________________________________________________________________________________________________________________________
 %
-%   Author: Aaron Winder
-%   Affiliation: Engineering Science and Mechanics, Penn State University
-%   https://github.com/awinde
+%   Inputs: DayList - [Array of cells, or matrix] fileid list from a field of the ChunkStruct.
 %
-%   DESCRIPTION: Returns the indexes from the fileids list of a ChunkStruct
-%           field that match a given day.
-%   
-%_______________________________________________________________
-%   PARAMETERS:             
-%                   DayList - [Array of cells, or matrix] fileid list from 
-%                   a field of the ChunkStruct.
+%           Ind_Day - [String] Day to match in format [yymmdd].
 %
-%                   Ind_Day - [String] Day to match in format [yymmdd].
-%_______________________________________________________________
-%   RETURN:                     
-%                   day_inds - [array] indexes of fileids entries that 
-%                   match the Ind_Day.
-%_______________________________________________________________
+%   Outputs: day_inds - [array] indexes of fileids entries that match the Ind_Day.
+%
+%   Last Revised: March 22nd, 2019
+%________________________________________________________________________________________________________________________
 
 %% Process the list for format
 % Tramspose into row vector if needed

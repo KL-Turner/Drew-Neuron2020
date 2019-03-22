@@ -1,8 +1,8 @@
 function [RestingBaselines] = CalculateRestingBaselines_SlowOscReview2019(animalID, targetMinutes, RestData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
-% Ph.D. Candidate, Department of Bioengineering
-% The Pennsylvania State University
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
 %   Purpose: This function finds the resting baseline for all fields of the RestData.mat structure, for each unique day
