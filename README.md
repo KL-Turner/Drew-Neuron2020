@@ -8,15 +8,26 @@ Data was acquired simultaneously from MScan (Two photon data, neural data, force
 
 Stage One Processing
 
-    Extract the whisker angle, force sensor data, and notes from the camera's binary file and the LabVIEW TDMS file. This creates a '*_LabVIEW.mat' structure corresponding to the date/time of the imaging.
+    Extract the whisker angle, force sensor data, and notes from the camera's binary file and the LabVIEW TDMS files. Create a '*_LabVIEW.mat' structure corresponding to the date/time of the imaging.
     
     For more information on whisker tracking, see https://github.com/KL-Turner/Whisker-Tracking
 
+| ![](https://github.com/KL-Turner/Slow-Oscillations-Review/blob/master/Images/2P_Whiskers.PNG) |
+|:--:|
+| *Figure 1: Graphical User Input (GUI) front interface* |
+
 Stage Two Processing
 
-    Extract the notes from a MS Excel sheet containing the 5 minute session's information. See ''
+    Extract the notes from a MS Excel sheet containing the 5 minute session's information.
+
+| ![](https://github.com/KL-Turner/Slow-Oscillations-Review/blob/master/Images/excelFileExample.PNG) |
+|:--:|
+| *Figure 1: Graphical User Input (GUI) front interface* |
 
     Analyze the diameter changes from the two-photon TIFF stack by drawing the region of interest and axis along the vessel for the radon transform/FWHD.
+| ![](    https://github.com/KL-Turner/Slow-Oscillations-Review/blob/master/Images/vesseROIexample.PNG) |
+|:--:|
+| *Figure 1: Graphical User Input (GUI) front interface* |
 
     Set the binarization threshold for the whisker acceleration and force sensor (movement).
 
