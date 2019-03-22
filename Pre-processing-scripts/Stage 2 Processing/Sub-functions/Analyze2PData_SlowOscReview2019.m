@@ -1,4 +1,4 @@
-function Analyze2PData(msExcel_File)
+function Analyze2PData_SlowOscReview2019(msExcel_File)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -7,12 +7,12 @@ function Analyze2PData(msExcel_File)
 % Adapted from code written by Dr. Patrick J. Drew: https://github.com/DrewLab
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: 
+%   Purpose: Draw the ROIs for vessel diameter analysis.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs: 
+%   Inputs: MS excel sheet
 %
-%   Outputs:
+%   Outputs: Saves an MScanData.mat structure that will contain the ROI information.
 %
 %   Last Revised: February 29th, 2019
 %________________________________________________________________________________________________________________________
@@ -38,21 +38,20 @@ for row = 2:size(alldata, 1)   % Loop through all rows of the excel sheet
     
     %% Vessel diameter calculation for movie surface vessels
     if strcmp(tempData.Notes.movieType, 'MS')
-        MscanData = DiamCalc_SurfaceVessel(tempData, [tempData.Notes.date '_' tempData.Notes.imageID]);
+        MscanData = DiamCalcSurfaceVessel_SlowOscReview2019(tempData, [tempData.Notes.date '_' tempData.Notes.imageID]);
         
     % Vessel diameter calculation for movie penetrating
-    elseif strcmp(tempData.Notes.movieType, 'MP')
-        MscanData = PA_boxDraw_new_soft(tempData, [tempData.Notes.date '_' tempData.Notes.imageID]);
+    % elseif strcmp(tempData.Notes.movieType, 'MP')
+        % MscanData = PA_boxDraw_new_soft(tempData, [tempData.Notes.date '_' tempData.Notes.imageID]);
         
     % Vessel diameter calculation for capillaries
-    elseif strcmp(tempData.Notes.movieType, 'C')
-        MscanData = Cap_linescan_new_soft(tempData, [tempData.Notes.date '_' tempData.Notes.imageID]);
+    % elseif strcmp(tempData.Notes.movieType, 'C')
+        % MscanData = Cap_linescan_new_soft(tempData, [tempData.Notes.date '_' tempData.Notes.imageID]);
     end
     
     % Save the RawData file for the current movie type
     disp(['File Created. Saving MscanData File ' num2str(row - 1) '...']); disp(' ')
     save([tempData.Notes.animalID '_' tempData.Notes.date '_' tempData.Notes.imageID '_MscanData'], 'MscanData')
-    close all
 end
 
 end

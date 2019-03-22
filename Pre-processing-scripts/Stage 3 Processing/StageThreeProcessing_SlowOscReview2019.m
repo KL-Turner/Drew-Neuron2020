@@ -37,8 +37,6 @@ load(mergedDataFiles(1,:), '-mat');
 trialDuration_Sec = MergedData.notes.trialDuration_Sec;
 dataTypes = {'vesselDiameter', 'deltaPower', 'thetaPower', 'alphaPower', 'betaPower', 'gammaPower', 'muaPower'};
 
-disp('Block [0] structs loaded.'); disp(' ')
-
 %% BLOCK PURPOSE: [1] Categorize data 
 disp('Analyzing Block [1] Categorizing behavioral data, adding flags to MergedData structures.'); disp(' ')
 for a = 1:size(mergedDataFiles, 1)

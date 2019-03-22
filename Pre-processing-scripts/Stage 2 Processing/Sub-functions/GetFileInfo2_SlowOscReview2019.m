@@ -7,12 +7,12 @@ function [animalID, fileDate, fileID, vesselID, imageID] = GetFileInfo2_SlowOscR
 % Adapted from code written by Dr. Aaron T. Winder: https://github.com/awinde
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: 
+%   Purpose: Extract the individual components of a file name.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs: 
+%   Inputs: Name of a file, particularly the MergedData or SpecData files.
 %
-%   Outputs:
+%   Outputs: Individual components based on their location with respect to the underscores.
 %
 %   Last Revised: February 29th, 2019
 %________________________________________________________________________________________________________________________

@@ -23,9 +23,7 @@
 clc;
 clear;
 disp('Analyzing Block [0] Preparing the workspace and loading variables.'); disp(' ')
-
 msExcelFile = uigetfile('*.xlsx');
-disp('Block [0] structs loaded.'); disp(' ')
 
 %% BLOCK PURPOSE: [1] Use ms Excel sheet to create MScanData.mat files with vessel information.
 disp('Analyzing Block [1] Pulling vessel notes from Excel sheet.'); disp(' ')

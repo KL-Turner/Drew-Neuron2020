@@ -1,6 +1,6 @@
-function  [bin_wwf] = BinarizeWhiskers_SlowOscReview2019(angl, fs, thresh1, thresh2)
+function [bin_wwf] = BinarizeWhiskers_SlowOscReview2019(angl, fs, thresh1, thresh2)
 %________________________________________________________________________________________________________________________
-% Written by Kevin L. Turner
+% Edited by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
 % https://github.com/KL-Turner
 %

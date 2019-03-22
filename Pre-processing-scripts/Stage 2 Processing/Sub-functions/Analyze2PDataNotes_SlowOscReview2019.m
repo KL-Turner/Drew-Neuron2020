@@ -1,6 +1,6 @@
 function Analyze2PDataNotes_SlowOscReview2019(msExcelFile)
 %________________________________________________________________________________________________________________________
-% Written by Kevin L. Turner
+% Edited by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
 % https://github.com/KL-Turner
 %

@@ -56,7 +56,7 @@ tempData.notes.header.timePerLine = 1/(tempData.notes.frameRate*str2num(tempData
 xFactor = micronsPerPixel/(str2num(tempData.notes.header.magnification(1:end - 1)));
 
 image = imread(imageID, 'TIFF', 'Index', 1);
-figure;
+vesROI = figure;
 imagesc(double(image))
 title([tempData.notes.animalID '_' tempData.notes.date '_' tempData.notes.imageID])
 colormap('gray');
@@ -98,6 +98,7 @@ tempData.notes.xFactor = xFactor;
 tempData.notes.vesselType = input('What is the type of this vessel? (A, V, PA, AV): ', 's'); disp(' ');
 tempData.notes.vesselOrder = input('What is the order of this vessel? (number): ', 's'); disp(' ')
 
+close(vesROI);
 MscanData = tempData;
 
 end
