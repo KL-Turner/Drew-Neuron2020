@@ -1,4 +1,4 @@
-function [S,f,Serr] = mtspectrumc_SlowOscReview2019(data,params)
+function [C,phi,S12,S1,S2,f,confC,phistd,Cerr]=coherencyc_SlowOscReview2019(data1,data2,params)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -9,16 +9,16 @@ function [S,f,Serr] = mtspectrumc_SlowOscReview2019(data,params)
 %   Last Opened: February 23rd, 2019
 %________________________________________________________________________________________________________________________
 %
-% Multi-taper spectrum - continuous process
+% Multi-taper coherency,cross-spectrum and individual spectra - continuous process
 %
 % Usage:
-%
-% [S,f,Serr]=mtspectrumc(data,params)
+% [C,phi,S12,S1,S2,f,confC,phistd,Cerr]=coherencyc(data1,data2,params)
 % Input: 
 % Note units have to be consistent. See chronux.m for more information.
-%       data (in form samples x channels/trials) -- required
+%       data1 (in form samples x trials) -- required
+%       data2 (in form samples x trials) -- required
 %       params: structure with fields tapers, pad, Fs, fpass, err, trialave
-%       -optional
+%       - optional
 %           tapers : precalculated tapers from dpss or in the one of the following
 %                    forms: 
 %                    (1) A numeric vector [TW K] where TW is the
@@ -49,29 +49,48 @@ function [S,f,Serr] = mtspectrumc_SlowOscReview2019(data,params)
 %                                   Default all frequencies between 0 and Fs/2
 %           err  (error calculation [1 p] - Theoretical error bars; [2 p] - Jackknife error bars
 %                                   [0 p] or 0 - no error bars) - optional. Default 0.
-%           trialave (average over trials/channels when 1, don't average when 0) - optional. Default 0
+%           trialave (average over trials when 1, don't average when 0) - optional. Default 0
 % Output:
-%       S       (spectrum in form frequency x channels/trials if trialave=0; 
-%               in the form frequency if trialave=1)
-%       f       (frequencies)
-%       Serr    (error bars) only for err(1)>=1
+%       C (magnitude of coherency - frequencies x trials if trialave=0; dimension frequencies if trialave=1)
+%       phi (phase of coherency - frequencies x trials if trialave=0; dimension frequencies if trialave=1)
+%       S12 (cross spectrum -  frequencies x trials if trialave=0; dimension frequencies if trialave=1)
+%       S1 (spectrum 1 - frequencies x trials if trialave=0; dimension frequencies if trialave=1)
+%       S2 (spectrum 2 - frequencies x trials if trialave=0; dimension frequencies if trialave=1)
+%       f (frequencies)
+%       confC (confidence level for C at 1-p %) - only for err(1)>=1
+%       phistd - theoretical/jackknife (depending on err(1)=1/err(1)=2) standard deviation for phi. 
+%                Note that phi + 2 phistd and phi - 2 phistd will give 95% confidence
+%                bands for phi - only for err(1)>=1 
+%       Cerr  (Jackknife error bars for C - use only for Jackknife - err(1)=2)
 
-if nargin < 1; error('Need data'); end;
-if nargin < 2; params=[]; end;
-[tapers,pad,Fs,fpass,err,trialave,params]=getparams_SlowOscReview2019(params);
-if nargout > 2 && err(1)==0; 
-%   Cannot compute error bars with err(1)=0. Change params and run again. 
-    error('When Serr is desired, err(1) has to be non-zero.');
+if nargin < 2; error('Need data1 and data2'); end;
+data1=change_row_to_column(data1);
+data2=change_row_to_column(data2);
+if nargin < 3; params=[]; end;
+[tapers,pad,Fs,fpass,err,trialave]=getparams_SlowOscReview2019(params);
+if nargout > 8 && err(1)~=2; 
+    error('Cerr computed only for Jackknife. Correct inputs and run again');
 end;
-data=change_row_to_column_SlowOscReview2019(data);
-N=size(data,1);
+if nargout > 6 && err(1)==0;
+%   Errors computed only if err(1) is nonzero. Need to change params and run again.
+    error('When errors are desired, err(1) has to be non-zero.');
+end;
+N=check_consistency_SlowOscReview2019(data1,data2);
 nfft=max(2^(nextpow2(N)+pad),N);
 [f,findx]=getfgrid_SlowOscReview2019(Fs,nfft,fpass); 
-tapers = dpsschk_SlowOscReview2019(tapers,N,Fs); % check tapers
-J=mtfftc_SlowOscReview2019(data,tapers,nfft,Fs);
-J=J(findx,:,:);
-S=squeeze(mean(conj(J).*J,2));
-if trialave; S=squeeze(mean(S,2));end;
-if nargout==3; 
-   Serr=specerr_SlowOscReview2019(S,J,err,trialave);
+tapers=dpsschk_SlowOscReview2019(tapers,N,Fs); % check tapers
+J1=mtfftc_SlowOscReview2019(data1,tapers,nfft,Fs);
+J2=mtfftc_SlowOscReview2019(data2,tapers,nfft,Fs);
+J1=J1(findx,:,:); J2=J2(findx,:,:);
+S12=squeeze(mean(conj(J1).*J2,2));
+S1=squeeze(mean(conj(J1).*J1,2));
+S2=squeeze(mean(conj(J2).*J2,2));
+if trialave; S12=squeeze(mean(S12,2)); S1=squeeze(mean(S1,2)); S2=squeeze(mean(S2,2)); end;
+C12=S12./sqrt(S1.*S2);
+C=abs(C12); 
+phi=angle(C12);
+if nargout>=9; 
+     [confC,phistd,Cerr]=coherr_SlowOscReview2019(C,J1,J2,err,trialave);
+elseif nargout==8;
+     [confC,phistd]=coherr_SlowOscReview2019(C,J1,J2,err,trialave);
 end;

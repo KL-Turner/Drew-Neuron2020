@@ -52,7 +52,7 @@ for a = 1:size(mscanDataFiles,1)
         [MScanData.data.deltaPower, ~] = ProcessNeuro_SlowOscReview2019(MScanData, expectedLength, 'Delta', 'rawNeuralData');
         
         %% Downsample and binarize the force sensor.
-        trimmedForceM = MScanData.data.forceSensor(1:expectedLength);
+        trimmedForceM = MScanData.data.forceSensor(1:min(expectedLength, length(MScanData.data.forceSensor)));
         
         % Filter then downsample the Force Sensor waveform to desired frequency
         filtThreshold = 20;
@@ -94,7 +94,7 @@ for b = 1:size(labviewDataFiles,1)
     if LabVIEWData.notes.checklist.processData == false
         disp(['Analyzing LabVIEW analog signals and whisker angle for file number ' num2str(b) ' of ' num2str(size(labviewDataFiles, 1)) '...']); disp(' ');
         [animalID, hem, fileDate, fileID] = GetFileInfo_SlowOscReview2019(labviewDataFile);
-        strDay = ConvertDate(fileDate);
+        strDay = ConvertDate_SlowOscReview2019(fileDate);
         expectedLength = LabVIEWData.notes.trialDuration_Seconds*LabVIEWData.notes.analogSamplingRate_Hz;
 
         %% Patch and binarize the whisker angle and set the resting angle to zero degrees.
@@ -134,7 +134,7 @@ for b = 1:size(labviewDataFiles,1)
         LabVIEWData.data.binWhiskerAngle = binWhisk;
         
         %% Downsample and binarize the force sensor.
-        trimmedForceL = LabVIEWData.data.forceSensor(1:expectedLength);
+        trimmedForceL = LabVIEWData.data.forceSensor(1:min(expectedLength, length(LabVIEWData.data.forceSensor)));
         
         % Filter then downsample the Force Sensor waveform to desired frequency
         [z, p, k] = butter(filtOrder, filtThreshold/(LabVIEWData.notes.analogSamplingRate_Hz/2), 'low');

@@ -17,7 +17,7 @@ function [ComparisonData] = AnalyzeCoherence_SlowOscReview2019(animalID, Compari
 
 cd(animalID);
 p2Fs = 20;
-downSampledFs = 30;
+dsFs = 30;
 
 mergedDirectory = dir('*_MergedData.mat');
 mergedDataFiles = {mergedDirectory.name}';
@@ -27,7 +27,7 @@ mergedDataFiles = char(mergedDataFiles);
 vesselIDs = {};
 for a = 1:size(mergedDataFiles, 1)
     mergedDataFile = mergedDataFiles(a,:);
-    [~,~,~, vID] = GetFileInfo_2P(mergedDataFile);
+    [~,~,~, vID, ~] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
     vesselIDs{a,1} = vID;
 end
 
@@ -38,11 +38,11 @@ for b = 1:length(uniqueVesselIDs)
     d = 1;
     for c = 1:size(mergedDataFiles, 1)
         mergedDataFile = mergedDataFiles(c,:);
-        [~,~,~, mdID] = GetFileInfo_2P(mergedDataFile);
+        [~,~,~, mdID, ~] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
         if strcmp(uniqueVesselID, mdID) == true
             load(mergedDataFile);
-            uniqueVesselData{b,1}(:,d) = detrend(filtfilt(B, A, MergedData.Data.Vessel_Diameter(1:end - 2)), 'constant');
-            uniqueWhiskerData{b,1}(:,d) = detrend(abs(diff(resample(MergedData.Data.Whisker_Angle, p2Fs, downSampledFs), 2)), 'constant');
+            uniqueVesselData{b,1}(:,d) = detrend(filtfilt(B, A, MergedData.data.vesselDiameter(1:end - 2)), 'constant');
+            uniqueWhiskerData{b,1}(:,d) = detrend(abs(diff(resample(MergedData.data.whiskerAngle, p2Fs, dsFs), 2)), 'constant');
             d = d + 1;
         end
     end
@@ -57,7 +57,7 @@ params.trialave = 1;
 params.err = [2 0.05];
 
 for e = 1:length(uniqueVesselData)
-    [C, ~, ~, ~, ~, f, ~, ~, ~] = coherencyc(uniqueVesselData{e,1}, uniqueWhiskerData{e,1}, params);
+    [C, ~, ~, ~, ~, f, ~, ~, ~] = coherencyc_SlowOscReview2019(uniqueVesselData{e,1}, uniqueWhiskerData{e,1}, params);
     allC{e,1} = C;
     allf{e,1} = f;
 end

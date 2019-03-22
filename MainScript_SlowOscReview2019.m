@@ -5,87 +5,89 @@ function [] = MainScript_SlowOscReview2019()
 % https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: 
+%   Purpose: Generates KLT's main and supplemental figs for the 2019 Slow Oscillations review paper. 
 %
-%           Scripts used to pre-process the original data are located in the folder "Pre-processing-scripts". Functions
-%                   that are used in both the analysis and pre-processing are located in the analysis folder.
+%            Scripts used to pre-process the original data are located in the folder "Pre-processing-scripts".
+%            Functions that are used in both the analysis and pre-processing are located in the analysis folder.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs:
+%   Inputs: No inputs - this function is intended to be run independently.
 %
-%   Outputs:
+%   Outputs: Each main and supplmental figure with its corresponding number and letter in the paper.
 %
-%   Last Revised: March 20th, 2019
+%   Last Revised: March 22nd, 2019
 %________________________________________________________________________________________________________________________
 
-GT_multiWaitbar('Analyzing whisking-evoked data', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
-GT_multiWaitbar('Analyzing cross correlation', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
-GT_multiWaitbar('Analyzing coherence', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
-GT_multiWaitbar('Analyzing power spectra', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
-[ComparisonData] = AnalyzeData;
-multiWaitbar_SlowOscReview2019('CloseAll');
-
-FigOne_SlowOscReview2019(ComparisonData)
-
-FigTwo_SlowOscReview2019(ComparisonData)
-
-FigThree_SlowOscReview2019(ComparisonData)
-
-SuppFigOne_SlowOscReview2019(ComparisonData)
-
-SuppFigTwo_SlowOscReview2019(ComparisonData)
-
-SuppFigThree_SlowOscReview2019(ComparisonData)
-
-end
-
-function [ComparisonData] = AnalyzeData()
-%% Control for mac/pc differences in filepathing
+%% Make sure the current directory is 'TurnerFigs-SlowOscReview2019' and that the MainScript/code repository is present.
 currentFolder = pwd;
 addpath(genpath(currentFolder));
 fileparts = strsplit(currentFolder, filesep);
 if ismac
-    rootfolder = fullfile(filesep, fileparts{1:end}, 'TurnerFigs-SlowOscReview2019');
+    rootfolder = fullfile(filesep, fileparts{1:end}, 'Processed Data');
 else
-    rootfolder = fullfile(fileparts{1:end}, 'TurnerFigs-SlowOscReview2019');
+    rootfolder = fullfile(fileparts{1:end}, 'Processed Data');
 end
 addpath(genpath(rootfolder))   % add root folder to Matlab's working directory
 
+%% Run data analysis. The progress bars will show the analysis progress.
+GT_multiWaitbar('Analyzing whisking-evoked data', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
+GT_multiWaitbar('Analyzing cross correlation', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
+GT_multiWaitbar('Analyzing coherence', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
+GT_multiWaitbar('Analyzing power spectra', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
+
+[ComparisonData] = AnalyzeData_SlowOscReview2019;
+multiWaitbar_SlowOscReview2019('CloseAll');
+
+%% Individual figures can be re-run after the analysis has completed.
+FigOne_SlowOscReview2019(ComparisonData)         % Avg. Evoked whisking responses
+FigTwo_SlowOscReview2019(ComparisonData)         % Avg. Cross-correlation
+FigThree_SlowOscReview2019(ComparisonData)       % Avg. Coherence
+FigFour_SlowOscReview2019(ComparisonData)        % Avg. Power Spectra
+SuppFigOne_SlowOscReview2019(ComparisonData)     % Individual Evoked whisking responses
+SuppFigTwo_SlowOscReview2019(ComparisonData)     % Individual Cross-correlation
+SuppFigThree_SlowOscReview2019(ComparisonData)   % Individual Coherence
+SuppFigFour_SlowOscReview2019(ComparisonData)    % Individual Power Spectra
+
+% To view individual summary figures, change the value of line 82 to false. You will then be prompted to manually select
+% any number of figures (CTL-A for all) inside any of the five folders. You can only do one animal at a time.
+
+end
+
+function [ComparisonData] = AnalyzeData_SlowOscReview2019()
 animalIDs = {'T72', 'T73', 'T74', 'T75', 'T76'};   % list of animal IDs
 ComparisonData = [];   % pre-allocate the results structure as empty
 
-%% BLOCK PURPOSE: [1]
-% for a = 1:length(animalIDs)
-%     [ComparisonData] = AnalyzeEvokedResponses_SlowOscReview2019(animalIDs{1,a}, ComparisonData);
-%     GT_multiWaitbar('Analyzing whisking-evoked data', a/length(animalIDs));
-% end
-%
-% %% BLOCK PURPOSE: [2]
-% for b = 1:length(animalIDs)
-%     [ComparisonData] = AnalyzeXCorr_SlowOscReview2019(animalIDs{1,b}, ComparisonData);
-%     GT_multiWaitbar('Analyzing cross correlation', b/length(animalIDs));
-% end
-%
-% %% BLOCK PURPOSE: [3]
-% for c = 1:length(animalIDs)
-%     [ComparisonData] = AnalyzeCoherence_SlowOscReview2019(animalIDs{1,c}, ComparisonData);
-%     GT_multiWaitbar('Analyzing coherence', c/length(animalIDs));
-% end
-%
-% %% BLOCK PURPOSE: [4]
-% for d = 1:length(animalIDs)
-%     [ComparisonData] = AnalyzePowerSpectrum_SlowOscReview2019(animalIDs{1,d}, ComparisonData);
-%     GT_multiWaitbar('Analyzing power spectra', d/length(animalIDs));
-% end
+%% BLOCK PURPOSE: [1] Analyze the whisking-evoked changes in vessel diameter and neural LFP.
+for a = 1:length(animalIDs)
+    [ComparisonData] = AnalyzeEvokedResponses_SlowOscReview2019(animalIDs{1,a}, ComparisonData);
+    GT_multiWaitbar('Analyzing whisking-evoked data', a/length(animalIDs));
+end
 
-%% BLOCK PURPOSE: [5]
-selectFigs = true;
+%% BLOCK PURPOSE: [2] Analyze the cross-correlation between abs(whisker acceleration) and vessel diameter.
+for b = 1:length(animalIDs)
+    [ComparisonData] = AnalyzeXCorr_SlowOscReview2019(animalIDs{1,b}, ComparisonData);
+    GT_multiWaitbar('Analyzing cross correlation', b/length(animalIDs));
+end
+
+%% BLOCK PURPOSE: [3] Analyze the spectral coherence between abs(whisker acceleration) and vessel diameter.
+for c = 1:length(animalIDs)
+    [ComparisonData] = AnalyzeCoherence_SlowOscReview2019(animalIDs{1,c}, ComparisonData);
+    GT_multiWaitbar('Analyzing coherence', c/length(animalIDs));
+end
+
+%% BLOCK PURPOSE: [4] Analyze the spectral power of abs(whisker acceleration) and vessel diameter.
+for d = 1:length(animalIDs)
+    [ComparisonData] = AnalyzePowerSpectrum_SlowOscReview2019(animalIDs{1,d}, ComparisonData);
+    GT_multiWaitbar('Analyzing power spectra', d/length(animalIDs));
+end
+
+%% BLOCK PURPOSE: [5] Create single trial summary figures. selectFigs = false displays the one used for representative example.
+selectFigs = False;   % set to true to manually select other figure(s).
 GenerateSingleFigures_SlowOscReview2019(selectFigs)
 
 end
 
 function [] = GenerateSingleFigures_SlowOscReview2019(selectFigs)
-
 if selectFigs == true
     [fileNames, path] = uigetfile('*_MergedData.mat', 'MultiSelect', 'on');
     cd(path)
@@ -93,13 +95,14 @@ else
     fileNames = '';
 end
 
+% Load the RestingBaselines structure from this animal
 baselineDirectory = dir('*_RestingBaselines.mat');
 baselineDataFile = {baselineDirectory.name}';
 baselineDataFile = char(baselineDataFile);
 load(baselineDataFile, '-mat')
 
 for a = 1:length(fileNames)
-    
+    % Control for the case that a single file is selected vs. multiple files
     if iscell(fileNames) == 1
         indFile = fileNames{1,a};
     else
@@ -133,8 +136,8 @@ for a = 1:length(fileNames)
     F = SpecData.fiveSec.F;
     
     %% Yvals for behavior Indices
-    whisking_YVals = 1.10*max(filtVesselDiameter)*ones(size(binWhiskers));
-    force_YVals = 1.20*max(filtVesselDiameter)*ones(size(binForce));
+    whisking_YVals = 1.10*max(detrend(filtVesselDiameter, 'constant'))*ones(size(binWhiskers));
+    force_YVals = 1.20*max(detrend(filtVesselDiameter, 'constant'))*ones(size(binForce));
     
     %% Figure
     figure;
@@ -150,9 +153,9 @@ for a = 1:length(fileNames)
     ylabel('Angle (deg)')
     legend('Force sensor', 'Whisker angle')
     xlim([0 MergedData.notes.trialDuration_Sec])
-    
+
     ax2 = subplot(4,1,2:3);
-    plot((1:length(filtVesselDiameter))/MergedData.notes.p2Fs, filtVesselDiameter, 'color', colors_SlowOscReview2019('dark candy apple red'))
+    plot((1:length(filtVesselDiameter))/MergedData.notes.p2Fs, detrend(filtVesselDiameter, 'constant'), 'color', colors_SlowOscReview2019('dark candy apple red'))
     hold on;
     whiskInds = binWhiskers.*whisking_YVals;
     forceInds = binForce.*force_YVals;

@@ -23,7 +23,7 @@ RestCriteria.Fieldname = {'durations'};
 RestCriteria.Comparison = {'gt'};
 RestCriteria.Value = {5};
 
-[restLogical] = FilterEvents(RestData.vesselDiameter, RestCriteria);   % RestData output is a logical
+[restLogical] = FilterEvents_SlowOscReview2019(RestData.vesselDiameter, RestCriteria);   % RestData output is a logical
 allRestFileIDs = RestData.vesselDiameter.fileIDs(restLogical, :);
 allRestDurations = RestData.vesselDiameter.durations(restLogical, :);
 allRestEventTimes = RestData.vesselDiameter.eventTimes(restLogical, :);
@@ -43,7 +43,7 @@ for a = 1:size(mergedDataFiles)
     allVesselIDs{a,1} = vesselID;
 end
 
-uniqueDates = GetUniqueDays(allFileDates);
+uniqueDates = GetUniqueDays_SlowOscReview2019(allFileDates);
 for b = 1:length(uniqueDates)
     uniqueDays{b, 1} = ConvertDate_SlowOscReview2019(uniqueDates{b, 1});
 end

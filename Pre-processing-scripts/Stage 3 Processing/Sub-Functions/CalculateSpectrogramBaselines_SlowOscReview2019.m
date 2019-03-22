@@ -37,7 +37,7 @@ end
 
 for c = 1:length(restFileList)
     fileID = restFileList{c,1};
-    strDay = ConvertDate(fileID(1:6));
+    strDay = ConvertDate_SlowOscReview2019(fileID(1:6));
     S1_data = restS1{c,1};
     S5_data = restS5{c,1};
     s1Length = size(S1_data,2);
@@ -79,7 +79,7 @@ for e = 1:length(uniqueDays)
     f = 1;
     for field = 1:length(fields)
         if strcmp(fields{field}(7:12), uniqueDays{e})
-            stringDay = ConvertDate(uniqueDays{e});
+            stringDay = ConvertDate_SlowOscReview2019(uniqueDays{e});
             S_avgs.oneSec.(stringDay){f, 1} = trialRestData.(fields{field}).oneSec.S_avg;
             S_avgs.fiveSec.(stringDay){f, 1} = trialRestData.(fields{field}).fiveSec.S_avg;
             f = f + 1;

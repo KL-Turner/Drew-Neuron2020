@@ -27,6 +27,10 @@ load(EventDataFile.name);
 RestingBaselinesFile = dir('*_RestingBaselines.mat');
 load(RestingBaselinesFile.name);
 
+specDirectory = dir('*_SpecData.mat');
+specDataFiles = {specDirectory.name}';
+specDataFiles = char(specDataFiles);
+
 %%
 whiskCriteria.Fieldname{1,1} = {'duration', 'duration', 'puffDistance'};
 whiskCriteria.Comparison{1,1} = {'gt','lt','gt'};
@@ -100,9 +104,11 @@ for w = 1:length(whiskFileIDs)
     for x = 1:length(sFiles)   % Loop through each non-unique file
         whiskFileID = sFiles{x, 1};
         % Load in Neural Data from rest period
-        for s = 1:length(SpectrogramData.FileIDs)
-            if strcmp(whiskFileID, SpectrogramData.FileIDs{s, 1})
-                whiskS_Data = SpectrogramData.OneSec.S_Norm{s, 1};  % S data for this specific file
+        for s = 1:size(specDataFiles,1)
+            [~, ~, specDataFileID, vesselID, imageID] = GetFileInfo2_SlowOscReview2019(specDataFiles(s,:));
+            if strcmp(whiskFileID, specDataFileID)
+                load([animalID '_' vesselID '_' specDataFileID '_' imageID '_SpecData.mat'], '-mat');
+                whiskS_Data = SpecData.oneSec.normS;  % S data for this specific file
             end
         end
         whiskSLength = size(whiskS_Data, 2);
@@ -110,7 +116,6 @@ for w = 1:length(whiskFileIDs)
         whiskSamplingDiff = p2Fs/whiskBinSize;
         
         % Find the start time and duration
-        whiskDuration = whiskBinSize*(offset+duration);
         startTime = floor(floor(sEventTimes(x,1)*p2Fs)/whiskSamplingDiff);
         if startTime == 0
             startTime = 1;
@@ -124,8 +129,8 @@ for w = 1:length(whiskFileIDs)
         end
         whiskZhold = cat(3, whiskZhold, whiskS_Vals);
     end
-    whiskT{w,1} = (SpectrogramData.OneSec.T{w,1}/whiskBinSize) - offset;
-    whiskF{w,1} = SpectrogramData.OneSec.F{w,1};
+    whiskT{w,1} = (SpecData.oneSec.T/whiskBinSize) - offset;
+    whiskF{w,1} = SpecData.oneSec.F;
     whiskZhold_all{w,1} = whiskZhold;
 end
 

@@ -18,7 +18,7 @@ function [procNeuro, neuroFs] = ProcessNeuro_SlowOscReview2019(MScanData, expect
 %________________________________________________________________________________________________________________________
 
 %% Thresholds and Neurtype switch
-trimmedNeuro = MScanData.data.(neuralFieldName)(1:expectedLength);
+trimmedNeuro = (1:min(expectedLength, length(MScanData.data.(neuralFieldName))));
 analogFs = MScanData.notes.analogSamplingRate;
 
 switch neurType

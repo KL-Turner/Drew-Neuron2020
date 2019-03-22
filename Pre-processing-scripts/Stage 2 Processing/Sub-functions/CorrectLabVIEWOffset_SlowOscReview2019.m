@@ -72,6 +72,38 @@ for a = 1:size(mscanDataFiles,1)
             binWhiskShift = horzcat(pad, LabVIEWData.data.binWhiskerAngle);
         end
         
+        corrOffset = figure;
+        ax1 = subplot(3,1,1);
+        plot((1:length(mscanForce))/dsFs, mscanForce, 'k')
+        hold on;
+        plot((1:length(labviewForce))/dsFs, labviewForce, 'r')
+        title({[animalID ' ' fileID ' ' imageID ' force sensor data'], 'Offset correction between MScan and LabVIEW DAQ'})
+        legend('Original MScan', 'Original LabVIEW')
+        ylabel('A.U.')
+        xlabel('Time (sec)')
+        set(gca, 'Ticklength', [0 0])
+        axis tight
+        
+        ax2 = subplot(3,1,2); %#ok<NASGU>
+        plot(analog_lags/dsFs, analog_r, 'k')
+        title('Cross Correlation between the two signals')
+        ylabel('Correlation (A.U.)')
+        xlabel('Lag (sec)')
+        set(gca, 'Ticklength', [0 0])
+        axis tight
+        
+        ax3 = subplot(3,1,3);
+        plot((1:length(mscanForce))/dsFs, mscanForce, 'k')
+        hold on;
+        plot((1:length(dsForceShift))/dsFs, dsForceShift, 'b')
+        title({'Shifted correction between MScan and LabVIEW DAQ', ['Offset value: ' num2str(offset) ' samples or ~' num2str(offset/dsFs) ' seconds']})
+        legend('Original MScan', 'Shifted LabVIEW')
+        ylabel('A.U.')
+        xlabel('Time (sec)')
+        set(gca, 'Ticklength', [0 0])
+        axis tight
+        linkaxes([ax1 ax3], 'x')
+        
         %% Apply correction to the data, and trim excess time
         frontCut = trimTime;
         endCut = trimTime;

@@ -15,7 +15,7 @@ function [ComparisonData] = AnalyzeXCorr_SlowOscReview2019(animalID, ComparisonD
 
 cd(animalID);
 p2Fs = 20;
-downSampledFs = 30;
+dsFs = 30;
 
 mergedDirectory = dir('*_MergedData.mat');
 mergedDataFiles = {mergedDirectory.name}';
@@ -25,7 +25,7 @@ mergedDataFiles = char(mergedDataFiles);
 vesselIDs = {};
 for a = 1:size(mergedDataFiles, 1)
     mergedDataFile = mergedDataFiles(a,:);
-    [~,~,~, vID] = GetFileInfo_2P(mergedDataFile);
+    [~,~,~, vID] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
     vesselIDs{a,1} = vID;
 end
 
@@ -39,8 +39,8 @@ for b = 1:length(uniqueVesselIDs)
         [~,~,~, mdID] = GetFileInfo_2P(mergedDataFile);
         if strcmp(uniqueVesselID, mdID) == true
             load(mergedDataFile);
-            uniqueVesselData{b,1}(:,d) = detrend(filtfilt(B, A, MergedData.Data.Vessel_Diameter(2:end - 1)), 'constant');
-            uniqueWhiskerData{b,1}(:,d) = detrend(abs(diff(resample(MergedData.Data.Whisker_Angle, p2Fs, downSampledFs), 2)), 'constant');
+            uniqueVesselData{b,1}(:,d) = detrend(filtfilt(B, A, MergedData.data.vesselDiameter(2:end - 1)), 'constant');
+            uniqueWhiskerData{b,1}(:,d) = detrend(abs(diff(resample(MergedData.data.whiskerAngle, p2Fs, dsFs), 2)), 'constant');
             d = d + 1;
         end
     end
