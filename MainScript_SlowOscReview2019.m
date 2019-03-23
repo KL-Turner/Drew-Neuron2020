@@ -39,14 +39,14 @@ GT_multiWaitbar('Analyzing power spectra', 0, 'Color', [0.720000 0.530000 0.0400
 multiWaitbar_SlowOscReview2019('CloseAll');
 
 %% Individual figures can be re-run after the analysis has completed.
-FigOne_SlowOscReview2019(ComparisonData)         % Avg. Evoked whisking responses
-FigTwo_SlowOscReview2019(ComparisonData)         % Avg. Cross-correlation
-FigThree_SlowOscReview2019(ComparisonData)       % Avg. Coherence
-FigFour_SlowOscReview2019(ComparisonData)        % Avg. Power Spectra
-SuppFigOne_SlowOscReview2019(ComparisonData)     % Individual Evoked whisking responses
-SuppFigTwo_SlowOscReview2019(ComparisonData)     % Individual Cross-correlation
-SuppFigThree_SlowOscReview2019(ComparisonData)   % Individual Coherence
-SuppFigFour_SlowOscReview2019(ComparisonData)    % Individual Power Spectra
+% FigOne_SlowOscReview2019(ComparisonData)         % Avg. Evoked whisking responses
+% FigTwo_SlowOscReview2019(ComparisonData)         % Avg. Cross-correlation
+% FigThree_SlowOscReview2019(ComparisonData)       % Avg. Coherence
+% FigFour_SlowOscReview2019(ComparisonData)        % Avg. Power Spectra
+% SuppFigOne_SlowOscReview2019(ComparisonData)     % Individual Evoked whisking responses
+% SuppFigTwo_SlowOscReview2019(ComparisonData)     % Individual Cross-correlation
+% SuppFigThree_SlowOscReview2019(ComparisonData)   % Individual Coherence
+% SuppFigFour_SlowOscReview2019(ComparisonData)    % Individual Power Spectra
 
 % To view individual summary figures, change the value of line 82 to false. You will then be prompted to manually select
 % any number of figures (CTL-A for all) inside any of the five folders. You can only do one animal at a time.
@@ -54,35 +54,35 @@ SuppFigFour_SlowOscReview2019(ComparisonData)    % Individual Power Spectra
 end
 
 function [ComparisonData] = AnalyzeData_SlowOscReview2019()
-animalIDs = {'T72', 'T73', 'T74', 'T75', 'T76'};   % list of animal IDs
-ComparisonData = [];   % pre-allocate the results structure as empty
-
-%% BLOCK PURPOSE: [1] Analyze the whisking-evoked changes in vessel diameter and neural LFP.
-for a = 1:length(animalIDs)
-    [ComparisonData] = AnalyzeEvokedResponses_SlowOscReview2019(animalIDs{1,a}, ComparisonData);
-    GT_multiWaitbar('Analyzing whisking-evoked data', a/length(animalIDs));
-end
-
-%% BLOCK PURPOSE: [2] Analyze the cross-correlation between abs(whisker acceleration) and vessel diameter.
-for b = 1:length(animalIDs)
-    [ComparisonData] = AnalyzeXCorr_SlowOscReview2019(animalIDs{1,b}, ComparisonData);
-    GT_multiWaitbar('Analyzing cross correlation', b/length(animalIDs));
-end
-
-%% BLOCK PURPOSE: [3] Analyze the spectral coherence between abs(whisker acceleration) and vessel diameter.
-for c = 1:length(animalIDs)
-    [ComparisonData] = AnalyzeCoherence_SlowOscReview2019(animalIDs{1,c}, ComparisonData);
-    GT_multiWaitbar('Analyzing coherence', c/length(animalIDs));
-end
-
-%% BLOCK PURPOSE: [4] Analyze the spectral power of abs(whisker acceleration) and vessel diameter.
-for d = 1:length(animalIDs)
-    [ComparisonData] = AnalyzePowerSpectrum_SlowOscReview2019(animalIDs{1,d}, ComparisonData);
-    GT_multiWaitbar('Analyzing power spectra', d/length(animalIDs));
-end
+% animalIDs = {'T72', 'T73', 'T74', 'T75', 'T76'};   % list of animal IDs
+% ComparisonData = [];   % pre-allocate the results structure as empty
+% 
+% %% BLOCK PURPOSE: [1] Analyze the whisking-evoked changes in vessel diameter and neural LFP.
+% for a = 1:length(animalIDs)
+%     [ComparisonData] = AnalyzeEvokedResponses_SlowOscReview2019(animalIDs{1,a}, ComparisonData);
+%     GT_multiWaitbar('Analyzing whisking-evoked data', a/length(animalIDs));
+% end
+% 
+% %% BLOCK PURPOSE: [2] Analyze the cross-correlation between abs(whisker acceleration) and vessel diameter.
+% for b = 1:length(animalIDs)
+%     [ComparisonData] = AnalyzeXCorr_SlowOscReview2019(animalIDs{1,b}, ComparisonData);
+%     GT_multiWaitbar('Analyzing cross correlation', b/length(animalIDs));
+% end
+% 
+% %% BLOCK PURPOSE: [3] Analyze the spectral coherence between abs(whisker acceleration) and vessel diameter.
+% for c = 1:length(animalIDs)
+%     [ComparisonData] = AnalyzeCoherence_SlowOscReview2019(animalIDs{1,c}, ComparisonData);
+%     GT_multiWaitbar('Analyzing coherence', c/length(animalIDs));
+% end
+% 
+% %% BLOCK PURPOSE: [4] Analyze the spectral power of abs(whisker acceleration) and vessel diameter.
+% for d = 1:length(animalIDs)
+%     [ComparisonData] = AnalyzePowerSpectrum_SlowOscReview2019(animalIDs{1,d}, ComparisonData);
+%     GT_multiWaitbar('Analyzing power spectra', d/length(animalIDs));
+% end
 
 %% BLOCK PURPOSE: [5] Create single trial summary figures. selectFigs = false displays the one used for representative example.
-selectFigs = False;   % set to true to manually select other figure(s).
+selectFigs = true;   % set to true to manually select other figure(s).
 GenerateSingleFigures_SlowOscReview2019(selectFigs)
 
 end
