@@ -41,7 +41,7 @@ for b = 1:length(uniqueVesselIDs)
     d = 1;
     for c = 1:size(mergedDataFiles, 1)
         mergedDataFile = mergedDataFiles(c,:);
-        [~,~,~, mdID,~] = GetFileInfo2_SlowOscReview2019P(mergedDataFile);
+        [~,~,~, mdID,~] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
         if strcmp(uniqueVesselID, mdID) == true
             load(mergedDataFile);
             % Detrend the filtered vessel diameter

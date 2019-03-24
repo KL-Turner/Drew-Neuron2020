@@ -26,7 +26,7 @@ for a = 1:length(animalIDs)
     animalID = animalIDs{a,1};
     for b = 1:length(ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{1,1})
         whiskDataC1(x,:) = ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{1,1}{b,1};
-        vID = join([string(animalID) string(ComparisonData.(animalID).WhiskEvokedAvgs.vesselIDs{1,1}{b,1})]);
+        vID = join([string(animalID) string(ComparisonData.(animalID).WhiskEvokedAvgs.vesselIDs{b,1})]);
         vIDs{x,1} = strrep(vID, ' ', '');
         x = x + 1;
     end
