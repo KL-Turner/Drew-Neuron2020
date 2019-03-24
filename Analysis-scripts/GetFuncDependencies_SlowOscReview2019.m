@@ -35,12 +35,12 @@ catch
     return
 end
 
-% Remove the first result, as it corresponds to the function itself.
-if size(fList, 2) == 1
-    fList = [];
-else
-    fList = fList(1, 2:end);
-end
+% % Remove the first result, as it corresponds to the function itself.
+% if size(fList, 2) == 1
+%     fList = [];
+% else
+%     fList = fList(1, 2:end);
+% end
 
 % Find the unique functions listed.
 uniqueFuncPaths = unique(fList);
