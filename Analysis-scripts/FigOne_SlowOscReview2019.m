@@ -17,146 +17,105 @@ function FigOne_SlowOscReview2019(ComparisonData)
 
 %%
 animalIDs = fields(ComparisonData);
+p2Fs = 20;
+leadTime = 4;
 x = 1;
 y = 1;
 z = 1;
-for t = 1:length(animalIDs)
-    for a = 1:length(ComparisonData.(animalID).Whisk).data{1,1})
-        whiskDataC1(x, :) = ComparisonData.Whisk.data{1,1}{a,1};
-        vesselID = join([string(animalID) string(ComparisonData.Whisk.vesselIDs{1,1}{a,1})]);
-        vIDs1{x,1} = strrep(vesselID, ' ', '');
+for a = 1:length(animalIDs)
+    animalID = animalIDs{a,1};
+    for b = 1:length(ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{1,1})
+        whiskDataC1(x,:) = ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{1,1}{b,1};
         x = x + 1;
     end
     
-    for b = 1:length(ComparisonData.Whisk.data{2,1})
-        whiskDataC2(y, :) = ComparisonData.Whisk.data{2,1}{b,1};
-        vesselID = join([string(animalID) string(ComparisonData.Whisk.vesselIDs{2,1}{b,1})]);
-        vIDs2{y,1} = strrep(vesselID, ' ', '');
+    for c = 1:length(ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{2,1})
+        whiskDataC2(y,:) = ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{2,1}{c,1};
         y = y + 1;
     end
     
-    for c = 1:length(ComparisonData.Whisk.data{3,1})
-        whiskDataC3(z,:) = ComparisonData.Whisk.data{3,1}{c,1};
-        vesselID = join([string(animalID) string(ComparisonData.Whisk.vesselIDs{3,1}{c,1})]);
-        vIDs3{z,1} = strrep(vesselID, ' ', '');
+    for d = 1:length(ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{3,1})
+        whiskDataC3(z,:) = ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{3,1}{d,1};
         z = z + 1;
     end
     
-    whiskLFPC1(:, :, t) = ComparisonData.Whisk.LFP.S{1,1};
-    whiskLFPC2(:, :, t) = ComparisonData.Whisk.LFP.S{2,1};
-    whiskLFPC3(:, :, t) = ComparisonData.Whisk.LFP.S{3,1};
+    whiskLFPC1(:,:,a) = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.S{1,1};
+    whiskLFPC2(:,:,a) = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.S{2,1};
+    whiskLFPC3(:,:,a) = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.S{3,1};
 end
-T = ComparisonData.Whisk.LFP.T;
-F = ComparisonData.Whisk.LFP.F;
+T = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.T{1,1};
+F = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.F{1,1};
 
-whiskData_C1 = mean(whiskDataC1, 1);
-whiskData_C2 = mean(whiskDataC2, 1);
-whiskData_C3 = mean(whiskDataC3, 1);
-whiskLFP_C1 = mean(whiskLFPC1, 3);
-whiskLFP_C2 = mean(whiskLFPC2, 3);
-whiskLFP_C3 = mean(whiskLFPC3, 3);
+whiskDataMeanC1 = mean(whiskDataC1,1);
+whiskDataMeanC2 = mean(whiskDataC2,1);
+whiskDataMeanC3 = mean(whiskDataC3,1);
 
-whiskSTD_C1 = std(whiskDataC1, 1, 1);
-whiskSTD_C2 = std(whiskDataC2, 1, 1);
-whiskSTD_C3 = std(whiskDataC3, 1, 1);
+whiskSTDC1 = std(whiskDataC1,1,1);
+whiskSTDC2 = std(whiskDataC2,1,1);
+whiskSTDC3 = std(whiskDataC3,1,1);
 
-T = ComparisonData.Whisk.LFP.T;
-F = ComparisonData.Whisk.LFP.F;
+whiskLFPMeanC1 = mean(whiskLFPC1,3);
+whiskLFPMeanC2 = mean(whiskLFPC2,3);
+whiskLFPMeanC3 = mean(whiskLFPC3,3);
 
 %%
-timeVec = ((1:length(whiskData_C1))/20) - 4;
-evokedAvgs = figure;
-ax1 = subplot(3,3,1);
-legendIDs = [];
-for x = 1:size(whiskDataC1, 1)
-    plot(timeVec, whiskDataC1(x,:));
-    vID = vIDs1{x,1};
-    hold on
-end
-title('Ind 0.5 to 2 seconds')
+timeVec = ((1:length(whiskDataMeanC1))/p2Fs) - leadTime;
+
+figure;
+ax1 = subplot(2,3,1);
+plot(timeVec, whiskDataMeanC1, 'k')
+hold on
+plot(timeVec, whiskDataMeanC1 + whiskSTDC1)
+plot(timeVec, whiskDataMeanC1 - whiskSTDC1)
+title('Mean 0.5 to 2')
 xlabel('Peri-whisk time (sec)')
 ylabel('\Delta Diameter (%)')
 
-ax2 = subplot(3,3,2);
-legendIDs = [];
-for y = 1:size(whiskDataC2, 1)
-    plot(timeVec, whiskDataC2(y,:));
-    vID = vIDs1{y,1};
-    hold on
-end
-title('Ind 2 to 5 seconds')
+ax2 = subplot(2,3,2);
+plot(timeVec, whiskDataMeanC2, 'k')
+hold on
+plot(timeVec, whiskDataMeanC2 + whiskSTDC2)
+plot(timeVec, whiskDataMeanC2 - whiskSTDC2)
+title('Mean 2 to 5')
 xlabel('Peri-whisk time (sec)')
 ylabel('\Delta Diameter (%)')
 
-ax3 = subplot(3,3,3);
-legendIDs = [];
-for z = 1:size(whiskDataC3, 1)
-    plot(timeVec, whiskDataC3(z,:));
-    vID = vIDs1{z,1};
-    legendIDs = [legendIDs vID];
-    hold on
-end
-title('Ind 5 to 10 seconds')
+ax3 = subplot(2,3,3);
+plot(timeVec, whiskDataMeanC3, 'k')
+hold on
+plot(timeVec, whiskDataMeanC3 + whiskSTDC3)
+plot(timeVec, whiskDataMeanC3 - whiskSTDC3)
+title('Mean 5 to 10')
 xlabel('Peri-whisk time (sec)')
 ylabel('\Delta Diameter (%)')
-legend(legendIDs)
 linkaxes([ax1 ax2 ax3], 'xy')
 
-%%
-ax4 = subplot(3,3,4);
-plot(timeVec, whiskData_C1, 'k')
-hold on
-plot(timeVec, whiskData_C1 + whiskSTD_C1)
-plot(timeVec, whiskData_C1 - whiskSTD_C1)
-title('Mean 0.5 to 2')
-xlabel('Peri-whisk time (sec)')
-ylabel('\Delta Diameter (%)')
-
-ax5 = subplot(3,3,5);
-plot(timeVec, whiskData_C2, 'k')
-hold on
-plot(timeVec, whiskData_C2 + whiskSTD_C2)
-plot(timeVec, whiskData_C2 - whiskSTD_C2)
-title('Mean 2 to 5')
-xlabel('Peri-whisk time (sec)')
-ylabel('\Delta Diameter (%)')
-
-ax6 = subplot(3,3,6);
-plot(timeVec, whiskData_C3, 'k')
-hold on
-plot(timeVec, whiskData_C3 + whiskSTD_C3)
-plot(timeVec, whiskData_C3 - whiskSTD_C3)
-title('Mean 5 to 10')
-xlabel('Peri-whisk time (sec)')
-ylabel('\Delta Diameter (%)')
-linkaxes([ax4 ax5 ax6], 'xy')
-
-%%
-subplot(3,3,7);
-imagesc(T,F,whiskLFP_C1);
+subplot(2,3,4);
+imagesc(T,F,whiskLFPMeanC1);
 axis xy
 caxis([-.5 0.75])
 ylim([1 100])
-title('Mean 0.5 to 2')
+title('LFP 0.5 to 2 seconds')
 ylabel('Frequency (Hz)')
 xlabel('Peri-whisk time (sec)')
 
-subplot(3,3,8);
-imagesc(T,F,whiskLFP_C2);
+subplot(2,3,5);
+imagesc(T,F,whiskLFPMeanC2);
 axis xy
 caxis([-.5 0.75])
 ylim([1 100])
-title('Mean 2 to 5')
+title('LFP 2 to 5 seconds')
 ylabel('Frequency (Hz)')
 xlabel('Peri-whisk time (sec)')
 
-subplot(3,3,9);
-imagesc(T,F,whiskLFP_C3);
+subplot(2,3,6);
+imagesc(T,F,whiskLFPMeanC3);
 axis xy
 caxis([-.5 0.75])
 ylim([1 100])
-title('Mean 5 to 10')
+title('LFP 5 to 10 seconds')
 ylabel('Frequency (Hz)')
 xlabel('Peri-whisk time (sec)')
+pause(1)
 
 end

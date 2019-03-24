@@ -16,38 +16,23 @@ function SuppFigThree_SlowOscReview2019(ComparisonData)
 %________________________________________________________________________________________________________________________
 
 %%
-whiskAnimalIDs = {'T72', 'T73', 'T74', 'T75', 'T76'};
+animalIDs = fields(ComparisonData);
 x = 1;
-for a = 1:length(whiskAnimalIDs)
-    animalID = whiskAnimalIDs{a};
-    cd(['I:\' animalID '\Combined Imaging\']);
-    load([animalID '_ComparisonData.mat']);
-  
-    for b = 1:length(ComparisonData.WhiskVessel_Coherence.C)
-        coherenceData(x, :) = ComparisonData.WhiskVessel_Coherence.C{b,1};
-        vIDs{x,1} =  ComparisonData.Vessel_PowerSpec.vesselIDs{b,1};
+for a = 1:length(animalIDs)
+    animalID = animalIDs{a,1};
+    for b = 1:length(ComparisonData.(animalID).WhiskVessel_Coherence.C)
+        coherenceData(x,:) = ComparisonData.(animalID).WhiskVessel_Coherence.C{b,1};
+        vID = join([string(animalID) string(ComparisonData.(animalID).WhiskVessel_Coherence.vesselIDs{b,1})]);
+        vIDs{x,1} = strrep(vID, ' ', '');
         x = x + 1;
     end 
 end
 
-f = ComparisonData.WhiskVessel_Coherence.f{1,1};
-coherenceMean = mean(coherenceData, 1);
-coherenceSTD = std(coherenceData, 1, 1);
+f = ComparisonData.(animalID).WhiskVessel_Coherence.f{1,1};
 
 %%
-cohAvgs = figure;
-ax1 = subplot(1,2,1);
-plot(f, coherenceMean, 'k')
-hold on
-plot(f, coherenceMean + coherenceSTD)
-plot(f, coherenceMean - coherenceSTD)
-title('Mean coherence Abs(whiskAccel) vs. vessel diameter')
-xlabel('Frequency (Hz)')
-ylabel('Coherence')
-xlim([0 0.5])
-
-ax2 = subplot(1,2,2);
-for c = 1:size(coherenceData, 1)
+figure;
+for c = 1:size(coherenceData,1)
     plot(f, coherenceData(c,:));
     hold on
 end
@@ -56,6 +41,6 @@ xlabel('Frequency (Hz)')
 ylabel('Coherence')
 legend(vIDs)
 xlim([0 0.5])
-linkaxes([ax1 ax2], 'xy')
+pause(1)
 
 end

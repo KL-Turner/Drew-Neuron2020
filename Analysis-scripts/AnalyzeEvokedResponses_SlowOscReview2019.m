@@ -139,11 +139,38 @@ for a = 1:length(whiskZhold_all)
 end
 
 %%
+for a = 1:length(uniqueVesselIDs)
+    uvID = uniqueVesselIDs{a,1};
+    t = 1;
+    for b = 1:size(specDataFiles,1)
+        [~,~,~,vID,~] = GetFileInfo2_SlowOscReview2019(specDataFiles(b,:));
+        if strcmp(uvID, vID)
+            timePerVessel{a,1} = t*trialDuration;
+            t = t+1;
+        end
+    end
+    vesselBaselines = [];
+    timePerVessel{a,1} = timePerVessel{a,1}/60;
+    fieldnames = fields(RestingBaselines.(uvID));
+    for c = 1:length(fieldnames)
+        fieldname = fieldnames{c,1};
+        if ~isnan(RestingBaselines.(uvID).(fieldname).vesselDiameter.baseLine)
+            vesselBaselines = [vesselBaselines RestingBaselines.(uvID).(fieldname).vesselDiameter.baseLine];
+        end
+    end
+    vBaselines{a,1} = mean(vesselBaselines);
+end
+tblVals.vesselIDs = uniqueVesselIDs;
+tblVals.timePerVessel = timePerVessel;
+tblVals.baselines = vBaselines;
+
+%%
 ComparisonData.(animalID).WhiskEvokedAvgs.vesselData = whiskCritMeans.data;
 ComparisonData.(animalID).WhiskEvokedAvgs.vesselIDs = vesselIDs;
 ComparisonData.(animalID).WhiskEvokedAvgs.LFP.T = whiskT;
 ComparisonData.(animalID).WhiskEvokedAvgs.LFP.F = whiskF;
 ComparisonData.(animalID).WhiskEvokedAvgs.LFP.S = whiskS;
+ComparisonData.(animalID).tblVals = tblVals;
 cd ..
 
 end
