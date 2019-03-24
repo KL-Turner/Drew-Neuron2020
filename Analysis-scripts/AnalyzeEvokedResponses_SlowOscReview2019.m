@@ -52,7 +52,7 @@ for x = 1:length(whiskCriteria.Fieldname)
     criteria.Fieldname = whiskCriteria.Fieldname{x,1};
     criteria.Comparison = whiskCriteria.Comparison{x,1};
     criteria.Value = whiskCriteria.Value{x,1};
-    whiskFilter = FilterEvents(EventData.vesselDiameter.whisk, criteria);
+    whiskFilter = FilterEvents_SlowOscReview2019(EventData.vesselDiameter.whisk, criteria);
     [tempWhiskData] = EventData.vesselDiameter.whisk.data(whiskFilter, :);
     whiskData{x,1} = tempWhiskData;
     [tempWhiskVesselIDs] = EventData.vesselDiameter.whisk.vesselIDs(whiskFilter, :);
@@ -74,7 +74,7 @@ for x = 1:length(whiskData)
             vesselID = whiskVesselIDs{x,1}{z,1};
             if strcmp(uniqueVesselID, vesselID)
                 fileID = whiskFileIDs{x,1}{z,1};
-                strDay = ConvertDate(fileID(1:6));
+                strDay = ConvertDate_SlowOscReview2019(fileID(1:6));
                 vesselDiam = whiskData{x,1}(z,:);
                 normVesselDiam = (vesselDiam - RestingBaselines.(uniqueVesselID).(strDay).vesselDiameter.baseLine)./(RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine);
                 filtVesselDiam = sgolayfilt(normVesselDiam, 3, 17)*100;

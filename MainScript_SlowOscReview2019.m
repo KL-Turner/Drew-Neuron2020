@@ -155,7 +155,7 @@ for a = 1:length(fileNames)
         disp(['Analyzing single trial figure ' num2str(a) ' of ' num2str(size(fileNames,2)) '...']); disp(' ');
     end
     [animalID, fileDate, fileID, vesselID, imageID] = GetFileInfo2_SlowOscReview2019(indFile);
-    strDay = ConvertDate(fileDate);
+    strDay = ConvertDate_SlowOscReview2019(fileDate);
     
     %% BLOCK PURPOSE: Filter the whisker angle and identify the solenoid timing and location.
     % Setup butterworth filter coefficients for a 10 Hz lowpass based on the sampling rate (150 Hz).

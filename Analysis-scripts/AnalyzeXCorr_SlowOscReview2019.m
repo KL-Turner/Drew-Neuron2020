@@ -36,7 +36,7 @@ for b = 1:length(uniqueVesselIDs)
     d = 1;
     for c = 1:size(mergedDataFiles, 1)
         mergedDataFile = mergedDataFiles(c,:);
-        [~,~,~, mdID] = GetFileInfo_2P(mergedDataFile);
+        [~,~,~, mdID,~] = GetFileInfo_SlowOscReview2019P(mergedDataFile);
         if strcmp(uniqueVesselID, mdID) == true
             load(mergedDataFile);
             uniqueVesselData{b,1}(:,d) = detrend(filtfilt(B, A, MergedData.data.vesselDiameter(2:end - 1)), 'constant');

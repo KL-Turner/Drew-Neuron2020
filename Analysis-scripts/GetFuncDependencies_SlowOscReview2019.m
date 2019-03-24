@@ -60,7 +60,7 @@ if a == length(functionNames)
     for b = 1:length(functionList.names)
         tableVals{b,1} = sortrows(horzcat(functionList.names{b,1}, functionList.paths{b,1}));
         fileNames{b,1} = tableVals{b,1}(:,1);
-        filePaths{b,1} = tableVals{b,1}(:,1);
+        filePaths{b,1} = tableVals{b,1}(:,2);
         fileNames{b,1} = vertcat(functionNames{1,b}, {''}, fileNames{b,1}, {''});
         filePaths{b,1} = vertcat({''}, {''}, filePaths{b,1}, {''});
         allFileNames = vertcat(allFileNames, fileNames{b,1});

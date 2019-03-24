@@ -64,8 +64,8 @@ function [C,phi,S12,S1,S2,f,confC,phistd,Cerr]=coherencyc_SlowOscReview2019(data
 %       Cerr  (Jackknife error bars for C - use only for Jackknife - err(1)=2)
 
 if nargin < 2; error('Need data1 and data2'); end;
-data1=change_row_to_column(data1);
-data2=change_row_to_column(data2);
+data1=change_row_to_column_SlowOscReview2019(data1);
+data2=change_row_to_column_SlowOscReview2019(data2);
 if nargin < 3; params=[]; end;
 [tapers,pad,Fs,fpass,err,trialave]=getparams_SlowOscReview2019(params);
 if nargout > 8 && err(1)~=2; 
