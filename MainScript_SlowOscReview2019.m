@@ -119,7 +119,7 @@ if strcmp(answer, 'yes')
     save('ComparisonData.mat', 'ComparisonData')
 end
 
-disp('Loading analysis results and generating figures...'); disp('')
+disp('Loading analysis results and generating figures...'); disp(' ')
 
 end
 
@@ -234,5 +234,6 @@ for a = 1:length(fileNames)
     xlim([0 MergedData.notes.trialDuration_Sec])
     pause(1)
 end
+cd ..
 
 end
