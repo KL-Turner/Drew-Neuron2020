@@ -5,7 +5,7 @@ function SuppFigFour_SlowOscReview2019(ComparisonData)
 % https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: 
+%   Purpose:
 %________________________________________________________________________________________________________________________
 %
 %   Inputs: 
@@ -28,7 +28,6 @@ for a = 1:length(animalIDs)
     end 
     powerspecWhiskData(a,:) = ComparisonData.(animalID).Whisk_PowerSpec.S;
 end
-
 vf = ComparisonData.(animalID).Vessel_PowerSpec.f{1,1};
 wf = ComparisonData.(animalID).Whisk_PowerSpec.f;
 

@@ -42,10 +42,6 @@ for a = 1:length(animalIDs)
     end
 end
 
-whiskDataMeanC1 = mean(whiskDataC1,1);
-whiskDataMeanC2 = mean(whiskDataC2,1);
-whiskDataMeanC3 = mean(whiskDataC3,1);
-
 %%
 timeVec = ((1:length(whiskDataC1))/p2Fs) - leadTime;
 figure;

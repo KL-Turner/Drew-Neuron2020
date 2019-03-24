@@ -33,6 +33,7 @@ end
 % Add root folder to Matlab's working directory.
 addpath(genpath(rootfolder))
 
+% Verify that the User is in the correct working directory. Toss an error msg & end the function if not.
 if ~strcmp(fileparts(end),'Kleinfeld_Review2019_Turner_ProcessedData')
     message = 'The current folder does not appear to be Kleinfeld_Review2019_Turner_ProcessedData, please cd to the correct folder and re-run';
     title = 'Incorrect Directory';
@@ -40,8 +41,9 @@ if ~strcmp(fileparts(end),'Kleinfeld_Review2019_Turner_ProcessedData')
     return
 end
 
-%% Run data analysis. The progress bars will show the analysis progress.
+%% Run the data analysis. The progress bars will show the analysis progress.
 dataSummary = dir('ComparisonData.mat');
+% If the analysis structure has already been created, load it and skip the analysis.
 if ~isempty(dataSummary)
     load(dataSummary.name);
     disp('Loading analysis results and re-generating figures...'); disp('')
@@ -50,7 +52,6 @@ else
     multiWaitbar_SlowOscReview2019('Analyzing cross correlation', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
     multiWaitbar_SlowOscReview2019('Analyzing coherence', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
     multiWaitbar_SlowOscReview2019('Analyzing power spectra', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
-    
     % Run analysis and output a structure containing all the analyzed data.
     [ComparisonData] = AnalyzeData_SlowOscReview2019;
     multiWaitbar_SlowOscReview2019('CloseAll');
@@ -137,6 +138,7 @@ baselineDataFile = {baselineDirectory.name}';
 baselineDataFile = char(baselineDataFile);
 load(baselineDataFile, '-mat')
 
+% Control for the case that a single file is selected vs. multiple files
 if iscell(fileNames) == 0
     fileName = fileNames;
     fileNames = 1;
@@ -150,6 +152,7 @@ for a = 1:length(fileNames)
         indFile = fileName;
     end
     
+    % Load specific file and pull relevant file information for normalization and figure labels
     load(indFile, '-mat');
     if length(fileNames) > 1
         disp(['Analyzing single trial figure ' num2str(a) ' of ' num2str(size(fileNames,2)) '...']); disp(' ');
@@ -158,7 +161,7 @@ for a = 1:length(fileNames)
     strDay = ConvertDate_SlowOscReview2019(fileDate);
     
     %% BLOCK PURPOSE: Filter the whisker angle and identify the solenoid timing and location.
-    % Setup butterworth filter coefficients for a 10 Hz lowpass based on the sampling rate (150 Hz).
+    % Setup butterworth filter coefficients for a 10 Hz lowpass based on the sampling rate (30 Hz).
     [B, A] = butter(4, 10/(MergedData.notes.dsFs/2), 'low');
     filteredWhiskerAngle = filtfilt(B, A, MergedData.data.whiskerAngle);
     filtForceSensor = filtfilt(B, A, MergedData.data.forceSensorM);
@@ -166,12 +169,13 @@ for a = 1:length(fileNames)
     binForce = MergedData.data.binForceSensorM;
     
     %% CBV data - normalize and then lowpass filer
+    % Setup butterworth filter coefficients for a 1 Hz lowpass based on the sampling rate (20 Hz).
+    [D, C] = butter(4, 1/(MergedData.notes.p2Fs/2), 'low');
     vesselDiameter = MergedData.data.vesselDiameter;
     normVesselDiameter = (vesselDiameter - RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine)./(RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine);
-    [D, C] = butter(4, 1/(MergedData.notes.p2Fs/2), 'low');
     filtVesselDiameter = (filtfilt(D, C, normVesselDiameter))*100;
     
-    %% Neural spectrograms
+    %% Normalized neural spectrogram
     specDataFile = [animalID '_' vesselID '_' fileID '_' imageID '_SpecData.mat'];
     load(specDataFile, '-mat');
     normS = SpecData.fiveSec.normS;
@@ -189,8 +193,7 @@ for a = 1:length(fileNames)
     title({[animalID ' Two-photon behavioral characterization and vessel ' vesselID ' diameter changes for ' fileID], 'Force sensor and whisker angle'})
     xlabel('Time (sec)')
     ylabel('Force Sensor (Volts)')
-    xlim([0 MergedData.notes.trialDuration_Sec])
-    
+    xlim([0 MergedData.notes.trialDuration_Sec])  
     yyaxis right
     plot((1:length(filteredWhiskerAngle))/MergedData.notes.dsFs, -filteredWhiskerAngle, 'color', colors_SlowOscReview2019('ash grey'))
     ylabel('Angle (deg)')

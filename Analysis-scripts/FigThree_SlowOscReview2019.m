@@ -25,7 +25,6 @@ for a = 1:length(animalIDs)
         x = x + 1;
     end 
 end
-
 f = ComparisonData.(animalID).WhiskVessel_Coherence.f{1,1};
 coherenceMean = mean(coherenceData, 1);
 coherenceSTD = std(coherenceData, 1, 1);

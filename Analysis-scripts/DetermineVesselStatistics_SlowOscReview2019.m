@@ -1,20 +1,24 @@
 function DetermineVesselStatistics_SlowOscReview2019(ComparisonData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
-% Ph.D. Candidate, Department of Bioengineering
-% The Pennsylvania State University
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
-%   Purpose:
+%   Purpose: Use the results structure to display how many minutes of time were used in the previous analysis for
+%            each unique vessel.
 %________________________________________________________________________________________________________________________
 %
-%   Inputs:
+%   Inputs: ComparisonData.mat results structure
 %
-%   Outputs:
+%   Outputs: Figure displaying the results in a table.
+%
+%   Last Revised: March 23rd, 2019
 %________________________________________________________________________________________________________________________
 
 animalIDs = fields(ComparisonData);
 x = 1;
+% Loop through each animal and pull the results that were calculated in AnalyzeEvokedResponses
 for a = 1:length(animalIDs)
     animalID = animalIDs{a};  
     for b = 1:length(ComparisonData.(animalID).tblVals.vesselIDs)
@@ -25,7 +29,7 @@ for a = 1:length(animalIDs)
         x = x + 1;
     end
 end
-
+% Table
 T = table(animal, vesselID, baselineDiam, minutesPerVessel, 'VariableNames', {'Animal_ID', 'Vessel_ID', ...
     'Baseline_diameter_um', 'Total_minutes_per_Vessel'});
 figure('Name', 'Individual vessel imaging information', 'NumberTitle', 'off')

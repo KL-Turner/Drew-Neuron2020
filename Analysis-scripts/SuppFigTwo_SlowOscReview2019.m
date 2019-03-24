@@ -15,7 +15,6 @@ function SuppFigTwo_SlowOscReview2019(ComparisonData)
 %   Last Revised: March 22nd, 2019
 %________________________________________________________________________________________________________________________
 
-
 %%
 animalIDs = fields(ComparisonData);
 x = 1;
@@ -28,7 +27,6 @@ for a = 1:length(animalIDs)
         x = x + 1;
     end 
 end
-
 lags = ComparisonData.(animalID).WhiskVessel_XCorr.lags;
 
 %%

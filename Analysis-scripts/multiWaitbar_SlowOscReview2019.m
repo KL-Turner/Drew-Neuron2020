@@ -1,4 +1,14 @@
 function cancel = multiWaitbar_SlowOscReview2019( label, varargin )
+%________________________________________________________________________________________________________________________
+% Utilized in analysis by Kevin L. Turner
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
+%
+% Removed the estimated time remaining feature, as it was very inaccurate.
+%
+%   Last Edited: March 23rd, 2019
+%________________________________________________________________________________________________________________________
+%
 %multiWaitbar: add, remove or update an entry on the multi waitbar
 %
 %   multiWaitbar(LABEL,VALUE) adds a waitbar for the specified label, or

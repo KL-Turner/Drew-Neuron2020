@@ -26,11 +26,9 @@ for a = 1:length(animalIDs)
     end 
     powerspecWhiskData(a,:) = ComparisonData.(animalID).Whisk_PowerSpec.S;
 end
-
 vf = ComparisonData.(animalID).Vessel_PowerSpec.f{1,1};
 powerspecVesselMean = mean(powerspecVesselData,1);
 powerspecVesselSTD = std(powerspecVesselData,1,1);
-
 wf = ComparisonData.(animalID).Whisk_PowerSpec.f;
 powerspecWhiskMean = mean(powerspecWhiskData,1);
 powerspecWhiskSTD = std(powerspecWhiskData,1,1);

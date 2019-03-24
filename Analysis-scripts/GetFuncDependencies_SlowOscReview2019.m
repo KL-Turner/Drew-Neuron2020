@@ -42,7 +42,7 @@ end
 %     fList = fList(1, 2:end);
 % end
 
-% Find the unique functions listed.
+% Find the unique functions listed and pull the names out.
 uniqueFuncPaths = unique(fList);
 allDepFuncNames = cell(size(uniqueFuncPaths, 2), 1);
 allDepFuncPaths = cell(size(uniqueFuncPaths, 2), 1);
@@ -51,11 +51,12 @@ for x = 1:size(uniqueFuncPaths, 2)
     funcDelimiters = strfind(allDepFuncPaths{x, 1}, delimiter);
     allDepFuncNames{x, 1} = char(strip(allDepFuncPaths{x, 1}(funcDelimiters(end):end), delimiter));
 end
-
 functionList.names{a,1} = allDepFuncNames;
 functionList.paths{a,1} = allDepFuncPaths;
 allFileNames = {};
 allFilePaths = {};
+
+% Generate results table if this is the last animal. This value is hard-coded for this specific analysis.
 if a == length(functionNames)
     for b = 1:length(functionList.names)
         tableVals{b,1} = sortrows(horzcat(functionList.names{b,1}, functionList.paths{b,1}));
@@ -66,7 +67,7 @@ if a == length(functionNames)
         allFileNames = vertcat(allFileNames, fileNames{b,1});
         allFilePaths = vertcat(allFilePaths, filePaths{b,1});
     end
-    
+    % Table
     T = table(allFileNames, allFilePaths, 'VariableNames', {'File_names', 'File_paths'});
     figure('Name', 'Function dependencies table', 'NumberTitle', 'off')
     u = uitable('Data',T{:,:},'ColumnName',T.Properties.VariableNames,'RowName',T.Properties.RowNames,'Units', 'Normalized', 'Position',[0, 0, 1, 1]);

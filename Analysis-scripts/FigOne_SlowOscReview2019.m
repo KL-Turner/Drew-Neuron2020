@@ -37,30 +37,25 @@ for a = 1:length(animalIDs)
     for d = 1:length(ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{3,1})
         whiskDataC3(z,:) = ComparisonData.(animalID).WhiskEvokedAvgs.vesselData{3,1}{d,1};
         z = z + 1;
-    end
-    
+    end 
     whiskLFPC1(:,:,a) = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.S{1,1};
     whiskLFPC2(:,:,a) = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.S{2,1};
     whiskLFPC3(:,:,a) = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.S{3,1};
 end
 T = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.T{1,1};
 F = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.F{1,1};
-
 whiskDataMeanC1 = mean(whiskDataC1,1);
 whiskDataMeanC2 = mean(whiskDataC2,1);
 whiskDataMeanC3 = mean(whiskDataC3,1);
-
 whiskSTDC1 = std(whiskDataC1,1,1);
 whiskSTDC2 = std(whiskDataC2,1,1);
 whiskSTDC3 = std(whiskDataC3,1,1);
-
 whiskLFPMeanC1 = mean(whiskLFPC1,3);
 whiskLFPMeanC2 = mean(whiskLFPC2,3);
 whiskLFPMeanC3 = mean(whiskLFPC3,3);
 
 %%
 timeVec = ((1:length(whiskDataMeanC1))/p2Fs) - leadTime;
-
 figure;
 ax1 = subplot(2,3,1);
 plot(timeVec, whiskDataMeanC1, 'k')

@@ -27,7 +27,6 @@ for a = 1:length(animalIDs)
         x = x + 1;
     end 
 end
-
 f = ComparisonData.(animalID).WhiskVessel_Coherence.f{1,1};
 
 %%
