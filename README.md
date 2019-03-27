@@ -6,7 +6,7 @@ Begin by downloading the entire code repository and data from the following loca
 * Code repository location: https://github.com/KL-Turner/Slow-Oscillations-Review
 * Data repository location: https://psu.app.box.com/folder/70922070354
 
-Once the data (~ X GB) and code repository are either cloned or downloaded, open the zipped folder(s) to extract the contents. Add both the code and the data to the Matlab path. This can be done by dragging and dropping the code repository's contents into the data repository's folder. Ensure that the MainScript function is in the outer-most shell. Navigate the matlab directory to the folder's location. 
+Once the data (~7.5 GB) and code repository are either cloned or downloaded, open the zipped folder(s) to extract the contents. Add both the code and the data to the Matlab path. This can be done by dragging and dropping the code repository's contents into the data repository's folder. Ensure that the MainScript function is in the outer-most shell. Navigate the matlab directory to the folder's location. 
 
 Before beginning, ensure that the most recent version of the Signal Processing Toolbox is installed (version 8.1 or greater). This can be determined by typing **ver** into the Matlab Command Window. If the Signal Processing Toolbox is out of date or not installed, it can be downloaded from the *Add-Ons* button under the *Home* tab on the toolstrip ribbon. More information can be found at https://www.mathworks.com/products/signal.html. 
 
