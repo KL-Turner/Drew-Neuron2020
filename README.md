@@ -4,7 +4,7 @@ This document serves to outline the steps necessary to re-create Kevin L. Turner
 
 Begin by downloading the entire code repository and data from the following locations:
 * Code repository location: https://github.com/KL-Turner/Slow-Oscillations-Review
-* Data repository location: 'BOX LINK'
+* Data repository location: https://psu.app.box.com/folder/70922070354
 
 Once the data (~ X GB) and code repository are either cloned or downloaded, open the zipped folder(s) to extract the contents. Add both the code and the data to the Matlab path. This can be done by dragging and dropping the code repository's contents into the data repository's folder. Ensure that the MainScript function is in the outer-most shell. Navigate the matlab directory to the folder's location. 
 
@@ -14,15 +14,22 @@ When ready, hit the *Run* button of the MainScript function under the *Editor* t
 
 # Analysis and figure summary
 
-## Figure 1
+## Figure 1: Whisking-evoked changes in vessel diameter and hippocampal LFP
+Whisking events lasting 0.5 to 2 seconds, 2 to 5 seconds, and 5 to 10 seconds in duration were analyzed. From the initiation of each whisking event, data was pulled 4 seconds prior and 10 seconds from initiation for 14 seconds total. Vessel diameter (20 Hz Fs) was normalized by its resting diameter for that day and then smoothed using a 3rd-order 17 sample Savitzky-Golay. Each signal was mean-subtracted using the first four seconds prior to whisking, and then averaged across all whisking events for each criteria. The hippocampal LFP spectrograms were analyzed from the raw data (20 kHz Fs, mean subtracted, 60 Hz notch) with [1 1] tapers and a 1 second window taking 0.1 second step-size. The frequency-depend power from each bin was normalized by the resting value for each day. The normalized power corresponding to each whisking criteria time epoch (0.5 to 2, etc) was pulled and averaged across events for each animal. 
 
-## Figure 2
+The mean change in vessel diameter per whisking condition, per vessel, was then averaged across vessels (n = 14) with the error-bars showing standard deviation across the averaged vessels. Individual vessel averages can be seen in figure S1. The mean frequency-dependent power during these events was averaged across animals (N = 5).
 
-## Figure 3
+## Figure 2 Cross-correlation between whisker acceleration and vessel diameter
+Vessel diameter (20 Hz Fs) was low-pass (2 Hz) filtered using a 4th-order Butterworth, then mean-subtracted (entire trial, 280 seconds). Whisker angle was downsampled to 20 Hz, differentiated to acceleration (2nd derivative), and the absolute value of the acceleration was then low-pass filtered using the same Butterworth coefficients as the vessel diameter, and then mean-subtracted. The cross-correlation (xcorr, 'coeff') with 25 seconds lead/lag time was calculated between the two processed signals. The average of each vessel's cross correlation was then averaged across all vessels, with the error bars showing standard deviation. The individual vessel cross-correlations can be seen in figure S2.
 
-## Figure 4
+## Figure 3 Spectral coherence between whisker acceleration and vessel diameter
+Vessel diameter and whisker acceleration were processed using the same conditions as Figure 2. The spectral coherence was then calculated between the two signals using the Chronux coherency function with [3 5] tapers and an fpass of [0.004 0.5]. The coherence of for each vessel was then averaged across all vessels, with the error bars showing standard deviation. The individual vessel coherence can be seen in figure S3.
 
-## Figure S1
+## Figure 4 Spectral power for whisker acceleration and vessel diameter
+Vessel diameter and whisker acceleration were processed using the same conditions as Figure 2. The spectral power was then calculated for the two signals using the Chronux mtspectrumc function with [3 5] tapers and an fpass of [0.004 0.5]. The power of for each vessel was then averaged across all vessels, with the error bars showing standard deviation. The power of the whisker acceleration for each animal was averaged across animals. The individual vessel power and whisker acceleration power can be seen in figure S4.
+
+## Figure S1-S4
+Each supplementary figure corresponds to its respective maintext figure, showing the individual vessel/animal traces for each analysis condition.
 
 # Data pre-processing summary 
 This section contains a summary of the analysis that went in to pre-processing of all data. All code and functions are located in the *Pre-processing-scripts* sub-folder of the code repository. Each stage contains a sub-functions folder with its respective dependencies. If a specific function is used in multiple stages, it is located only in the first stage that it is used. If it is used in the MainScript that analyzes the data and generates the figures, the sub-function will be located in *Analysis-scripts* folder.

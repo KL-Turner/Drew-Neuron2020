@@ -165,7 +165,7 @@ for a = 1:length(uniqueVesselIDs)
             vesselBaselines = [vesselBaselines RestingBaselines.(uvID).(fieldname).vesselDiameter.baseLine];
         end
     end
-    vBaselines{a,1} = mean(vesselBaselines);
+    vBaselines{a,1} = round(mean(vesselBaselines),1);
 end
 tblVals.vesselIDs = uniqueVesselIDs;
 tblVals.timePerVessel = timePerVessel;

@@ -48,7 +48,7 @@ for b = 1:length(uniqueVesselIDs)
             % Detrend the filtered vessel diameter
             uniqueVesselData{b,1}(:,d) = detrend(filtfilt(B, A, MergedData.data.vesselDiameter), 'constant');
             % Detrend the absolute value of the whisker acceleration that was resampled down to 20 Hz (Fs of vessels)
-            whiskerData(:,t) = detrend(abs(diff(resample(MergedData.data.whiskerAngle, p2Fs, dsFs), 2)), 'constant');
+            whiskerData(:,t) = detrend(filtfilt(B, A, abs(diff(resample(MergedData.data.whiskerAngle, p2Fs, dsFs), 2))), 'constant');
             d = d + 1;
             t = t + 1;
         end
@@ -59,7 +59,7 @@ end
 params.tapers = [3 5];
 params.pad = 1;
 params.Fs = p2Fs;
-params.fpass = [0 0.5]; 
+params.fpass = [0.004 0.5]; 
 params.trialave = 1;
 params.err = [2 0.05];
 

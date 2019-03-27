@@ -39,7 +39,7 @@ title('Ind coherence Abs(whiskAccel) vs. vessel diameter')
 xlabel('Frequency (Hz)')
 ylabel('Coherence')
 legend(vIDs)
-xlim([0 0.5])
+xlim([0.004 0.5])
 pause(1)
 
 end

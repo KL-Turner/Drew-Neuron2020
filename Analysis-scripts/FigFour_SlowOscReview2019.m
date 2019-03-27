@@ -43,7 +43,7 @@ loglog(vf, powerspecVesselMean - powerspecVesselSTD)
 title('Mean power spec vessel diameter')
 xlabel('Frequency (Hz)')
 ylabel('Power')
-xlim([0 0.5])
+xlim([0.004 0.5])
 
 ax2 = subplot(1,2,2);
 loglog(wf, powerspecWhiskMean, 'k')
@@ -53,7 +53,7 @@ loglog(wf, powerspecWhiskMean - powerspecWhiskSTD)
 title('Mean power spec abs(whiskerAccel)')
 xlabel('Frequency (Hz)')
 ylabel('Power')
-xlim([0 0.5])
+xlim([0.004 0.5])
 linkaxes([ax1 ax2], 'xy')
 pause(1)
 

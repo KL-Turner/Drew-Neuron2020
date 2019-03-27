@@ -38,7 +38,7 @@ plot(f, coherenceMean - coherenceSTD)
 title('Mean coherence Abs(whiskAccel) vs. vessel diameter')
 xlabel('Frequency (Hz)')
 ylabel('Coherence')
-xlim([0 0.5])
+xlim([0.004 0.5])
 pause(1)
 
 end
