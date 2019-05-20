@@ -69,7 +69,7 @@ end
 DetermineVesselStatistics_SlowOscReview2019(ComparisonData);
 
 % Create single trial summary figures. selectFigs = false displays the one used for representative example.
-selectFigs = false;   % set to true to manually select other figure(s).
+selectFigs = true;   % set to true to manually select other figure(s).
 GenerateSingleFigures_SlowOscReview2019(selectFigs)
 
 %% Individual figures can be re-run after the analysis has completed.
@@ -87,7 +87,7 @@ disp('MainScript Analysis - Complete'); disp(' ')
 end
 
 function [ComparisonData] = AnalyzeData_SlowOscReview2019()
-animalIDs = {'T72', 'T73', 'T74', 'T75', 'T76'};   % list of animal IDs
+animalIDs = {'T72', 'T73', 'T74', 'T75', 'T76', 'T80', 'T81', 'T82', 'T82b', 'T83', 'T83b'};   % list of animal IDs
 ComparisonData = [];   % pre-allocate the results structure as empty
 
 %% BLOCK PURPOSE: [1] Analyze the whisking-evoked changes in vessel diameter and neural LFP.
@@ -195,7 +195,7 @@ for a = 1:length(fileNames)
     ylabel('Force Sensor (Volts)')
     xlim([0 MergedData.notes.trialDuration_Sec])  
     yyaxis right
-    plot((1:length(filteredWhiskerAngle))/MergedData.notes.dsFs, -filteredWhiskerAngle, 'color', colors_SlowOscReview2019('ash grey'))
+    plot((1:length(filteredWhiskerAngle))/MergedData.notes.dsFs, -filteredWhiskerAngle, 'color', colors_SlowOscReview2019('carrot orange'))
     ylabel('Angle (deg)')
     legend('Force sensor', 'Whisker angle')
     xlim([0 MergedData.notes.trialDuration_Sec])
@@ -214,8 +214,8 @@ for a = 1:length(fileNames)
             forceInds(1, x) = NaN;
         end
     end
-    scatter((1:length(binForce))/MergedData.notes.dsFs, forceInds, '.', 'MarkerEdgeColor', colors_SlowOscReview2019('rich black'));
-    scatter((1:length(binWhiskers))/MergedData.notes.dsFs, whiskInds, '.', 'MarkerEdgeColor', colors_SlowOscReview2019('sapphire'));
+    scatter((1:length(binForce))/MergedData.notes.dsFs, forceInds, '.', 'MarkerEdgeColor', colors_SlowOscReview2019('sapphire'));
+    scatter((1:length(binWhiskers))/MergedData.notes.dsFs, whiskInds, '.', 'MarkerEdgeColor', colors_SlowOscReview2019('carrot orange'));
     title('Vessel diameter in response to behaviorial events')
     xlabel('Time (sec)')
     ylabel('% change (diameter)')
