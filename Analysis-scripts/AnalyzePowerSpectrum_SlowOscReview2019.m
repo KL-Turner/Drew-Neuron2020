@@ -17,7 +17,13 @@ function [ComparisonData] = AnalyzePowerSpectrum_SlowOscReview2019(animalID, Com
 %________________________________________________________________________________________________________________________
 
 cd(animalID);   % Change to the subfolder for the current animal
-p2Fs = 20;   % Two-photon Fs is 20 Hz
+if strcmp(animalID, 'T72') || strcmp(animalID, 'T73') || strcmp(animalID, 'T74') || strcmp(animalID, 'T75') || strcmp(animalID, 'T76') 
+    p2Fs = 20;   % Two-photon Fs is 20 Hz
+elseif strcmp(animalID, 'T80') || strcmp(animalID, 'T81') || strcmp(animalID, 'T82') || strcmp(animalID, 'T83')
+    p2Fs = 20;
+elseif strcmp(animalID, 'T82b') || strcmp(animalID, 'T83b')
+    p2Fs = 5;
+end
 dsFs = 30;   % Down-sampled Fs is 30 Hz
 
 % Load necessary data structures and filenames from current directory

@@ -58,7 +58,7 @@ else
 end
 
 %% Informational figures with function dependencies for the various analysis and the time per vessel.
-% To view individual summary figures, change the value of line 82 to false. You will then be prompted to manually select
+% To view individual summary figures, change the value of line 72 to false. You will then be prompted to manually select
 % any number of figures (CTL-A for all) inside any of the five folders. You can only do one animal at a time.
 functionNames = {'MainScript_SlowOscReview2019', 'StageOneProcessing_SlowOscReview2019'...
     'StageTwoProcessing_SlowOscReview2019','StageThreeProcessing_SlowOscReview2019'};
@@ -69,7 +69,7 @@ end
 DetermineVesselStatistics_SlowOscReview2019(ComparisonData);
 
 % Create single trial summary figures. selectFigs = false displays the one used for representative example.
-selectFigs = true;   % set to true to manually select other figure(s).
+selectFigs = false;   % set to true to manually select other figure(s).
 GenerateSingleFigures_SlowOscReview2019(selectFigs)
 
 %% Individual figures can be re-run after the analysis has completed.
