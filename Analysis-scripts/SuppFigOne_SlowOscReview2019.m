@@ -17,7 +17,6 @@ function SuppFigOne_SlowOscReview2019(ComparisonData)
 
 %%
 animalIDs = fields(ComparisonData);
-p2Fs = 20;
 leadTime = 4;
 x = 1;
 y = 1;

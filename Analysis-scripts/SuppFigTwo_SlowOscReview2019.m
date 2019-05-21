@@ -19,15 +19,15 @@ function SuppFigTwo_SlowOscReview2019(ComparisonData)
 animalIDs = fields(ComparisonData);
 x = 1;
 for a = 1:length(animalIDs)
-    animalID = animalIDs{a};
+    animalID = animalIDs{a,1};
     for b = 1:length(ComparisonData.(animalID).WhiskVessel_XCorr.XC_means)
         XCorrData(x, :) = ComparisonData.(animalID).WhiskVessel_XCorr.XC_means{b,1};
         vID = join([string(animalID) string(ComparisonData.(animalID).WhiskVessel_XCorr.vesselIDs{b,1})]);
+        lags = ComparisonData.(animalID).WhiskVessel_XCorr.lags;
         vIDs{x,1} = strrep(vID, ' ', '');
         x = x + 1;
-    end 
+    end
 end
-lags = ComparisonData.(animalID).WhiskVessel_XCorr.lags;
 
 %%
 figure;

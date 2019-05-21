@@ -17,15 +17,19 @@ function [ComparisonData] = AnalyzeEvokedResponses_SlowOscReview2019(animalID, C
 %________________________________________________________________________________________________________________________
 
 cd(animalID);   % Change to the subfolder for the current animal
-if strcmp(animalID, 'T72') || strcmp(animalID, 'T73') || strcmp(animalID, 'T74') || strcmp(animalID, 'T75') || strcmp(animalID, 'T76') 
+if strcmp(animalID, 'T72') || strcmp(animalID, 'T73') || strcmp(animalID, 'T74') || strcmp(animalID, 'T75') || strcmp(animalID, 'T76')
     p2Fs = 20;   % Two-photon Fs is 20 Hz
     trialDuration = 280;   % 4 minutes, 40 seconds. ten seconds were previously removed from beginning/end
+    animalSaveID = animalID;
 elseif strcmp(animalID, 'T80') || strcmp(animalID, 'T81') || strcmp(animalID, 'T82') || strcmp(animalID, 'T83')
     p2Fs = 20;
     trialDuration = 900;
+    animalSaveID = animalID;
 elseif strcmp(animalID, 'T82b') || strcmp(animalID, 'T83b')
     p2Fs = 5;
     trialDuration = 900;
+    animalSaveID = animalID;
+    animalID = animalID(1:end - 1);
 end
 
 offset = 4;   % Look four seconds prior to the start of a whisking event
@@ -181,12 +185,12 @@ tblVals.timePerVessel = timePerVessel;
 tblVals.baselines = vBaselines;
 
 %% Save the results.
-ComparisonData.(animalID).WhiskEvokedAvgs.vesselData = whiskCritMeans.data;
-ComparisonData.(animalID).WhiskEvokedAvgs.vesselIDs = uniqueVesselIDs;
-ComparisonData.(animalID).WhiskEvokedAvgs.LFP.T = whiskT;
-ComparisonData.(animalID).WhiskEvokedAvgs.LFP.F = whiskF;
-ComparisonData.(animalID).WhiskEvokedAvgs.LFP.S = whiskS;
-ComparisonData.(animalID).tblVals = tblVals;
+ComparisonData.(animalSaveID).WhiskEvokedAvgs.vesselData = whiskCritMeans.data;
+ComparisonData.(animalSaveID).WhiskEvokedAvgs.vesselIDs = uniqueVesselIDs;
+ComparisonData.(animalSaveID).WhiskEvokedAvgs.LFP.T = whiskT;
+ComparisonData.(animalSaveID).WhiskEvokedAvgs.LFP.F = whiskF;
+ComparisonData.(animalSaveID).WhiskEvokedAvgs.LFP.S = whiskS;
+ComparisonData.(animalSaveID).tblVals = tblVals;
 cd ..
 
 end

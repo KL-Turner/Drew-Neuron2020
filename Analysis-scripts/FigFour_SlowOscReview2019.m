@@ -18,38 +18,77 @@ function FigFour_SlowOscReview2019(ComparisonData)
 %%
 animalIDs = fields(ComparisonData);
 x = 1;
+y = 1;
+c = 1;
+d = 1;
 for a = 1:length(animalIDs)
     animalID = animalIDs{a,1};
     for b = 1:length(ComparisonData.(animalID).Vessel_PowerSpec.S)
-        powerspecVesselData(x,:) = ComparisonData.(animalID).Vessel_PowerSpec.S{b,1};
-        x = x + 1;
-    end 
-    powerspecWhiskData(a,:) = ComparisonData.(animalID).Whisk_PowerSpec.S;
+        try
+            powerspecVesselData1(x,:) = ComparisonData.(animalID).Vessel_PowerSpec.S{b,1};
+            vID = join([string(animalID) string(ComparisonData.(animalID).Vessel_PowerSpec.vesselIDs{b,1})]);
+            vIDs1{x,1} = strrep(vID, ' ', '');
+            x = x + 1;
+        catch
+            powerspecVesselData2(y,:) = ComparisonData.(animalID).Vessel_PowerSpec.S{b,1};
+            vID = join([string(animalID) string(ComparisonData.(animalID).Vessel_PowerSpec.vesselIDs{b,1})]);
+            vIDs2{y,1} = strrep(vID, ' ', '');
+            y = y + 1;
+        end
+    end
+    try
+        powerspecWhiskData1(c,:) = ComparisonData.(animalID).Whisk_PowerSpec.S;
+        vf1 = ComparisonData.(animalID).Vessel_PowerSpec.f{1,1};
+        wf1 = ComparisonData.(animalID).Whisk_PowerSpec.f;
+        c = c + 1;
+    catch
+        powerspecWhiskData2(d,:) = ComparisonData.(animalID).Whisk_PowerSpec.S;
+        vf2 = ComparisonData.(animalID).Vessel_PowerSpec.f{1,1};
+        wf2 = ComparisonData.(animalID).Whisk_PowerSpec.f;
+        d = d + 1;
+    end
 end
-vf = ComparisonData.(animalID).Vessel_PowerSpec.f{1,1};
-powerspecVesselMean = mean(powerspecVesselData,1);
-powerspecVesselSTD = std(powerspecVesselData,1,1);
-wf = ComparisonData.(animalID).Whisk_PowerSpec.f;
-powerspecWhiskMean = mean(powerspecWhiskData,1);
-powerspecWhiskSTD = std(powerspecWhiskData,1,1);
+
+%% Adjust for differences in trial duration
+f1_f2_logical = ismember(vf2, vf1);
+for e = 1:size(powerspecVesselData2, 1)
+    vesselData = powerspecVesselData2(e,:);
+    logicalVesselData = vesselData(f1_f2_logical);
+    powerspecVesselData1(x,:) = logicalVesselData;
+    vIDs1{x,1} = vIDs2{e,1};
+    x = x + 1;
+end
+
+for f = 1:size(powerspecWhiskData2, 1)
+    whiskData = powerspecWhiskData2(f,:);
+    logicalWhiskData = whiskData(f1_f2_logical);
+    powerspecWhiskData1(c,:) = logicalWhiskData;
+    c = c + 1;
+end
+
+%% Averages
+powerspecVesselMean = mean(powerspecVesselData1,1);
+powerspecVesselSTD = std(powerspecVesselData1,1,1);
+powerspecWhiskMean = mean(powerspecWhiskData1,1);
+powerspecWhiskSTD = std(powerspecWhiskData1,1,1);
 
 %%
 figure;
 ax1 = subplot(1,2,1);
-loglog(vf, powerspecVesselMean, 'k')
+loglog(vf1, powerspecVesselMean, 'k')
 hold on
-loglog(vf, powerspecVesselMean + powerspecVesselSTD)
-loglog(vf, powerspecVesselMean - powerspecVesselSTD)
+loglog(vf1, powerspecVesselMean + powerspecVesselSTD)
+loglog(vf1, powerspecVesselMean - powerspecVesselSTD)
 title('Mean power spec vessel diameter')
 xlabel('Frequency (Hz)')
 ylabel('Power')
 xlim([0.004 0.5])
 
 ax2 = subplot(1,2,2);
-loglog(wf, powerspecWhiskMean, 'k')
+loglog(wf1, powerspecWhiskMean, 'k')
 hold on
-loglog(wf, powerspecWhiskMean + powerspecWhiskSTD)
-loglog(wf, powerspecWhiskMean - powerspecWhiskSTD)
+loglog(wf1, powerspecWhiskMean + powerspecWhiskSTD)
+loglog(wf1, powerspecWhiskMean - powerspecWhiskSTD)
 title('Mean power spec abs(whiskerAccel)')
 xlabel('Frequency (Hz)')
 ylabel('Power')

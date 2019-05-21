@@ -18,35 +18,70 @@ function SuppFigFour_SlowOscReview2019(ComparisonData)
 %%
 animalIDs = fields(ComparisonData);
 x = 1;
+y = 1;
+c = 1;
+d = 1;
 for a = 1:length(animalIDs)
     animalID = animalIDs{a,1};
     for b = 1:length(ComparisonData.(animalID).Vessel_PowerSpec.S)
-        powerspecVesselData(x,:) = ComparisonData.(animalID).Vessel_PowerSpec.S{b,1};
-        vID = join([string(animalID) string(ComparisonData.(animalID).Vessel_PowerSpec.vesselIDs{b,1})]);
-        vIDs{x,1} = strrep(vID, ' ', '');
-        x = x + 1;
-    end 
-    powerspecWhiskData(a,:) = ComparisonData.(animalID).Whisk_PowerSpec.S;
+        try
+            powerspecVesselData1(x,:) = ComparisonData.(animalID).Vessel_PowerSpec.S{b,1};
+            vID = join([string(animalID) string(ComparisonData.(animalID).Vessel_PowerSpec.vesselIDs{b,1})]);
+            vIDs1{x,1} = strrep(vID, ' ', '');
+            x = x + 1;
+        catch
+            powerspecVesselData2(y,:) = ComparisonData.(animalID).Vessel_PowerSpec.S{b,1};
+            vID = join([string(animalID) string(ComparisonData.(animalID).Vessel_PowerSpec.vesselIDs{b,1})]);
+            vIDs2{y,1} = strrep(vID, ' ', '');
+            y = y + 1;
+        end
+    end
+    try
+        powerspecWhiskData1(c,:) = ComparisonData.(animalID).Whisk_PowerSpec.S;
+        vf1 = ComparisonData.(animalID).Vessel_PowerSpec.f{1,1};
+        wf1 = ComparisonData.(animalID).Whisk_PowerSpec.f;
+        c = c + 1;
+    catch
+        powerspecWhiskData2(d,:) = ComparisonData.(animalID).Whisk_PowerSpec.S;
+        vf2 = ComparisonData.(animalID).Vessel_PowerSpec.f{1,1};
+        wf2 = ComparisonData.(animalID).Whisk_PowerSpec.f;
+        d = d + 1;
+    end
 end
-vf = ComparisonData.(animalID).Vessel_PowerSpec.f{1,1};
-wf = ComparisonData.(animalID).Whisk_PowerSpec.f;
+
+%% Adjust for differences in trial duration
+f1_f2_logical = ismember(vf2, vf1);
+for e = 1:size(powerspecVesselData2, 1)
+    vesselData = powerspecVesselData2(e,:);
+    logicalVesselData = vesselData(f1_f2_logical);
+    powerspecVesselData1(x,:) = logicalVesselData;
+    vIDs1{x,1} = vIDs2{e,1};
+    x = x + 1;
+end
+
+for f = 1:size(powerspecWhiskData2, 1)
+    whiskData = powerspecWhiskData2(f,:);
+    logicalWhiskData = whiskData(f1_f2_logical);
+    powerspecWhiskData1(c,:) = logicalWhiskData;
+    c = c + 1;
+end
 
 %%
 figure;
 ax1 = subplot(1,2,1);
-for c = 1:size(powerspecVesselData, 1)
-    loglog(vf, powerspecVesselData(c,:));
+for c = 1:size(powerspecVesselData1, 1)
+    loglog(vf1, powerspecVesselData1(c,:));
     hold on
 end
 title('Ind power spec vessel diameter')
 xlabel('Frequency (Hz)')
 ylabel('Power')
-legend(vIDs)
+legend(vIDs1)
 xlim([0.004 0.5])
 
 ax2 = subplot(1,2,2);
-for c = 1:size(powerspecWhiskData,1)
-    loglog(wf, powerspecWhiskData(c,:));
+for c = 1:size(powerspecWhiskData1,1)
+    loglog(wf1, powerspecWhiskData1(c,:));
     hold on
 end
 title('Ind power spec abs(whiskerAccel)')

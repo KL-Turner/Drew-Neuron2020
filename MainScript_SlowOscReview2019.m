@@ -93,25 +93,25 @@ ComparisonData = [];   % pre-allocate the results structure as empty
 %% BLOCK PURPOSE: [1] Analyze the whisking-evoked changes in vessel diameter and neural LFP.
 for a = 1:length(animalIDs)
     [ComparisonData] = AnalyzeEvokedResponses_SlowOscReview2019(animalIDs{1,a}, ComparisonData);
-    multiWaitbar_SlowOscReview2019('Analyzing whisking-evoked data', a/length(animalIDs));
+    multiWaitbar_SlowOscReview2019('Analyzing whisking-evoked data', 'Value', a/length(animalIDs));
 end
 
 %% BLOCK PURPOSE: [2] Analyze the cross-correlation between abs(whisker acceleration) and vessel diameter.
 for b = 1:length(animalIDs)
     [ComparisonData] = AnalyzeXCorr_SlowOscReview2019(animalIDs{1,b}, ComparisonData);
-    multiWaitbar_SlowOscReview2019('Analyzing cross correlation', b/length(animalIDs));
+    multiWaitbar_SlowOscReview2019('Analyzing cross correlation', 'Value', b/length(animalIDs));
 end
 
 %% BLOCK PURPOSE: [3] Analyze the spectral coherence between abs(whisker acceleration) and vessel diameter.
 for c = 1:length(animalIDs)
     [ComparisonData] = AnalyzeCoherence_SlowOscReview2019(animalIDs{1,c}, ComparisonData);
-    multiWaitbar_SlowOscReview2019('Analyzing coherence', c/length(animalIDs));
+    multiWaitbar_SlowOscReview2019('Analyzing coherence', 'Value', c/length(animalIDs));
 end
 
 %% BLOCK PURPOSE: [4] Analyze the spectral power of abs(whisker acceleration) and vessel diameter.
 for d = 1:length(animalIDs)
     [ComparisonData] = AnalyzePowerSpectrum_SlowOscReview2019(animalIDs{1,d}, ComparisonData);
-    multiWaitbar_SlowOscReview2019('Analyzing power spectra', d/length(animalIDs));
+    multiWaitbar_SlowOscReview2019('Analyzing power spectra', 'Value', d/length(animalIDs));
 end
 
 answer = questdlg('Would you like to save the analysis results structure?', '', 'yes', 'no', 'yes');
