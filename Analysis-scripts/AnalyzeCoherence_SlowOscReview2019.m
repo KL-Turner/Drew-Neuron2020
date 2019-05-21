@@ -77,13 +77,13 @@ end
 %% Shuffle and calculate coherence 1000 times
 for f = 1:length(uniqueVesselData)
     vesselData = uniqueVesselData{f,1};
-    whiskData = uniqueWhiskData{f,1};
+    whiskData = uniqueWhiskerData{f,1};
     for g = 1:1000
-        shuffledWhiskData = whiskData(randperm(size(whiskData,1)),:);
+        shuffledWhiskData = whiskData(:, randperm(size(whiskData, 2)));
         [C, ~, ~, ~, ~, ~, ~, ~, ~] = coherencyc_SlowOscReview2019(vesselData, shuffledWhiskData, params);
-        shuffledC(g,:) = C;
+        shuffledC(:,g) = C;
     end
-    shuffledC_means{f,1} = mean(shuffledC);
+    shuffledC_means{f,1} = mean(shuffledC, 2);
 end
 
 %% Save the results.

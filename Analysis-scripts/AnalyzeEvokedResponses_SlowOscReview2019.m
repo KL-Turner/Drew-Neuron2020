@@ -148,7 +148,7 @@ for w = 1:length(whiskFileIDs)
         end
         whiskZhold = cat(3, whiskZhold, whiskS_Vals);
     end
-    whiskT{w,1} = (SpecData.oneSec.T/whiskBinSize) - offset;
+    whiskT{w,1} = -offset:(1/whiskBinSize):duration;
     whiskF{w,1} = SpecData.oneSec.F;
     whiskZhold_all{w,1} = whiskZhold;
 end

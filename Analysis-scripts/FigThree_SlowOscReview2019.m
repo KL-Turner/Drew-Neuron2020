@@ -24,14 +24,14 @@ for a = 1:length(animalIDs)
     for b = 1:length(ComparisonData.(animalID).WhiskVessel_Coherence.C)
         try
             coherenceData1(x,:) = ComparisonData.(animalID).WhiskVessel_Coherence.C{b,1};
-            shuffledCoherenceData1(x,:) = ComparisonData.(animalID).WhiskVessel_Coherence.shuffledC{b,1};
+            shuffledCoherenceData1(x,:) = ComparisonData.(animalID).WhiskVessel_Coherence.shuffC{b,1};
             vID = join([string(animalID) string(ComparisonData.(animalID).WhiskVessel_Coherence.vesselIDs{b,1})]);
             f1 = ComparisonData.(animalID).WhiskVessel_Coherence.f{1,1};
             vIDs1{x,1} = strrep(vID, ' ', '');
             x = x + 1;
         catch
             coherenceData2(y,:) = ComparisonData.(animalID).WhiskVessel_Coherence.C{b,1};
-            shuffledCoherenceData1(y,:) = ComparisonData.(animalID).WhiskVessel_Coherence.shuffledC{b,1};
+            shuffledCoherenceData1(y,:) = ComparisonData.(animalID).WhiskVessel_Coherence.shuffC{b,1};
             vID = join([string(animalID) string(ComparisonData.(animalID).WhiskVessel_Coherence.vesselIDs{b,1})]);
             f2 = ComparisonData.(animalID).WhiskVessel_Coherence.f{1,1};
             vIDs2{y,1} = strrep(vID, ' ', '');
