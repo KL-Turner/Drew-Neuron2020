@@ -31,7 +31,7 @@ for a = 1:length(animalIDs)
             x = x + 1;
         catch
             coherenceData2(y,:) = ComparisonData.(animalID).WhiskVessel_Coherence.C{b,1};
-            shuffledCoherenceData1(y,:) = ComparisonData.(animalID).WhiskVessel_Coherence.shuffC{b,1};
+            shuffledCoherenceData2(y,:) = ComparisonData.(animalID).WhiskVessel_Coherence.shuffC{b,1};
             vID = join([string(animalID) string(ComparisonData.(animalID).WhiskVessel_Coherence.vesselIDs{b,1})]);
             f2 = ComparisonData.(animalID).WhiskVessel_Coherence.f{1,1};
             vIDs2{y,1} = strrep(vID, ' ', '');
@@ -48,7 +48,7 @@ for c = 1:size(coherenceData2, 1)
     logicalCoherenceData = coherenceData(f1_f2_logical);
     logicalShuffledCoherenceData = shuffledCoherenceData(f1_f2_logical);
     coherenceData1(x,:) = logicalCoherenceData;
-    shuffledCoherenceData(x,:) = logicalCoherenceData;
+    shuffledCoherenceData1(x,:) = logicalShuffledCoherenceData;
     vIDs1{x,1} = vIDs2{c,1};
     x = x + 1;
 end

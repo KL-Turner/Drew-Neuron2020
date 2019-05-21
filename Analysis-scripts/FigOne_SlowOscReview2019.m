@@ -81,8 +81,7 @@ for i = 1:size(whiskDataC1_2, 1)
     x = x + 1;
 end
 
-T = -4:0.1:10;
-% T = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.T{1,1};
+T = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.T{1,1};
 F = ComparisonData.(animalID).WhiskEvokedAvgs.LFP.F{1,1};
 whiskDataMeanC1 = mean(whiskDataC1_3,1);
 whiskDataMeanC2 = mean(whiskDataC2_3,1);
