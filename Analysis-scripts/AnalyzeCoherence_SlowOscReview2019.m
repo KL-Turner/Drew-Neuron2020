@@ -74,8 +74,21 @@ for e = 1:length(uniqueVesselData)
     allf{e,1} = f;
 end
 
+%% Shuffle and calculate coherence 1000 times
+for f = 1:length(uniqueVesselData)
+    vesselData = uniqueVesselData{f,1};
+    whiskData = uniqueWhiskData{f,1};
+    for g = 1:1000
+        shuffledWhiskData = whiskData(randperm(size(whiskData,1)),:);
+        [C, ~, ~, ~, ~, ~, ~, ~, ~] = coherencyc_SlowOscReview2019(vesselData, shuffledWhiskData, params);
+        shuffledC(g,:) = C;
+    end
+    shuffledC_means{f,1} = mean(shuffledC);
+end
+
 %% Save the results.
 ComparisonData.(animalID).WhiskVessel_Coherence.C = allC;
+ComparisonData.(animalID).WhiskVessel_Coherence.shuffC = shuffledC_means;
 ComparisonData.(animalID).WhiskVessel_Coherence.f = allf;
 ComparisonData.(animalID).WhiskVessel_Coherence.vesselIDs = uniqueVesselIDs;
 cd ..
