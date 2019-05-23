@@ -59,9 +59,10 @@ for e = 1:size(powerspecVesselData2, 1)
     x = x + 1;
 end
 
+f3_f4_logical = ismember(wf2, wf1);
 for f = 1:size(powerspecWhiskData2, 1)
     whiskData = powerspecWhiskData2(f,:);
-    logicalWhiskData = whiskData(f1_f2_logical);
+    logicalWhiskData = whiskData(f3_f4_logical);
     powerspecWhiskData1(c,:) = logicalWhiskData;
     c = c + 1;
 end

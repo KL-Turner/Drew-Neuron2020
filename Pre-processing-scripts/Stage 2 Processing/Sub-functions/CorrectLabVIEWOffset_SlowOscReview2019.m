@@ -24,7 +24,7 @@ for a = 1:size(mscanDataFiles,1)
     load(mscanDataFile);
     labviewDataFile = labviewDataFiles(a, :);
     load(labviewDataFile)
-    if MScanData.notes.checklist.offsetCorrect == false
+%     if MScanData.notes.checklist.offsetCorrect == false
         disp(['Correcting offset in file number ' num2str(a) ' of ' num2str(size(mscanDataFiles, 1)) '...']); disp(' ');
         [animalID, hem, fileDate, fileID] = GetFileInfo_SlowOscReview2019(labviewDataFile);
         imageID = MScanData.notes.imageID;
@@ -55,7 +55,7 @@ for a = 1:size(mscanDataFiles,1)
         
         if offset > 0
             analog_forceShift = analog_labviewForce(analog_forceOffset:end);
-            analog_whiskerShift = LabVIEWData.data.whiskerAngle(analog_whiskerOffset:end);
+            analog_whiskerShift = LabVIEWData.data.patchedWhiskerAngle(analog_whiskerOffset:end);
             dsForceShift = labviewForce(offset:end);
             dsWhiskShift = LabVIEWData.data.dsWhiskerAngle(offset:end);
             binForceShift = LabVIEWData.data.binForceSensorL(offset:end);
@@ -65,7 +65,7 @@ for a = 1:size(mscanDataFiles,1)
             analog_wpad = zeros(1, abs(analog_whiskerOffset));
             pad = zeros(1, abs(dsOffset));
             analog_forceShift = horzcat(analog_fpad, analog_labviewForce);
-            analog_whiskerShift = horzcat(analog_wpad, LabVIEWData.data.whiskerAngle);
+            analog_whiskerShift = horzcat(analog_wpad, LabVIEWData.data.patchedWhiskerAngle);
             dsForceShift = horzcat(pad, labviewForce);
             dsWhiskShift = horzcat(pad, LabVIEWData.data.dsWhiskerAngle);
             binForceShift = horzcat(pad, LabVIEWData.data.binForceSensorL);
@@ -164,9 +164,9 @@ for a = 1:size(mscanDataFiles,1)
         disp('Updating MScanData and LabVIEW Files...'); disp(' ')
         save([animalID '_' fileDate '_' imageID '_MScanData'], 'MScanData')
         save([animalID '_' hem '_' fileID '_LabVIEWData'], 'LabVIEWData')
-    else
-        disp(['Offset in ' mscanDataFile ' and ' labviewDataFile ' has already been corrected. Continuing...']); disp(' ');
-    end
+%     else
+%         disp(['Offset in ' mscanDataFile ' and ' labviewDataFile ' has already been corrected. Continuing...']); disp(' ');
+%     end
 end
 
 end

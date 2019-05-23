@@ -28,6 +28,7 @@ for a = 1:size(labviewDataFiles,1)
     
     % Pull the notes and data from LabVIEW
     MergedData.notes.LabVIEW = LabVIEWData.notes;
+    MergedData.data.rawWhiskerAngle = LabVIEWData.data.whiskerAngle_trim;
     MergedData.data.whiskerAngle = LabVIEWData.data.dsWhiskerAngle_trim;
     MergedData.data.binWhiskerAngle = LabVIEWData.data.binWhiskerAngle_trim;
     MergedData.data.forceSensorL = LabVIEWData.data.dsForceSensorL_trim;

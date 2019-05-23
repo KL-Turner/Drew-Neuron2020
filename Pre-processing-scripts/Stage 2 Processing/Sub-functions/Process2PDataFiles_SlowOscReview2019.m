@@ -99,6 +99,7 @@ for b = 1:size(labviewDataFiles,1)
 
         %% Patch and binarize the whisker angle and set the resting angle to zero degrees.
         [patchedWhisk] = PatchWhiskerAngle_SlowOscReview2019(LabVIEWData.data.whiskerAngle, LabVIEWData.notes.whiskerCamSamplingRate_Hz, LabVIEWData.notes.trialDuration_Seconds, LabVIEWData.notes.droppedWhiskerCamFrameIndex);
+        LabVIEWData.data.patchedWhiskerAngle = patchedWhisk;
         
         % Create filter for whisking/movement
         downSampledFs = 30;

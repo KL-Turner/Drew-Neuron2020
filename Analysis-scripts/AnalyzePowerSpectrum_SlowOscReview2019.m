@@ -41,7 +41,10 @@ end
 
 % For each vessel, pull the diameter and whisker angle
 uniqueVesselIDs = unique(vesselIDs);
-[B, A] = butter(4, 2/(p2Fs/2), 'low');   % 2 Hz low pass filter for vessels
+filtThreshold = 20;
+filtOrder = 2;
+[z, p, k] = butter(filtOrder, filtThreshold/(150/2), 'low');
+[sos, g] = zp2sos(z, p, k);
 t = 1;
 for b = 1:length(uniqueVesselIDs)
     uniqueVesselID = string(uniqueVesselIDs{b,1});
@@ -52,9 +55,9 @@ for b = 1:length(uniqueVesselIDs)
         if strcmp(uniqueVesselID, mdID) == true
             load(mergedDataFile);
             % Detrend the filtered vessel diameter
-            uniqueVesselData{b,1}(:,d) = detrend(filtfilt(B, A, MergedData.data.vesselDiameter), 'constant');
+            uniqueVesselData{b,1}(:,d) = detrend(MergedData.data.vesselDiameter, 'constant');
             % Detrend the absolute value of the whisker acceleration that was resampled down to 20 Hz (Fs of vessels)
-            whiskerData(:,t) = detrend(filtfilt(B, A, abs(diff(resample(MergedData.data.whiskerAngle, p2Fs, dsFs), 2))), 'constant');
+            whiskerData(:,t) = resample(filtfilt(sos, g, (abs(diff(MergedData.data.rawWhiskerAngle, 2)))), p2Fs, dsFs);
             d = d + 1;
             t = t + 1;
         end
@@ -62,7 +65,7 @@ for b = 1:length(uniqueVesselIDs)
 end
 
 %% Chronux power spectrum parameters
-params.tapers = [3 5];
+params.tapers = [10 19];
 params.pad = 1;
 params.Fs = p2Fs;
 params.fpass = [0.004 0.5]; 

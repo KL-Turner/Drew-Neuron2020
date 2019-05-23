@@ -27,7 +27,7 @@ elseif strcmp(animalID, 'T82b') || strcmp(animalID, 'T83b')
     p2Fs = 5;
     trialDuration = 900;
 end
-dsFs = 30;   % Down-sampled Fs is 30 Hz
+wFs = 150;   % Down-sampled Fs is 30 Hz
 
 % Load necessary data structures and filenames from current directory
 mergedDirectory = dir('*_MergedData.mat');
@@ -42,6 +42,12 @@ for a = 1:size(mergedDataFiles, 1)
     vesselIDs{a,1} = vID;
 end
 
+
+filtThreshold = 20;
+filtOrder = 2;
+[z, p, k] = butter(filtOrder, filtThreshold/(150/2), 'low');
+[sos, g] = zp2sos(z, p, k);
+
 % For each vessel, pull the diameter and whisker angle
 uniqueVesselIDs = unique(vesselIDs);
 [B, A] = butter(4, 2/(p2Fs/2), 'low');   % 2 Hz low pass filter for vessels
@@ -54,9 +60,9 @@ for b = 1:length(uniqueVesselIDs)
         if strcmp(uniqueVesselID, mdID) == true
             load(mergedDataFile);
             % Detrend the filtered vessel diameter
-            uniqueVesselData{b,1}(:,d) = detrend(filtfilt(B, A, MergedData.data.vesselDiameter(2:end - 1)), 'constant');
+            uniqueVesselData{b,1}(:,d) = filtfilt(B, A, (detrend(MergedData.data.vesselDiameter, 'constant')));
             % Detrend the filtered absolute value of the whisker acceleration that was resampled down to 20 Hz (Fs of vessels)
-            uniqueWhiskerData{b,1}(:,d) = detrend(filtfilt(B, A, abs(diff(resample(MergedData.data.whiskerAngle, p2Fs, dsFs), 2))), 'constant');
+            uniqueWhiskerData{b,1}(:,d) = resample(filtfilt(sos, g, (abs(diff(MergedData.data.rawWhiskerAngle, 2)))), p2Fs, wFs);
             d = d + 1;
         end
     end
