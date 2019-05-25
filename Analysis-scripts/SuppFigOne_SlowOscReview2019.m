@@ -63,19 +63,23 @@ for a = 1:length(animalIDs)
     end
 end
 
+%%
 for h = 1:size(whiskDataC1_1, 1)
     whiskDataC1_3(h,:) = resample(whiskDataC1_1(h,:), p2Fs_2, p2Fs);
     whiskDataC2_3(h,:) = resample(whiskDataC2_1(h,:), p2Fs_2, p2Fs);
     whiskDataC3_3(h,:) = resample(whiskDataC3_1(h,:), p2Fs_2, p2Fs);
 end
 
+
+%%
 for i = 1:size(whiskDataC1_2, 1)
     whiskDataC1_3(x,:) = whiskDataC1_2(i,:);
     whiskDataC2_3(x,:) = whiskDataC2_2(i,:);
-    whiskDataC3_3(x,:) = whiskDataC3_2(i,:);
+    whiskDataC3_3(x,:) = whiskDataC3_2(i,:); 
     vIDs1{x,1} = vIDs2{i,1};
     x = x + 1;
 end
+
 
 %%
 timeVec = ((1:length(whiskDataC1_3))/p2Fs_2) - leadTime;

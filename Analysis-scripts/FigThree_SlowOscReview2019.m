@@ -73,7 +73,7 @@ xlabel('Frequency (Hz)')
 ylabel('Coherence')
 legend('Original data')
 % legend('Original data', 'Shuffled data')
-xlim([0.004 0.5])
+xlim([0.05 0.5])
 pause(1)
 
 end

@@ -64,7 +64,7 @@ title('Ind coherence Abs(whiskAccel) vs. vessel diameter')
 xlabel('Frequency (Hz)')
 ylabel('Coherence')
 legend(vIDs1)
-xlim([0.004 0.5])
+xlim([0.05 0.5])
 
 % subplot(1,2,2)
 % for e = 1:size(shuffledCoherenceData1,1)

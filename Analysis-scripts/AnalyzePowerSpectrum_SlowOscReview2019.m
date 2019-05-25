@@ -24,7 +24,7 @@ elseif strcmp(animalID, 'T80') || strcmp(animalID, 'T81') || strcmp(animalID, 'T
 elseif strcmp(animalID, 'T82b') || strcmp(animalID, 'T83b')
     p2Fs = 5;
 end
-dsFs = 30;   % Down-sampled Fs is 30 Hz
+dsFs = 150;   % Down-sampled Fs is 150 Hz
 
 % Load necessary data structures and filenames from current directory
 mergedDirectory = dir('*_MergedData.mat');
@@ -68,7 +68,7 @@ end
 params.tapers = [10 19];
 params.pad = 1;
 params.Fs = p2Fs;
-params.fpass = [0.004 0.5]; 
+params.fpass = [0.05 0.5]; 
 params.trialave = 1;
 params.err = [2 0.05];
 

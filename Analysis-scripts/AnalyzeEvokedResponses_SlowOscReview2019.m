@@ -34,7 +34,7 @@ end
 
 offset = 4;   % Look four seconds prior to the start of a whisking event
 duration = 10;   % Look ten seconds after the start of a whisking event
-minRestTime = 2;
+minRestTime = 1;
 
 % Load necessary data structures and filenames from current directory
 EventDataFile = dir('*_EventData.mat');
@@ -161,17 +161,9 @@ for a = 1:length(whiskZhold_all)
     whiskS{a,1} = mean(whiskZhold_all{a,1}, 3);
 end
 
-allVesselIDs = [];
-for a = 1:size(whiskVesselIDs,1)
-    allVesselIDs = cat(1, allVesselIDs, unique(whiskVesselIDs{a,1}));
-end
-
-allVesselIDs = unique(allVesselIDs);
-
-
 %% Determine how long each vessel was imaged on this particular day, as well as its resting baseline diameter
-for a = 1:length(allVesselIDs)
-    uvID = allVesselIDs{a,1};
+for a = 1:length(uniqueVesselIDs)
+    uvID = uniqueVesselIDs{a,1};
     t = 1;
     for b = 1:size(specDataFiles,1)
         [~,~,~,vID,~] = GetFileInfo2_SlowOscReview2019(specDataFiles(b,:));
@@ -192,13 +184,13 @@ for a = 1:length(allVesselIDs)
     vBaselines{a,1} = round(mean(vesselBaselines),1);
 end
 
-tblVals.vesselIDs = allVesselIDs;
+tblVals.vesselIDs = uniqueVesselIDs;
 tblVals.timePerVessel = timePerVessel;
 tblVals.baselines = vBaselines;
 
 %% Save the results.
 ComparisonData.(animalSaveID).WhiskEvokedAvgs.vesselData = whiskCritMeans.data;
-ComparisonData.(animalSaveID).WhiskEvokedAvgs.vesselIDs = allVesselIDs;
+ComparisonData.(animalSaveID).WhiskEvokedAvgs.vesselIDs = uniqueVesselIDs;
 ComparisonData.(animalSaveID).WhiskEvokedAvgs.LFP.T = whiskT;
 ComparisonData.(animalSaveID).WhiskEvokedAvgs.LFP.F = whiskF;
 ComparisonData.(animalSaveID).WhiskEvokedAvgs.LFP.S = whiskS;

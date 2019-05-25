@@ -102,7 +102,7 @@ for b = 1:length(animalIDs)
     multiWaitbar_SlowOscReview2019('Analyzing cross correlation', 'Value', b/length(animalIDs));
 end
 
-%% BLOCK PURPOSE: [3] Analyze the spectral coherence between abs(whisker acceleration) and vessel diameter.
+% BLOCK PURPOSE: [3] Analyze the spectral coherence between abs(whisker acceleration) and vessel diameter.
 for c = 1:length(animalIDs)
     [ComparisonData] = AnalyzeCoherence_SlowOscReview2019(animalIDs{1,c}, ComparisonData);
     multiWaitbar_SlowOscReview2019('Analyzing coherence', 'Value', c/length(animalIDs));

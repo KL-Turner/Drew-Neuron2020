@@ -78,7 +78,7 @@ title('Ind power spec vessel diameter')
 xlabel('Frequency (Hz)')
 ylabel('Power')
 legend(vIDs1)
-xlim([0.004 0.5])
+xlim([0.05 0.5])
 
 ax2 = subplot(1,2,2);
 for c = 1:size(powerspecWhiskData1,1)
@@ -89,7 +89,7 @@ title('Ind power spec abs(whiskerAccel)')
 xlabel('Frequency (Hz)')
 ylabel('Power')
 legend(animalIDs)
-xlim([0.004 0.5])
+xlim([0.05 0.5])
 linkaxes([ax1 ax2], 'xy')
 pause(1)
 
