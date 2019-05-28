@@ -21,7 +21,7 @@ function [] = MainScript_SlowOscReview2019()
 %________________________________________________________________________________________________________________________
 
 clear; clc; close all
-%% Make sure the current directory is 'TurnerFigs-SlowOscReview2019' and that the MainScript/code repository is present.
+%% Make sure the current directory is 'TurnerFigs-SlowOscReview2019' and that the code repository is present.
 currentFolder = pwd;
 addpath(genpath(currentFolder));
 fileparts = strsplit(currentFolder, filesep);
@@ -34,8 +34,8 @@ end
 addpath(genpath(rootfolder))
 
 % Verify that the User is in the correct working directory. Toss an error msg & end the function if not.
-if ~strcmp(fileparts(end),'Kleinfeld_Review2019_Turner_ProcessedData')
-    message = 'The current folder does not appear to be Kleinfeld_Review2019_Turner_ProcessedData, please cd to the correct folder and re-run';
+if ~strcmp(fileparts(end), 'Kleinfeld_Review2019_Turner_ProcessedData') && ~strcmp(fileparts(end), 'TurnerFigs-SlowOscReview2019')
+    message = 'The current folder does not appear to be Kleinfeld_Review2019_Turner_ProcessedData or TurnerFigs-SlowOscReview2019, please cd to the correct folder and re-run';
     title = 'Incorrect Directory';
     waitfor(msgbox(message,title,'error'));
     return
@@ -46,7 +46,7 @@ dataSummary = dir('ComparisonData.mat');
 % If the analysis structure has already been created, load it and skip the analysis.
 if ~isempty(dataSummary)
     load(dataSummary.name);
-    disp('Loading analysis results and re-generating figures...'); disp('')
+    disp('Loading analysis results and re-generating figures...'); disp(' ')
 else
     multiWaitbar_SlowOscReview2019('Analyzing whisking-evoked data', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
     multiWaitbar_SlowOscReview2019('Analyzing cross correlation', 0, 'Color', [0.720000 0.530000 0.040000]); pause(0.25);
@@ -129,7 +129,7 @@ if selectFigs == true
     cd(path)
 else
     fileNames = 'T72_A1_190317_19_21_24_022_MergedData.mat';
-    cd('T72')
+    cd('Single Trial Example')
 end
 
 % Load the RestingBaselines structure from this animal
