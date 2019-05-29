@@ -63,8 +63,8 @@ coherenceSTD = std(coherenceData1, 1, 1);
 figure;
 plot(f1, coherenceMean, 'k', 'LineWidth', 2)
 hold on
-plot(f1, coherenceMean + coherenceSTD, 'Color', colors('ash grey'))
-plot(f1, coherenceMean - coherenceSTD, 'Color', colors('ash grey'))
+plot(f1, coherenceMean + coherenceSTD, 'Color', colors_SlowOscReview2019('ash grey'))
+plot(f1, coherenceMean - coherenceSTD, 'Color', colors_SlowOscReview2019('ash grey'))
 % plot(f1, shuffledCoherenceMean, 'm')
 % plot(f1, shuffledCoherenceMean + shuffledCoherenceSTD)
 % plot(f1, shuffledCoherenceMean - shuffledCoherenceSTD)

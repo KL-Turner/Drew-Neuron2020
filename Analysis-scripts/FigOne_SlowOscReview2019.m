@@ -99,8 +99,8 @@ figure;
 ax1 = subplot(2,3,1);
 plot(timeVec, whiskDataMeanC1, 'k', 'LineWidth', 2)
 hold on
-plot(timeVec, whiskDataMeanC1 + whiskSTDC1, 'Color', colors('ash grey'))
-plot(timeVec, whiskDataMeanC1 - whiskSTDC1, 'Color', colors('ash grey'))
+plot(timeVec, whiskDataMeanC1 + whiskSTDC1, 'Color', colors_SlowOscReview2019('ash grey'))
+plot(timeVec, whiskDataMeanC1 - whiskSTDC1, 'Color', colors_SlowOscReview2019('ash grey'))
 title('Mean 0.5 to 2')
 xlabel('Peri-whisk time (sec)')
 ylabel('\Delta Diameter (%)')
@@ -108,8 +108,8 @@ ylabel('\Delta Diameter (%)')
 ax2 = subplot(2,3,2);
 plot(timeVec, whiskDataMeanC2, 'k', 'LineWidth', 2)
 hold on
-plot(timeVec, whiskDataMeanC2 + whiskSTDC2, 'Color', colors('ash grey'))
-plot(timeVec, whiskDataMeanC2 - whiskSTDC2, 'Color', colors('ash grey'))
+plot(timeVec, whiskDataMeanC2 + whiskSTDC2, 'Color', colors_SlowOscReview2019('ash grey'))
+plot(timeVec, whiskDataMeanC2 - whiskSTDC2, 'Color', colors_SlowOscReview2019('ash grey'))
 title('Mean 2 to 5')
 xlabel('Peri-whisk time (sec)')
 ylabel('\Delta Diameter (%)')
@@ -117,8 +117,8 @@ ylabel('\Delta Diameter (%)')
 ax3 = subplot(2,3,3);
 plot(timeVec, whiskDataMeanC3, 'k', 'LineWidth', 2)
 hold on
-plot(timeVec, whiskDataMeanC3 + whiskSTDC3, 'Color', colors('ash grey'))
-plot(timeVec, whiskDataMeanC3 - whiskSTDC3, 'Color', colors('ash grey'))
+plot(timeVec, whiskDataMeanC3 + whiskSTDC3, 'Color', colors_SlowOscReview2019('ash grey'))
+plot(timeVec, whiskDataMeanC3 - whiskSTDC3, 'Color', colors_SlowOscReview2019('ash grey'))
 title('Mean 5 to 10')
 xlabel('Peri-whisk time (sec)')
 ylabel('\Delta Diameter (%)')

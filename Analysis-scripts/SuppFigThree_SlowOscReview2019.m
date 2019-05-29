@@ -65,23 +65,23 @@ for d = 1:size(coherenceData1,1)
     animalName = vID(1:3);
     switch animalName
         case 'T72'
-            animalColor = colors('candy apple red');
+            animalColor = colors_SlowOscReview2019('candy apple red');
         case 'T73'
-            animalColor = colors('deep carrot orange');
+            animalColor = colors_SlowOscReview2019('deep carrot orange');
         case 'T74'
-            animalColor = colors('vegas gold');
+            animalColor = colors_SlowOscReview2019('vegas gold');
         case 'T75'
-            animalColor = colors('jungle green');
+            animalColor = colors_SlowOscReview2019('jungle green');
         case 'T76'
-            animalColor = colors('sapphire');
+            animalColor = colors_SlowOscReview2019('sapphire');
         case 'T80'
-            animalColor = colors('otter brown');
+            animalColor = colors_SlowOscReview2019('otter brown');
         case 'T81'
-            animalColor = colors('royal purple');
+            animalColor = colors_SlowOscReview2019('royal purple');
         case 'T82'
-            animalColor = colors('flamingo pink');
+            animalColor = colors_SlowOscReview2019('flamingo pink');
         case 'T83'
-            animalColor = colors('smoky black');
+            animalColor = colors_SlowOscReview2019('smoky black');
     end
     plot(f1, coherenceData1(d,:), 'LineWidth', 1.5, 'Color', animalColor);
     hold on

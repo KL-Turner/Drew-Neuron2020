@@ -33,8 +33,8 @@ xcorrSTD = std(XCorrData,1,1);
 figure;
 plot(lags, xcorrMean, 'k', 'LineWidth', 2)
 hold on
-plot(lags, xcorrMean + xcorrSTD, 'Color', colors('ash grey'))
-plot(lags, xcorrMean - xcorrSTD, 'Color', colors('ash grey'))
+plot(lags, xcorrMean + xcorrSTD, 'Color', colors_SlowOscReview2019('ash grey'))
+plot(lags, xcorrMean - xcorrSTD, 'Color', colors_SlowOscReview2019('ash grey'))
 title('Mean XCorr Abs(whiskAccel) vs. vessel diameter')
 ylabel('Correlation')
 xlabel('Lags (sec)')
