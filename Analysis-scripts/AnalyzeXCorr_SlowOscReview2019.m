@@ -20,10 +20,10 @@ cd(animalID);   % Change to the subfolder for the current animal
 if strcmp(animalID, 'T72') || strcmp(animalID, 'T73') || strcmp(animalID, 'T74') || strcmp(animalID, 'T75') || strcmp(animalID, 'T76') 
     p2Fs = 20;   % Two-photon Fs is 20 Hz
     trialDuration = 280;   % 4 minutes, 40 seconds. ten seconds were previously removed from beginning/end
-elseif strcmp(animalID, 'T80') || strcmp(animalID, 'T81') || strcmp(animalID, 'T82') || strcmp(animalID, 'T83')
+elseif strcmp(animalID, 'T80') || strcmp(animalID, 'T81')
     p2Fs = 20;
     trialDuration = 900;
-elseif strcmp(animalID, 'T82b') || strcmp(animalID, 'T83b')
+elseif strcmp(animalID, 'T82') || strcmp(animalID, 'T83')
     p2Fs = 5;
     trialDuration = 900;
 end

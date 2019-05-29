@@ -19,9 +19,9 @@ function [ComparisonData] = AnalyzeCoherence_SlowOscReview2019(animalID, Compari
 cd(animalID);   % Change to the subfolder for the current animal
 if strcmp(animalID, 'T72') || strcmp(animalID, 'T73') || strcmp(animalID, 'T74') || strcmp(animalID, 'T75') || strcmp(animalID, 'T76') 
     p2Fs = 20;   % Two-photon Fs is 20 Hz
-elseif strcmp(animalID, 'T80') || strcmp(animalID, 'T81') || strcmp(animalID, 'T82') || strcmp(animalID, 'T83')
+elseif strcmp(animalID, 'T80') || strcmp(animalID, 'T81')
     p2Fs = 20;
-elseif strcmp(animalID, 'T82b') || strcmp(animalID, 'T83b')
+elseif strcmp(animalID, 'T82') || strcmp(animalID, 'T83')
     p2Fs = 5;
 end
 dsFs = 150;   % Down-sampled Fs is 30 Hz
@@ -95,6 +95,7 @@ end
 %% Save the results.
 ComparisonData.(animalID).WhiskVessel_Coherence.C = allC;
 % ComparisonData.(animalID).WhiskVessel_Coherence.shuffC = shuffledC_means;
+ComparisonData.(animalID).WhiskVessel_Coherence.confC = allconfC;
 ComparisonData.(animalID).WhiskVessel_Coherence.f = allf;
 ComparisonData.(animalID).WhiskVessel_Coherence.vesselIDs = uniqueVesselIDs;
 cd ..

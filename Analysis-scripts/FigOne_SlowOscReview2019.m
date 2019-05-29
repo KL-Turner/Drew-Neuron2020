@@ -97,28 +97,28 @@ whiskLFPMeanC3 = mean(whiskLFPC3,3);
 timeVec = ((1:length(whiskDataMeanC1))/p2Fs_2) - leadTime;
 figure;
 ax1 = subplot(2,3,1);
-plot(timeVec, whiskDataMeanC1, 'k')
+plot(timeVec, whiskDataMeanC1, 'k', 'LineWidth', 2)
 hold on
-plot(timeVec, whiskDataMeanC1 + whiskSTDC1)
-plot(timeVec, whiskDataMeanC1 - whiskSTDC1)
+plot(timeVec, whiskDataMeanC1 + whiskSTDC1, 'Color', colors('ash grey'))
+plot(timeVec, whiskDataMeanC1 - whiskSTDC1, 'Color', colors('ash grey'))
 title('Mean 0.5 to 2')
 xlabel('Peri-whisk time (sec)')
 ylabel('\Delta Diameter (%)')
 
 ax2 = subplot(2,3,2);
-plot(timeVec, whiskDataMeanC2, 'k')
+plot(timeVec, whiskDataMeanC2, 'k', 'LineWidth', 2)
 hold on
-plot(timeVec, whiskDataMeanC2 + whiskSTDC2)
-plot(timeVec, whiskDataMeanC2 - whiskSTDC2)
+plot(timeVec, whiskDataMeanC2 + whiskSTDC2, 'Color', colors('ash grey'))
+plot(timeVec, whiskDataMeanC2 - whiskSTDC2, 'Color', colors('ash grey'))
 title('Mean 2 to 5')
 xlabel('Peri-whisk time (sec)')
 ylabel('\Delta Diameter (%)')
 
 ax3 = subplot(2,3,3);
-plot(timeVec, whiskDataMeanC3, 'k')
+plot(timeVec, whiskDataMeanC3, 'k', 'LineWidth', 2)
 hold on
-plot(timeVec, whiskDataMeanC3 + whiskSTDC3)
-plot(timeVec, whiskDataMeanC3 - whiskSTDC3)
+plot(timeVec, whiskDataMeanC3 + whiskSTDC3, 'Color', colors('ash grey'))
+plot(timeVec, whiskDataMeanC3 - whiskSTDC3, 'Color', colors('ash grey'))
 title('Mean 5 to 10')
 xlabel('Peri-whisk time (sec)')
 ylabel('\Delta Diameter (%)')
@@ -129,6 +129,7 @@ imagesc(T,F,whiskLFPMeanC1);
 axis xy
 caxis([-.5 0.75])
 ylim([1 100])
+colormap parula
 title('LFP 0.5 to 2 seconds')
 ylabel('Frequency (Hz)')
 xlabel('Peri-whisk time (sec)')
@@ -138,6 +139,7 @@ imagesc(T,F,whiskLFPMeanC2);
 axis xy
 caxis([-.5 0.75])
 ylim([1 100])
+colormap parula
 title('LFP 2 to 5 seconds')
 ylabel('Frequency (Hz)')
 xlabel('Peri-whisk time (sec)')
@@ -147,6 +149,7 @@ imagesc(T,F,whiskLFPMeanC3);
 axis xy
 caxis([-.5 0.75])
 ylim([1 100])
+colormap parula
 title('LFP 5 to 10 seconds')
 ylabel('Frequency (Hz)')
 xlabel('Peri-whisk time (sec)')

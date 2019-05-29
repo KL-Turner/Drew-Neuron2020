@@ -61,10 +61,10 @@ coherenceSTD = std(coherenceData1, 1, 1);
 
 %%
 figure;
-plot(f1, coherenceMean, 'k')
+plot(f1, coherenceMean, 'k', 'LineWidth', 2)
 hold on
-plot(f1, coherenceMean + coherenceSTD)
-plot(f1, coherenceMean - coherenceSTD)
+plot(f1, coherenceMean + coherenceSTD, 'Color', colors('ash grey'))
+plot(f1, coherenceMean - coherenceSTD, 'Color', colors('ash grey'))
 % plot(f1, shuffledCoherenceMean, 'm')
 % plot(f1, shuffledCoherenceMean + shuffledCoherenceSTD)
 % plot(f1, shuffledCoherenceMean - shuffledCoherenceSTD)

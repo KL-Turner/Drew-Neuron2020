@@ -86,7 +86,29 @@ timeVec = ((1:length(whiskDataC1_3))/p2Fs_2) - leadTime;
 figure;
 ax1 = subplot(1,3,1);
 for x = 1:size(whiskDataC1_3, 1)
-    plot(timeVec, whiskDataC1_3(x,:));
+    vID = char(vIDs1{x,1});
+    animalName = vID(1:3);
+    switch animalName
+        case 'T72'
+            animalColor = colors('candy apple red');
+        case 'T73'
+            animalColor = colors('deep carrot orange');
+        case 'T74'
+            animalColor = colors('vegas gold');
+        case 'T75'
+            animalColor = colors('jungle green');
+        case 'T76'
+            animalColor = colors('sapphire');
+        case 'T80'
+            animalColor = colors('otter brown');
+        case 'T81'
+            animalColor = colors('royal purple');
+        case 'T82'
+            animalColor = colors('flamingo pink');
+        case 'T83'
+            animalColor = colors('smoky black');
+    end
+    plot(timeVec, whiskDataC1_3(x,:), 'LineWidth', 1.5, 'Color', animalColor);
     hold on
 end
 title('Ind 0.5 to 2 seconds')
@@ -95,7 +117,29 @@ ylabel('\Delta Diameter (%)')
 
 ax2 = subplot(1,3,2);
 for y = 1:size(whiskDataC2_3, 1)
-    plot(timeVec, whiskDataC2_3(y,:));
+    vID = char(vIDs1{y,1});
+    animalName = vID(1:3);
+    switch animalName
+        case 'T72'
+            animalColor = colors('candy apple red');
+        case 'T73'
+            animalColor = colors('deep carrot orange');
+        case 'T74'
+            animalColor = colors('vegas gold');
+        case 'T75'
+            animalColor = colors('jungle green');
+        case 'T76'
+            animalColor = colors('sapphire');
+        case 'T80'
+            animalColor = colors('otter brown');
+        case 'T81'
+            animalColor = colors('royal purple');
+        case 'T82'
+            animalColor = colors('flamingo pink');
+        case 'T83'
+            animalColor = colors('smoky black');
+    end
+    plot(timeVec, whiskDataC2_3(y,:), 'LineWidth', 1.5, 'Color', animalColor);
     hold on
 end
 title('Ind 2 to 5 seconds')
@@ -104,7 +148,29 @@ ylabel('\Delta Diameter (%)')
 
 ax3 = subplot(1,3,3);
 for z = 1:size(whiskDataC3_3, 1)
-    plot(timeVec, whiskDataC3_3(z,:));
+    vID = char(vIDs1{z,1});
+    animalName = vID(1:3);
+    switch animalName
+        case 'T72'
+            animalColor = colors('candy apple red');
+        case 'T73'
+            animalColor = colors('deep carrot orange');
+        case 'T74'
+            animalColor = colors('vegas gold');
+        case 'T75'
+            animalColor = colors('jungle green');
+        case 'T76'
+            animalColor = colors('sapphire');
+        case 'T80'
+            animalColor = colors('otter brown');
+        case 'T81'
+            animalColor = colors('royal purple');
+        case 'T82'
+            animalColor = colors('flamingo pink');
+        case 'T83'
+            animalColor = colors('smoky black');
+    end
+    plot(timeVec, whiskDataC3_3(z,:), 'LineWidth', 1.5, 'Color', animalColor);
     hold on
 end
 title('Ind 5 to 10 seconds')

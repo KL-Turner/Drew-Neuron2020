@@ -76,20 +76,20 @@ powerspecWhiskSTD = std(powerspecWhiskData1,1,1);
 %%
 figure;
 ax1 = subplot(1,2,1);
-loglog(vf1, powerspecVesselMean, 'k')
+loglog(vf1, powerspecVesselMean, 'k', 'LineWidth', 2)
 hold on
-loglog(vf1, powerspecVesselMean + powerspecVesselSTD)
-loglog(vf1, powerspecVesselMean - powerspecVesselSTD)
+loglog(vf1, powerspecVesselMean + powerspecVesselSTD, 'Color', colors('ash grey'))
+loglog(vf1, powerspecVesselMean - powerspecVesselSTD, 'Color', colors('ash grey'))
 title('Mean power spec vessel diameter')
 xlabel('Frequency (Hz)')
 ylabel('Power')
 xlim([0.05 0.5])
 
 ax2 = subplot(1,2,2);
-loglog(wf1, powerspecWhiskMean, 'k')
+loglog(wf1, powerspecWhiskMean, 'k', 'LineWidth', 2)
 hold on
-loglog(wf1, powerspecWhiskMean + powerspecWhiskSTD)
-loglog(wf1, powerspecWhiskMean - powerspecWhiskSTD)
+loglog(wf1, powerspecWhiskMean + powerspecWhiskSTD, 'Color', colors('ash grey'))
+loglog(wf1, powerspecWhiskMean - powerspecWhiskSTD, 'Color', colors('ash grey'))
 title('Mean power spec abs(whiskerAccel)')
 xlabel('Frequency (Hz)')
 ylabel('Power')

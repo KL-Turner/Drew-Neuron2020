@@ -67,11 +67,35 @@ for f = 1:size(powerspecWhiskData2, 1)
     c = c + 1;
 end
 
+
+
 %%
 figure;
 ax1 = subplot(1,2,1);
 for c = 1:size(powerspecVesselData1, 1)
-    loglog(vf1, powerspecVesselData1(c,:));
+    vID = char(vIDs1{c,1});
+    animalName = vID(1:3);
+    switch animalName
+        case 'T72'
+            animalColor = colors('candy apple red');
+        case 'T73'
+            animalColor = colors('deep carrot orange');
+        case 'T74'
+            animalColor = colors('vegas gold');
+        case 'T75'
+            animalColor = colors('jungle green');
+        case 'T76'
+            animalColor = colors('sapphire');
+        case 'T80'
+            animalColor = colors('otter brown');
+        case 'T81'
+            animalColor = colors('royal purple');
+        case 'T82'
+            animalColor = colors('flamingo pink');
+        case 'T83'
+            animalColor = colors('smoky black');
+    end
+    loglog(vf1, powerspecVesselData1(c,:), 'LineWidth', 1.5, 'Color', animalColor);
     hold on
 end
 title('Ind power spec vessel diameter')
@@ -81,8 +105,29 @@ legend(vIDs1)
 xlim([0.05 0.5])
 
 ax2 = subplot(1,2,2);
-for c = 1:size(powerspecWhiskData1,1)
-    loglog(wf1, powerspecWhiskData1(c,:));
+for d = 1:size(powerspecWhiskData1,1)
+    animalName = animalIDs{d,1};
+    switch animalName
+        case 'T72'
+            animalColor = colors('candy apple red');
+        case 'T73'
+            animalColor = colors('deep carrot orange');
+        case 'T74'
+            animalColor = colors('vegas gold');
+        case 'T75'
+            animalColor = colors('jungle green');
+        case 'T76'
+            animalColor = colors('sapphire');
+        case 'T80'
+            animalColor = colors('otter brown');
+        case 'T81'
+            animalColor = colors('royal purple');
+        case 'T82'
+            animalColor = colors('flamingo pink');
+        case 'T83'
+            animalColor = colors('smoky black');
+    end
+    loglog(wf1, powerspecWhiskData1(d,:), 'LineWidth', 1.5, 'Color', animalColor);
     hold on
 end
 title('Ind power spec abs(whiskerAccel)')

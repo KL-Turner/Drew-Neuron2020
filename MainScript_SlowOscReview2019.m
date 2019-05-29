@@ -87,7 +87,7 @@ disp('MainScript Analysis - Complete'); disp(' ')
 end
 
 function [ComparisonData] = AnalyzeData_SlowOscReview2019()
-animalIDs = {'T72', 'T73', 'T74', 'T75', 'T76', 'T80', 'T81', 'T82', 'T82b', 'T83', 'T83b'};   % list of animal IDs
+animalIDs = {'T72', 'T73', 'T74', 'T75', 'T76', 'T80', 'T81', 'T82', 'T83'};   % list of animal IDs
 ComparisonData = [];   % pre-allocate the results structure as empty
 
 %% BLOCK PURPOSE: [1] Analyze the whisking-evoked changes in vessel diameter and neural LFP.
@@ -128,8 +128,12 @@ if selectFigs == true
     [fileNames, path] = uigetfile('*_MergedData.mat', 'MultiSelect', 'on');
     cd(path)
 else
-    fileNames = 'T72_A1_190317_19_21_24_022_MergedData.mat';
-    cd('Single Trial Example')
+    fileNames = 'T81_A1_190413_19_34_28_006_MergedData.mat';
+    try
+        cd('Single Trial Example')
+    catch
+        cd('T81')
+    end
 end
 
 % Load the RestingBaselines structure from this animal
