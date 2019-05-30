@@ -34,8 +34,8 @@ end
 addpath(genpath(rootfolder))
 
 % Verify that the User is in the correct working directory. Toss an error msg & end the function if not.
-if ~strcmp(fileparts(end), 'Kleinfeld_Review2019_Turner_ProcessedData') && ~strcmp(fileparts(end), 'TurnerFigs-SlowOscReview2019')
-    message = 'The current folder does not appear to be Kleinfeld_Review2019_Turner_ProcessedData or TurnerFigs-SlowOscReview2019, please cd to the correct folder and re-run';
+if ~strcmp(fileparts(end), 'Kleinfeld_Review2019_Turner_ProcessedData') && ~strcmp(fileparts(end), 'TurnerFigs-SlowOscReview2019-master') && ~strcmp(fileparts(end), 'TurnerFigs-SlowOscReview2019')
+    message = 'The current folder does not appear to be Kleinfeld_Review2019_Turner_ProcessedData or TurnerFigs-SlowOscReview2019-master, please cd to the correct folder and re-run';
     title = 'Incorrect Directory';
     waitfor(msgbox(message,title,'error'));
     return
