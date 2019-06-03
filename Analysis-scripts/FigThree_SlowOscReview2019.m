@@ -28,6 +28,7 @@ for a = 1:length(animalIDs)
             vID = join([string(animalID) string(ComparisonData.(animalID).WhiskVessel_Coherence.vesselIDs{b,1})]);
             f1 = ComparisonData.(animalID).WhiskVessel_Coherence.f{1,1};
             vIDs1{x,1} = strrep(vID, ' ', '');
+            confC1{x,1} = ComparisonData.(animalID).WhiskVessel_Coherence.confC{b,1};
             x = x + 1;
         catch
             coherenceData2(y,:) = ComparisonData.(animalID).WhiskVessel_Coherence.C{b,1};
@@ -35,6 +36,7 @@ for a = 1:length(animalIDs)
             vID = join([string(animalID) string(ComparisonData.(animalID).WhiskVessel_Coherence.vesselIDs{b,1})]);
             f2 = ComparisonData.(animalID).WhiskVessel_Coherence.f{1,1};
             vIDs2{y,1} = strrep(vID, ' ', '');
+            confC2{y,1} = ComparisonData.(animalID).WhiskVessel_Coherence.confC{b,1};
             y = y + 1;
         end
     end
@@ -50,12 +52,15 @@ for c = 1:size(coherenceData2, 1)
     coherenceData1(x,:) = logicalCoherenceData;
 %     shuffledCoherenceData1(x,:) = logicalShuffledCoherenceData;
     vIDs1{x,1} = vIDs2{c,1};
+    confC1{x,1} = confC2{c,1};
     x = x + 1;
 end
 
 %% Averages
 coherenceMean = mean(coherenceData1, 1);
 coherenceSTD = std(coherenceData1, 1, 1);
+confInterval = max(cell2mat(confC1));
+confInterval_Y = ones(length(f1),1)*confInterval;
 % shuffledCoherenceMean = mean(shuffledCoherenceData1, 1);
 % shuffledCoherenceSTD = std(shuffledCoherenceData1, 1, 1);
 
@@ -65,14 +70,14 @@ plot(f1, coherenceMean, 'k', 'LineWidth', 2)
 hold on
 plot(f1, coherenceMean + coherenceSTD, 'Color', colors_SlowOscReview2019('ash grey'))
 plot(f1, coherenceMean - coherenceSTD, 'Color', colors_SlowOscReview2019('ash grey'))
+conf = plot(f1, confInterval_Y);
 % plot(f1, shuffledCoherenceMean, 'm')
 % plot(f1, shuffledCoherenceMean + shuffledCoherenceSTD)
 % plot(f1, shuffledCoherenceMean - shuffledCoherenceSTD)
 title('Mean coherence Abs(whiskAccel) vs. vessel diameter')
 xlabel('Frequency (Hz)')
 ylabel('Coherence')
-legend('Original data')
-% legend('Original data', 'Shuffled data')
+legend(conf, '95% conf inteval')
 xlim([0.05 0.5])
 pause(1)
 
