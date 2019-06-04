@@ -42,7 +42,6 @@ for a = 1:size(mergedDataFiles, 1)
     vesselIDs{a,1} = vID;
 end
 
-
 filtThreshold = 20;
 filtOrder = 2;
 [z, p, k] = butter(filtOrder, filtThreshold/(150/2), 'low');
@@ -62,7 +61,7 @@ for b = 1:length(uniqueVesselIDs)
             % Detrend the filtered vessel diameter
             uniqueVesselData{b,1}(:,d) = filtfilt(B, A, (detrend(MergedData.data.vesselDiameter, 'constant')));
             % Detrend the filtered absolute value of the whisker acceleration that was resampled down to 20 Hz (Fs of vessels)
-            uniqueWhiskerData{b,1}(:,d) = resample(filtfilt(sos, g, (abs(diff(MergedData.data.rawWhiskerAngle, 2)))), p2Fs, wFs);
+            uniqueWhiskerData{b,1}(:,d) = filtfilt(B, A, resample(filtfilt(sos, g, (abs(diff(MergedData.data.rawWhiskerAngle, 2)))), p2Fs, wFs));
             d = d + 1;
         end
     end
