@@ -69,7 +69,7 @@ end
 DetermineVesselStatistics_SlowOscReview2019(ComparisonData);
 
 % Create single trial summary figures. selectFigs = false displays the one used for representative example.
-selectFigs = false;   % set to true to manually select other figure(s).
+selectFigs = false;   % set to false to manually select other figure(s).
 GenerateSingleFigures_SlowOscReview2019(selectFigs)
 
 %% Individual figures can be re-run after the analysis has completed.
@@ -128,11 +128,11 @@ if selectFigs == true
     [fileNames, path] = uigetfile('*_MergedData.mat', 'MultiSelect', 'on');
     cd(path)
 else
-    fileNames = 'T81_A1_190413_19_34_28_006_MergedData.mat';
+    fileNames = 'T72_A1_190317_19_21_24_022_MergedData.mat';
     try
         cd('Single Trial Example')
     catch
-        cd('T81')
+        cd('T72')
     end
 end
 
