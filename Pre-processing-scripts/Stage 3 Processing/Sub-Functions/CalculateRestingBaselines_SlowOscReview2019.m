@@ -109,7 +109,7 @@ for u = 1:length(uniqueVessels)
             
             if ~isempty(uniqueDayVesselFileIDs)
                 uniqueDayFiles = unique(uniqueDayVesselFileIDs);
-                cutOffTime = targetMinutes/5;
+                cutOffTime = targetMinutes/(trialDuration_sec/60);
                 dayLog = zeros(length(validDays), 1);
                 for x = 1:length(validDays)
                     for y = 1:length(uniqueDayFiles)

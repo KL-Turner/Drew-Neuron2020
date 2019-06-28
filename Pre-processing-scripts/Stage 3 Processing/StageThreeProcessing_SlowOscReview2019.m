@@ -57,7 +57,8 @@ disp('Analyzing Block [3] Creating EventData struct for vessels and neural data.
 %% BLOCK PURPOSE: [4] Create Baselines data structure.
 disp('Analyzing Block [4] Finding the resting baseline for vessel diameter and neural data.'); disp(' ')
 targetMinutes = 30;
-[RestingBaselines] = CalculateRestingBaselines_SlowOscReview2019(animalID, targetMinutes, RestData);
+trialDuration_sec = 900;
+[RestingBaselines] = CalculateRestingBaselines_SlowOscReview2019(animalID, targetMinutes, trialDuration_sec, RestData);
 
 %% BLOCK PURPOSE [5] Analyze the spectrogram for each session.
 disp('Analyzing Block [5] Analyzing the spectrogram for each file and normalizing by the resting baseline.'); disp(' ')
