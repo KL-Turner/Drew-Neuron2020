@@ -1,4 +1,4 @@
-function FigTwo_SlowOscReview2019(ComparisonData)
+function TempCohXCorrFig_SlowOscReview2019(ComparisonData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -114,8 +114,8 @@ plot(lags,angleXC_Mean + angleXC_StErr,'Color',colors_SlowOscReview2019('ash gre
 plot(lags,angleXC_Mean - angleXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
 xlabel('Lags (s)')
 ylabel({'Corr. Coefficient';'WhiskAngle vs. \DeltaD/D'})
-xlim([-25,25])
-ylim([0,0.5])
+xlim([-50,50])
+ylim([0,0.75])
 set(gca,'box','off')
 axis square
 % Whisker velocity vs. vessel diameter XC
@@ -126,8 +126,8 @@ plot(lags,velocityXC_Mean + velocityXC_StErr,'Color',colors_SlowOscReview2019('a
 plot(lags,velocityXC_Mean - velocityXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
 xlabel('Lags (s)')
 ylabel({'Corr. Coefficient';'|WhiskVel| vs. \DeltaD/D'})
-xlim([-25,25])
-ylim([0,0.5])
+xlim([-50,50])
+ylim([0,0.75])
 set(gca,'box','off')
 axis square
 % Whisker acceleration vs. vessel diameter XC
@@ -138,8 +138,8 @@ plot(lags,accelXC_Mean + accelXC_StErr,'Color',colors_SlowOscReview2019('ash gre
 plot(lags,accelXC_Mean - accelXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
 xlabel('Lags (s)')
 ylabel({'Corr. Coefficient';'|WhiskAccel| vs. \DeltaD/D'})
-xlim([-25,25])
-ylim([0,0.5])
+xlim([-50,50])
+ylim([0,0.75])
 set(gca,'box','off')
 axis square
 % Movement vs. vessel diameter XC
@@ -150,8 +150,8 @@ plot(lags,movementXC_Mean + movementXC_StErr,'Color',colors_SlowOscReview2019('a
 plot(lags,movementXC_Mean - movementXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
 xlabel('Lags (s)')
 ylabel({'Corr. Coefficient';'|Movement| vs. \DeltaD/D'})
-xlim([-25,25])
-ylim([0,0.5])
+xlim([-50,50])
+ylim([0,0.75])
 set(gca,'box','off')
 axis square
 % Whisker angle vs. vessel diameter coherence

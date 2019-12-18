@@ -1,4 +1,4 @@
-function FigTwo_SlowOscReview2019(ComparisonData)
+function Fig7_SlowOscReview2019(ComparisonData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -14,6 +14,38 @@ function FigTwo_SlowOscReview2019(ComparisonData)
 %
 %   Last Revised: March 22nd, 2019
 %________________________________________________________________________________________________________________________
+
+ % Load the RestingBaselines structure from this animal
+         cd('T72')
+    baselineDirectory = dir('*_RestingBaselines.mat');
+    baselineDataFile = {baselineDirectory.name}';
+    baselineDataFile = char(baselineDataFile);
+    load(baselineDataFile,'-mat')
+    
+        % Load specific file and pull relevant file information for normalization and figure labels
+        indFile = 'T72_A1_190317_19_21_24_022_MergedData.mat';
+        load(indFile,'-mat');
+        [animalID,fileDate,fileID,vesselID,~] = GetFileInfo2_SlowOscReview2019(indFile);
+        strDay = ConvertDate_SlowOscReview2019(fileDate);
+        
+        %% BLOCK PURPOSE: Filter the whisker angle and identify the solenoid timing and location.
+        % Setup butterworth filter coefficients for a 10 Hz lowpass based on the sampling rate (30 Hz).
+        [B,A] = butter(3,10/(MergedData.notes.dsFs/2),'low');
+        filteredWhiskerAngle = filtfilt(B,A,MergedData.data.whiskerAngle);
+        filtForceSensor = filtfilt(B,A,MergedData.data.forceSensorM);
+        binWhiskers = MergedData.data.binWhiskerAngle;
+        binForce = MergedData.data.binForceSensorM;
+        
+        %% CBV data - normalize and then lowpass filer
+        % Setup butterworth filter coefficients for a 1 Hz lowpass based on the sampling rate (20 Hz).
+        [D,C] = butter(3,1/(MergedData.notes.p2Fs/2),'low');
+        vesselDiameter = MergedData.data.vesselDiameter;
+        normVesselDiameter = (vesselDiameter - RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine)./(RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine);
+        filtVesselDiameter = (filtfilt(D,C,normVesselDiameter))*100;
+        
+        %% Yvals for behavior Indices
+        whisking_YVals = 1.10*max(detrend(filtVesselDiameter,'constant'))*ones(size(binWhiskers));
+        force_YVals = 1.20*max(detrend(filtVesselDiameter,'constant'))*ones(size(binForce)); 
 
 %% Extract data from each animal for the cross-correlation averages 
 animalIDs = fields(ComparisonData);
@@ -106,32 +138,42 @@ confInterval_Y = ones(length(f1),1)*confInterval;
 
 %%
 figure;
-% Whisker angle vs. vessel diameter XC
-subplot(2,4,1)
-plot(lags,angleXC_Mean,'k','LineWidth',2)
-hold on
-plot(lags,angleXC_Mean + angleXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
-plot(lags,angleXC_Mean - angleXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
-xlabel('Lags (s)')
-ylabel({'Corr. Coefficient';'WhiskAngle vs. \DeltaD/D'})
-xlim([-25,25])
-ylim([0,0.5])
+% Force sensor
+ax1 = subplot(5,2,1:2);
+plot((1:length(filtForceSensor))/MergedData.notes.dsFs,filtForceSensor,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',2)
+ylabel('Force (V)')
+xlim([0 MergedData.notes.trialDuration_Sec])
 set(gca,'box','off')
-axis square
-% Whisker velocity vs. vessel diameter XC
-subplot(2,4,2)
-plot(lags,velocityXC_Mean,'k','LineWidth',2)
-hold on
-plot(lags,velocityXC_Mean + velocityXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
-plot(lags,velocityXC_Mean - velocityXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
-xlabel('Lags (s)')
-ylabel({'Corr. Coefficient';'|WhiskVel| vs. \DeltaD/D'})
-xlim([-25,25])
-ylim([0,0.5])
+% Whisker angle
+ax2 = subplot(5,2,3:4);
+plot((1:length(filteredWhiskerAngle))/MergedData.notes.dsFs,-filteredWhiskerAngle,'color',colors_SlowOscReview2019('carrot orange'),'LineWidth',2)
+ylabel('Angle (deg)')
+xlim([0 MergedData.notes.trialDuration_Sec])
 set(gca,'box','off')
-axis square
+% vessel diameter
+ax3 = subplot(5,2,5:6);
+plot((1:length(filtVesselDiameter))/MergedData.notes.p2Fs,detrend(filtVesselDiameter,'constant'),'color',colors_SlowOscReview2019('dark candy apple red'),'LineWidth',2)
+hold on;
+whiskInds = binWhiskers.*whisking_YVals;
+forceInds = binForce.*force_YVals;
+for x = 1:length(whiskInds)
+    if whiskInds(1,x) == 0
+        whiskInds(1,x) = NaN;
+    end
+    if forceInds(1,x) == 0
+        forceInds(1,x) = NaN;
+    end
+end
+scatter((1:length(binForce))/MergedData.notes.dsFs,forceInds,'.','MarkerEdgeColor',colors_SlowOscReview2019('sapphire'));
+scatter((1:length(binWhiskers))/MergedData.notes.dsFs,whiskInds,'.','MarkerEdgeColor',colors_SlowOscReview2019('carrot orange'));
+xlabel('Time (s)')
+ylabel('\DeltaD/D (%)')
+legend('Vessel diameter','Binarized movement events','binarized whisking events')
+xlim([0 MergedData.notes.trialDuration_Sec])
+set(gca,'box','off')
+linkaxes([ax1,ax2,ax3],'x')
 % Whisker acceleration vs. vessel diameter XC
-subplot(2,4,3)
+ax4 = subplot(5,2,7);
 plot(lags,accelXC_Mean,'k','LineWidth',2)
 hold on
 plot(lags,accelXC_Mean + accelXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
@@ -139,11 +181,10 @@ plot(lags,accelXC_Mean - accelXC_StErr,'Color',colors_SlowOscReview2019('ash gre
 xlabel('Lags (s)')
 ylabel({'Corr. Coefficient';'|WhiskAccel| vs. \DeltaD/D'})
 xlim([-25,25])
-ylim([0,0.5])
+ylim([-0.1,0.75])
 set(gca,'box','off')
-axis square
 % Movement vs. vessel diameter XC
-subplot(2,4,4)
+ax5 = subplot(5,2,8);
 plot(lags,movementXC_Mean,'k','LineWidth',2)
 hold on
 plot(lags,movementXC_Mean + movementXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
@@ -151,38 +192,10 @@ plot(lags,movementXC_Mean - movementXC_StErr,'Color',colors_SlowOscReview2019('a
 xlabel('Lags (s)')
 ylabel({'Corr. Coefficient';'|Movement| vs. \DeltaD/D'})
 xlim([-25,25])
-ylim([0,0.5])
+ylim([-0.1,0.75])
 set(gca,'box','off')
-axis square
-% Whisker angle vs. vessel diameter coherence
-subplot(2,4,5)
-plot(f1,angleCoherenceMean,'k','LineWidth',2)
-hold on
-plot(f1,angleCoherenceMean + angleCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
-plot(f1,angleCoherenceMean - angleCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
-conf = plot(f1,confInterval_Y,'--','Color',colors_SlowOscReview2019('vegas gold'),'LineWidth',2);
-xlabel('Frequency (Hz)')
-ylabel({'Coherence';'WhiskAngle vs. \DeltaD/D'})
-legend(conf,'95% conf inteval')
-xlim([0.05,0.5])
-ylim([0,0.75])
-set(gca,'box','off')
-axis square
-% Whisker velocity vs. vessel diameter coherence
-subplot(2,4,6)
-plot(f1,velocityCoherenceMean,'k','LineWidth',2)
-hold on
-plot(f1,velocityCoherenceMean + velocityCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
-plot(f1,velocityCoherenceMean - velocityCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
-conf = plot(f1,confInterval_Y,'--','Color',colors_SlowOscReview2019('vegas gold'),'LineWidth',2);
-xlabel('Frequency (Hz)')
-ylabel({'Coherence';'|WhiskVel| vs. \DeltaD/D'})
-xlim([0.05,0.5])
-ylim([0,0.75])
-set(gca,'box','off')
-axis square
 % Whisker acceleration vs. vessel diameter coherence
-subplot(2,4,7)
+ax6 = subplot(5,2,9);
 plot(f1,accelCoherenceMean,'k','LineWidth',2)
 hold on
 plot(f1,accelCoherenceMean + accelCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
@@ -193,9 +206,8 @@ ylabel({'Coherence';'|WhiskAccel| vs. \DeltaD/D'})
 xlim([0.05,0.5])
 ylim([0,0.75])
 set(gca,'box','off')
-axis square
 % Movement vs. vessel diameter coherence
-subplot(2,4,8)
+ax7 = subplot(5,2,10);
 plot(f1,movementCoherenceMean,'k','LineWidth',2)
 hold on
 plot(f1,movementCoherenceMean + movementCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
@@ -206,6 +218,5 @@ ylabel({'Coherence';'|Movement| vs. \DeltaD/D'})
 xlim([0.05,0.5])
 ylim([0,0.75])
 set(gca,'box','off')
-axis square
 
 end

@@ -70,7 +70,7 @@ plot(f1, coherenceMean, 'k', 'LineWidth', 2)
 hold on
 plot(f1, coherenceMean + coherenceSTD, 'Color', colors_SlowOscReview2019('ash grey'))
 plot(f1, coherenceMean - coherenceSTD, 'Color', colors_SlowOscReview2019('ash grey'))
-conf = plot(f1, confInterval_Y);
+conf = plot(f1,confInterval_Y);
 % plot(f1, shuffledCoherenceMean, 'm')
 % plot(f1, shuffledCoherenceMean + shuffledCoherenceSTD)
 % plot(f1, shuffledCoherenceMean - shuffledCoherenceSTD)
