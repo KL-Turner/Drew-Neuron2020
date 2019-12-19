@@ -25,8 +25,8 @@ end
 addpath(genpath(rootfolder))
 
 % Verify that the User is in the correct working directory. Toss an error msg & end the function if not.
-if ~strcmp(fileparts(end), 'Kleinfeld_Review2019_Turner_ProcessedData') && ~strcmp(fileparts(end), 'TurnerFigs-SlowOscReview2019-master') && ~strcmp(fileparts(end), 'TurnerFigs-SlowOscReview2019')
-    message = 'The current folder does not appear to be Kleinfeld_Review2019_Turner_ProcessedData or TurnerFigs-SlowOscReview2019-master, please cd to the correct folder and re-run';
+if ~strcmp(fileparts(end), 'Kleinfeld_Review_Neuron2020_Turner_ProcData') && ~strcmp(fileparts(end), 'TurnerFigs-SlowOscReview2019-master') && ~strcmp(fileparts(end), 'TurnerFigs-SlowOscReview2019')
+    message = 'The current folder does not appear to be Kleinfeld_Review_Neuron2020_Turner_ProcData or TurnerFigs-SlowOscReview2019-master, please cd to the correct folder and re-run';
     title = 'Incorrect Directory';
     waitfor(msgbox(message,title,'error'));
     return
@@ -62,7 +62,6 @@ selectFigs = false;   % set to true to manually select other figure(s).
 GenerateSingleFigures_SlowOscReview2019(selectFigs)
 
 %% Individual figures can be re-run after the analysis has completed.
-TempCohXCorrFig_SlowOscReview2019(ComparisonData)
 Fig7_SlowOscReview2019(ComparisonData)
 
 disp('MainScript Analysis - Complete'); disp(' ')

@@ -139,84 +139,76 @@ confInterval_Y = ones(length(f1),1)*confInterval;
 %%
 figure;
 % Force sensor
-ax1 = subplot(5,2,1:2);
-plot((1:length(filtForceSensor))/MergedData.notes.dsFs,filtForceSensor,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',2)
+ax1 = subplot(4,4,1:4);
+plot((1:length(diff(filteredWhiskerAngle,2)))/MergedData.notes.dsFs,diff(filteredWhiskerAngle,2),'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
+ylabel('Whisker Acceleration (deg/sec^2)')
+xlim([0 MergedData.notes.trialDuration_Sec])
+set(gca,'box','off')
+set(gca,'XTickLabel',[]);
+% Whisker angle
+ax2 = subplot(4,4,5:8);
+plot((1:length(filtForceSensor))/MergedData.notes.dsFs,filtForceSensor,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
 ylabel('Piezo sensor (V)')
 xlim([0 MergedData.notes.trialDuration_Sec])
 set(gca,'box','off')
-% Whisker angle
-ax2 = subplot(5,2,3:4);
-plot((1:length(filteredWhiskerAngle))/MergedData.notes.dsFs,-filteredWhiskerAngle,'color',colors_SlowOscReview2019('carrot orange'),'LineWidth',2)
-ylabel('Angle (deg)')
-xlim([0 MergedData.notes.trialDuration_Sec])
-set(gca,'box','off')
+set(gca,'XTickLabel',[]);
 % vessel diameter
-ax3 = subplot(5,2,5:6);
-plot((1:length(filtVesselDiameter))/MergedData.notes.p2Fs,detrend(filtVesselDiameter,'constant'),'color',colors_SlowOscReview2019('dark candy apple red'),'LineWidth',2)
-hold on;
-whiskInds = binWhiskers.*whisking_YVals;
-forceInds = binForce.*force_YVals;
-for x = 1:length(whiskInds)
-    if whiskInds(1,x) == 0
-        whiskInds(1,x) = NaN;
-    end
-    if forceInds(1,x) == 0
-        forceInds(1,x) = NaN;
-    end
-end
-scatter((1:length(binForce))/MergedData.notes.dsFs,forceInds,'.','MarkerEdgeColor',colors_SlowOscReview2019('sapphire'));
-scatter((1:length(binWhiskers))/MergedData.notes.dsFs,whiskInds,'.','MarkerEdgeColor',colors_SlowOscReview2019('carrot orange'));
+ax3 = subplot(4,4,9:12);
+plot((1:length(filtVesselDiameter))/MergedData.notes.p2Fs,detrend(filtVesselDiameter,'constant'),'color','k','LineWidth',1)
 xlabel('Time (s)')
 ylabel('\DeltaD/D (%)')
-legend('Vessel diameter','Binarized movement events','binarized whisking events')
 xlim([0 MergedData.notes.trialDuration_Sec])
 set(gca,'box','off')
 linkaxes([ax1,ax2,ax3],'x')
-% Whisker acceleration vs. vessel diameter XC
-ax4 = subplot(5,2,7);
-plot(lags,accelXC_Mean,'k','LineWidth',2)
-hold on
-plot(lags,accelXC_Mean + accelXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
-plot(lags,accelXC_Mean - accelXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
-xlabel('Lags (s)')
-ylabel({'Corr. Coefficient';'|WhiskAccel| vs. \DeltaD/D'})
-xlim([-25,25])
-ylim([-0.1,0.75])
-set(gca,'box','off')
-% Movement vs. vessel diameter XC
-ax5 = subplot(5,2,8);
-plot(lags,movementXC_Mean,'k','LineWidth',2)
-hold on
-plot(lags,movementXC_Mean + movementXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
-plot(lags,movementXC_Mean - movementXC_StErr,'Color',colors_SlowOscReview2019('ash grey'))
-xlabel('Lags (s)')
-ylabel({'Corr. Coefficient';'|Movement| vs. \DeltaD/D'})
-xlim([-25,25])
-ylim([-0.1,0.75])
-set(gca,'box','off')
 % Whisker acceleration vs. vessel diameter coherence
-ax6 = subplot(5,2,9);
-plot(f1,accelCoherenceMean,'k','LineWidth',2)
+ax4 = subplot(4,4,13);
+plot(f1,accelCoherenceMean,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',2)
 hold on
-plot(f1,accelCoherenceMean + accelCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
-plot(f1,accelCoherenceMean - accelCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
-conf = plot(f1,confInterval_Y,'--','Color',colors_SlowOscReview2019('vegas gold'),'LineWidth',2);
+plot(f1,accelCoherenceMean + accelCoherenceStErr,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
+plot(f1,accelCoherenceMean - accelCoherenceStErr,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
+conf = plot(f1,confInterval_Y,'--','color','k','LineWidth',1);
 xlabel('Frequency (Hz)')
 ylabel({'Coherence';'|WhiskAccel| vs. \DeltaD/D'})
 xlim([0.05,0.5])
 ylim([0,0.75])
 set(gca,'box','off')
-% Movement vs. vessel diameter coherence
-ax7 = subplot(5,2,10);
-plot(f1,movementCoherenceMean,'k','LineWidth',2)
+% Whisker acceleration vs. vessel diameter XC
+ax5 = subplot(4,4,14);
+plot(lags,accelXC_Mean,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',2)
 hold on
-plot(f1,movementCoherenceMean + movementCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
-plot(f1,movementCoherenceMean - movementCoherenceStErr,'Color',colors_SlowOscReview2019('ash grey'))
-conf = plot(f1,confInterval_Y,'--','Color',colors_SlowOscReview2019('vegas gold'),'LineWidth',2);
+plot(lags,accelXC_Mean + accelXC_StErr,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
+plot(lags,accelXC_Mean - accelXC_StErr,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
+[accelM,accelI] = max(accelXC_Mean);
+title(['Max corr: ' num2str(round(accelM,2)) ' at ' num2str(lags(accelI)) ' sec lag'])
+xlabel('Lags (s)')
+ylabel({'Corr. Coefficient';'|WhiskAccel| vs. \DeltaD/D'})
+xlim([-25,25])
+ylim([-0.1,0.75])
+set(gca,'box','off')
+% Movement vs. vessel diameter coherence
+ax6 = subplot(4,4,15);
+plot(f1,movementCoherenceMean,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',2)
+hold on
+plot(f1,movementCoherenceMean + movementCoherenceStErr,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
+plot(f1,movementCoherenceMean - movementCoherenceStErr,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
+conf = plot(f1,confInterval_Y,'--','Color','k','LineWidth',1);
 xlabel('Frequency (Hz)')
 ylabel({'Coherence';'|Movement| vs. \DeltaD/D'})
 xlim([0.05,0.5])
 ylim([0,0.75])
+set(gca,'box','off')
+% Movement vs. vessel diameter XC
+ax7 = subplot(4,4,16);
+plot(lags,movementXC_Mean,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',2)
+hold on
+plot(lags,movementXC_Mean + movementXC_StErr,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
+plot(lags,movementXC_Mean - movementXC_StErr,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
+[movementM,movementI] = max(movementXC_Mean);
+title(['Max corr: ' num2str(round(movementM,2)) ' at ' num2str(lags(movementI)) ' sec lag'])
+xlabel('Lags (s)')
+ylabel({'Corr. Coefficient';'|Movement| vs. \DeltaD/D'})
+xlim([-25,25])
+ylim([-0.1,0.75])
 set(gca,'box','off')
 
 end
