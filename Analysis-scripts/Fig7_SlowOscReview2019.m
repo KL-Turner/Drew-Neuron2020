@@ -25,7 +25,7 @@ function Fig7_SlowOscReview2019(ComparisonData)
         % Load specific file and pull relevant file information for normalization and figure labels
         indFile = 'T72_A1_190317_19_21_24_022_MergedData.mat';
         load(indFile,'-mat');
-        [animalID,fileDate,fileID,vesselID,~] = GetFileInfo2_SlowOscReview2019(indFile);
+        [animalID,fileDate,~,vesselID,~] = GetFileInfo2_SlowOscReview2019(indFile);
         strDay = ConvertDate_SlowOscReview2019(fileDate);
         
         %% BLOCK PURPOSE: Filter the whisker angle and identify the solenoid timing and location.
@@ -141,7 +141,7 @@ figure;
 % Force sensor
 ax1 = subplot(5,2,1:2);
 plot((1:length(filtForceSensor))/MergedData.notes.dsFs,filtForceSensor,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',2)
-ylabel('Force (V)')
+ylabel('Piezo sensor (V)')
 xlim([0 MergedData.notes.trialDuration_Sec])
 set(gca,'box','off')
 % Whisker angle
