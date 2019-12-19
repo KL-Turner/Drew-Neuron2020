@@ -60,8 +60,6 @@ for a = 1:length(fileNames)
     % Determine if a LabVIEWData file has already been created for this file. If it has, skip it
     fileExist = ls(['*' fileID '_LabVIEWData.mat']);
     if isempty(fileExist)
-        
-        
         %% BLOCK PURPOSE: [2] Import .tdms data (All channels).
         disp('Analyzing Block [2] Importing .tdms data from all channels.'); disp(' ')
         trialData = ReadInTDMSWhiskerTrials_SlowOscReview2019([fileID '.tdms']);
