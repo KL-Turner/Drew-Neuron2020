@@ -39,7 +39,7 @@ dataTypes = {'vesselDiameter', 'deltaPower', 'thetaPower', 'alphaPower', 'betaPo
 
 %% BLOCK PURPOSE: [1] Categorize data.
 disp('Analyzing Block [1] Categorizing behavioral data, adding flags to MergedData structures.'); disp(' ')
-CheckDataShape_SlowOscReview2020(mergedDataFiles)
+CheckDataShape_Neuron2020(mergedDataFiles)
 for a = 1:size(mergedDataFiles, 1)
     fileName = mergedDataFiles(a, :);
     disp(['Analyzing file ' num2str(a) ' of ' num2str(size(mergedDataFiles, 1)) '...']); disp(' ')

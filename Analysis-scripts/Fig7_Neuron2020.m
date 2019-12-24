@@ -1,4 +1,4 @@
-function Fig7_SlowOscReview2019(ComparisonData)
+function Fig7_Neuron2020(ComparisonData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -25,8 +25,8 @@ load(baselineDataFile,'-mat')
 % Load specific file and pull relevant file information for normalization and figure labels
 indFile = 'T72_A1_190317_19_21_24_022_MergedData.mat';
 load(indFile,'-mat');
-[animalID,fileDate,~,vesselID,~] = GetFileInfo2_SlowOscReview2019(indFile);
-strDay = ConvertDate_SlowOscReview2019(fileDate);
+[animalID,fileDate,~,vesselID,~] = GetFileInfo2_Neuron2020(indFile);
+strDay = ConvertDate_Neuron2020(fileDate);
 
 %% BLOCK PURPOSE: Filter the whisker angle and identify the solenoid timing and location.
 % Setup butterworth filter coefficients for a 10 Hz lowpass based on the sampling rate (30 Hz).
@@ -146,14 +146,14 @@ confInterval_Y = ones(length(f1),1)*confInterval;
 figure;
 % Force sensor
 ax1 = subplot(4,4,1:4);
-plot((1:length(filteredWhiskerAngle))/MergedData.notes.dsFs,abs(filteredWhiskerAngle - 135),'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
+plot((1:length(filteredWhiskerAngle))/MergedData.notes.dsFs,abs(filteredWhiskerAngle - 135),'color',colors_Neuron2020('sapphire'),'LineWidth',1)
 ylabel('Whisker Angle (deg)')
 xlim([0 MergedData.notes.trialDuration_Sec])
 set(gca,'box','off')
 set(gca,'XTickLabel',[]);
 % Whisker angle
 ax2 = subplot(4,4,5:8);
-plot((1:length(filtForceSensor))/MergedData.notes.dsFs,filtForceSensor,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
+plot((1:length(filtForceSensor))/MergedData.notes.dsFs,filtForceSensor,'color',colors_Neuron2020('north texas green'),'LineWidth',1)
 ylabel('Piezo sensor (V)')
 xlim([0 MergedData.notes.trialDuration_Sec])
 set(gca,'box','off')
@@ -168,10 +168,10 @@ set(gca,'box','off')
 linkaxes([ax1,ax2,ax3],'x')
 % Whisker acceleration vs. vessel diameter coherence
 ax4 = subplot(4,4,13);
-plot(f1,angleCoherenceMean,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',2)
+plot(f1,angleCoherenceMean,'color',colors_Neuron2020('sapphire'),'LineWidth',2)
 hold on
-plot(f1,angleCoherenceMean + angleCoherenceStErr,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
-plot(f1,angleCoherenceMean - angleCoherenceStErr,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
+plot(f1,angleCoherenceMean + angleCoherenceStErr,'color',colors_Neuron2020('sapphire'),'LineWidth',1)
+plot(f1,angleCoherenceMean - angleCoherenceStErr,'color',colors_Neuron2020('sapphire'),'LineWidth',1)
 conf = plot(f1,confInterval_Y,'--','color','k','LineWidth',1);
 xlabel('Frequency (Hz)')
 ylabel({'Coherence';'Whisker angle vs. \DeltaD/D'})
@@ -180,10 +180,10 @@ ylim([0,0.75])
 set(gca,'box','off')
 % Whisker acceleration vs. vessel diameter XC
 ax5 = subplot(4,4,14);
-plot(lags,angleXC_Mean,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',2)
+plot(lags,angleXC_Mean,'color',colors_Neuron2020('sapphire'),'LineWidth',2)
 hold on
-plot(lags,angleXC_Mean + angleXC_StErr,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
-plot(lags,angleXC_Mean - angleXC_StErr,'color',colors_SlowOscReview2019('sapphire'),'LineWidth',1)
+plot(lags,angleXC_Mean + angleXC_StErr,'color',colors_Neuron2020('sapphire'),'LineWidth',1)
+plot(lags,angleXC_Mean - angleXC_StErr,'color',colors_Neuron2020('sapphire'),'LineWidth',1)
 [accelM,accelI] = max(angleXC_Mean);
 title(['Max corr: ' num2str(round(accelM,2)) ' at ' num2str(lags(accelI)) ' sec lag'])
 xlabel('Lags (s)')
@@ -193,10 +193,10 @@ ylim([-0.1,0.75])
 set(gca,'box','off')
 % Movement vs. vessel diameter coherence
 ax6 = subplot(4,4,15);
-plot(f1,movementCoherenceMean,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',2)
+plot(f1,movementCoherenceMean,'color',colors_Neuron2020('north texas green'),'LineWidth',2)
 hold on
-plot(f1,movementCoherenceMean + movementCoherenceStErr,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
-plot(f1,movementCoherenceMean - movementCoherenceStErr,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
+plot(f1,movementCoherenceMean + movementCoherenceStErr,'color',colors_Neuron2020('north texas green'),'LineWidth',1)
+plot(f1,movementCoherenceMean - movementCoherenceStErr,'color',colors_Neuron2020('north texas green'),'LineWidth',1)
 conf = plot(f1,confInterval_Y,'--','Color','k','LineWidth',1);
 xlabel('Frequency (Hz)')
 ylabel({'Coherence';'|Movement| vs. \DeltaD/D'})
@@ -205,10 +205,10 @@ ylim([0,0.75])
 set(gca,'box','off')
 % Movement vs. vessel diameter XC
 ax7 = subplot(4,4,16);
-plot(lags,movementXC_Mean,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',2)
+plot(lags,movementXC_Mean,'color',colors_Neuron2020('north texas green'),'LineWidth',2)
 hold on
-plot(lags,movementXC_Mean + movementXC_StErr,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
-plot(lags,movementXC_Mean - movementXC_StErr,'color',colors_SlowOscReview2019('north texas green'),'LineWidth',1)
+plot(lags,movementXC_Mean + movementXC_StErr,'color',colors_Neuron2020('north texas green'),'LineWidth',1)
+plot(lags,movementXC_Mean - movementXC_StErr,'color',colors_Neuron2020('north texas green'),'LineWidth',1)
 [movementM,movementI] = max(movementXC_Mean);
 title(['Max corr: ' num2str(round(movementM,2)) ' at ' num2str(lags(movementI)) ' sec lag'])
 xlabel('Lags (s)')

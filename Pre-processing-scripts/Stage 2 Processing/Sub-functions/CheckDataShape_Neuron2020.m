@@ -23,7 +23,10 @@ for a = 1:size(mergedDataFiles,1)
     trialDuration_Sec = MergedData.notes.trialDuration_Sec;
     expectedLength = trialDuration_Sec*dp2Fs;
     if length(MergedData.data.vesselDiameter) ~= expectedLength
-        MergedData.data.vesselDiameter = resample(MergedData.data.vesselDiameter,dp2Fs,p2Fs);
+        vesselData = MergedData.data.vesselDiameter;
+        sampleMean = mean(vesselData(1:5));
+        rsVesselData = resample((vesselData - sampleMean),dp2Fs,p2Fs);
+        MergedData.data.vesselDiameter = rsVesselData + sampleMean;
     end
     MergedData.notes.dp2Fs = dp2Fs;
     disp(['Checking data shape for MergedData file ' num2str(a) ' of ' num2str(size(mergedDataFiles,1)) '...']); disp(' ')

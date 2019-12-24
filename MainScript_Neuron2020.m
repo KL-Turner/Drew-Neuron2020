@@ -62,8 +62,9 @@ selectFigs = false;   % set to true to manually select other figure(s).
 GenerateSingleFigures_Neuron2020(selectFigs)
 
 %% Individual figures can be re-run after the analysis has completed.
-Fig7_Neuron2020(ComparisonData)
-TempCohXCorrFig_Neuron2020(ComparisonData)
+Fig7_Angle_Neuron2020(ComparisonData)
+Fig7_Accel_Neuron2020(ComparisonData)
+% TempCohXCorrFig_Neuron2020(ComparisonData)
 
 disp('MainScript Analysis - Complete'); disp(' ')
 end

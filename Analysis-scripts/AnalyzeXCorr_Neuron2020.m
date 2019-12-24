@@ -1,4 +1,4 @@
-function [ComparisonData] = AnalyzeXCorr_SlowOscReview2019(animalID,ComparisonData)
+function [ComparisonData] = AnalyzeXCorr_Neuron2020(animalID,ComparisonData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -34,7 +34,7 @@ load(RestingBaselinesFile.name);
 vesselIDs = cell(size(mergedDataFiles,1),1);
 for a = 1:size(mergedDataFiles,1)
     mergedDataFile = mergedDataFiles(a,:);
-    [~,~,~,vID,~] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
+    [~,~,~,vID,~] = GetFileInfo2_Neuron2020(mergedDataFile);
     vesselIDs{a,1} = vID;
 end
 
@@ -57,7 +57,7 @@ for b = 1:length(uniqueVesselIDs)
     d = 1;
     for c = 1:size(mergedDataFiles, 1)
         mergedDataFile = mergedDataFiles(c,:);
-        [~,~,~,mdID,~] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
+        [~,~,~,mdID,~] = GetFileInfo2_Neuron2020(mergedDataFile);
         if strcmp(uniqueVesselID,mdID) == true
             load(mergedDataFile);
             % Process the vesesl diameter. Resample if the original sampling rate is higher than 5 Hz
@@ -119,7 +119,7 @@ for a = 1:length(uniqueVesselIDs)
     uvID = uniqueVesselIDs{a,1};
     t = 1;
     for b = 1:size(mergedDataFiles,1)
-        [~,~,~,vID,~] = GetFileInfo2_SlowOscReview2019(mergedDataFiles(b,:));
+        [~,~,~,vID,~] = GetFileInfo2_Neuron2020(mergedDataFiles(b,:));
         if strcmp(uvID, vID)
             timePerVessel{a,1} = t*trialDuration; %#ok<*AGROW>
             t = t+1;

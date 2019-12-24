@@ -1,4 +1,4 @@
-function [ComparisonData] = AnalyzeCoherence_SlowOscReview2019(animalID, ComparisonData)
+function [ComparisonData] = AnalyzeCoherence_Neuron2020(animalID, ComparisonData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -30,7 +30,7 @@ mergedDataFiles = char(mergedDataFiles);
 vesselIDs = cell(size(mergedDataFiles,1),1);
 for a = 1:size(mergedDataFiles,1)
     mergedDataFile = mergedDataFiles(a,:);
-    [~,~,~,vID,~] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
+    [~,~,~,vID,~] = GetFileInfo2_Neuron2020(mergedDataFile);
     vesselIDs{a,1} = vID;
 end
 
@@ -53,7 +53,7 @@ for b = 1:length(uniqueVesselIDs)
     d = 1;
     for c = 1:size(mergedDataFiles, 1)
         mergedDataFile = mergedDataFiles(c,:);
-        [~,~,~,mdID,~] = GetFileInfo2_SlowOscReview2019(mergedDataFile);
+        [~,~,~,mdID,~] = GetFileInfo2_Neuron2020(mergedDataFile);
         if strcmp(uniqueVesselID,mdID) == true
             load(mergedDataFile);
             % Process the vesesl diameter. Resample if the original sampling rate is higher than 5 Hz
@@ -86,18 +86,18 @@ all_confC = cell(length(vesselData),1);            % PreAlloc
 % Run coherence analysis between vessel diameter and each parameter
 for e = 1:length(vesselData)
     % Whisker angle vs. Vessel Diameter
-    [whiskerAngle_C,~,~,~,~,f,confC,~,~] = coherencyc_SlowOscReview2019(vesselData{e,1},whiskerAngleData{e,1},params);
+    [whiskerAngle_C,~,~,~,~,f,confC,~,~] = coherencyc_Neuron2020(vesselData{e,1},whiskerAngleData{e,1},params);
     allWhiskerAngle_C{e,1} = whiskerAngle_C;
     all_f{e,1} = f;
     all_confC{e,1} = confC;
     % Whisker Velocity vs. Vessel Diameter
-    [whiskerVelocity_C,~,~,~,~,~,~,~,~] = coherencyc_SlowOscReview2019(vesselData{e,1},whiskerVelocityData{e,1},params);
+    [whiskerVelocity_C,~,~,~,~,~,~,~,~] = coherencyc_Neuron2020(vesselData{e,1},whiskerVelocityData{e,1},params);
     allWhiskerVelocity_C{e,1} = whiskerVelocity_C;
     % Whisker Acceleration vs. Vessel Diameter
-    [whiskerAccel_C,~,~,~,~,~,~,~,~] = coherencyc_SlowOscReview2019(vesselData{e,1},whiskerAccelData{e,1},params);
+    [whiskerAccel_C,~,~,~,~,~,~,~,~] = coherencyc_Neuron2020(vesselData{e,1},whiskerAccelData{e,1},params);
     allWhiskerAccel_C{e,1} = whiskerAccel_C;
     % Movement vs. Vessel Diameter
-    [movement_C,~,~,~,~,~,~,~,~] = coherencyc_SlowOscReview2019(vesselData{e,1},movementData{e,1},params);
+    [movement_C,~,~,~,~,~,~,~,~] = coherencyc_Neuron2020(vesselData{e,1},movementData{e,1},params);
     allMovement_C{e,1} = movement_C;
 end
 
