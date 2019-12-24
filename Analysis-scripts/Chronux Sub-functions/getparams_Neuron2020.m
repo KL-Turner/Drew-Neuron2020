@@ -1,4 +1,4 @@
-function [tapers,pad,Fs,fpass,err,trialave,params]=getparams_Neuron2020(params)
+function [tapers,pad,Fs,fpass,err,trialave,params] = getparams_Neuron2020(params)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

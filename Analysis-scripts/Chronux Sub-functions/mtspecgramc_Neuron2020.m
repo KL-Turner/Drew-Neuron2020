@@ -1,4 +1,4 @@
-function [S,t,f,Serr]=mtspecgramc_Neuron2020(data,movingwin,params)
+function [S,t,f,Serr] = mtspecgramc_Neuron2020(data,movingwin,params)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

@@ -1,18 +1,11 @@
-function Fig7_Neuron2020(ComparisonData)
+function Fig7_Angle_Neuron2020(ComparisonData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
 % https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: 
-%________________________________________________________________________________________________________________________
-%
-%   Inputs: 
-%
-%   Outputs: 
-%
-%   Last Revised: March 22nd, 2019
+%   Purpose: Generates K.L. Turner's portion of the data presented in Figure 7 of Drew, Meteo et al. Neuron 2020.
 %________________________________________________________________________________________________________________________
 
 % Load the RestingBaselines structure from this animal
@@ -30,20 +23,23 @@ strDay = ConvertDate_Neuron2020(fileDate);
 
 %% BLOCK PURPOSE: Filter the whisker angle and identify the solenoid timing and location.
 % Setup butterworth filter coefficients for a 10 Hz lowpass based on the sampling rate (30 Hz).
-filtThreshold = 20;
-filtOrder = 2;
-[z,p,k] = butter(filtOrder,filtThreshold/(150/2),'low');
-[sos,g] = zp2sos(z,p,k);
+dsFs = 30;            % Hz 
+whiskerCamFs = 150;   % Hz
+analogFs = 20000;     % Hz
+[z1,p1,k1] = butter(2,20/(whiskerCamFs/2),'low');
+[sos1,g1] = zp2sos(z1,p1,k1);
+[z2,p2,k2] = butter(2,20/(analogFs/2),'low');
+[sos2,g2] = zp2sos(z2,p2,k2);
 [B,A] = butter(3,10/(MergedData.notes.dsFs/2),'low');
-filteredWhiskerAngle = filtfilt(B,A,resample(filtfilt(sos,g,abs(MergedData.data.rawWhiskerAngle - 135)),30,150));
-filteredWhiskerAcceleration = filtfilt(B,A,resample(filtfilt(sos,g,diff(abs(MergedData.data.rawWhiskerAngle - 135),2)),30,150));
-filtForceSensor = filtfilt(B,A,MergedData.data.forceSensorM);
+filteredWhiskerAngle = filtfilt(B,A,resample(filtfilt(sos1,g1,abs(MergedData.data.rawWhiskerAngle - 135)),dsFs,whiskerCamFs));
+filteredWhiskerAcceleration = filtfilt(B,A,resample(filtfilt(sos1,g1,diff(abs(MergedData.data.rawWhiskerAngle - 135),2)),dsFs,whiskerCamFs));
+filtForceSensor = filtfilt(B,A,resample(filtfilt(sos2,g2,MergedData.data.rawForceSensorM),dsFs,analogFs));
 binWhiskers = MergedData.data.binWhiskerAngle;
 binForce = MergedData.data.binForceSensorM;
 
 %% CBV data - normalize and then lowpass filer
-% Setup butterworth filter coefficients for a 1 Hz lowpass based on the sampling rate (20 Hz).
-[D,C] = butter(3,1/(MergedData.notes.dp2Fs/2),'low');
+% Setup butterworth filter coefficients for a 2 Hz lowpass based on the sampling rate.
+[D,C] = butter(3,2/(MergedData.notes.dp2Fs/2),'low');
 vesselDiameter = MergedData.data.vesselDiameter;
 normVesselDiameter = (vesselDiameter - RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine)./(RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine);
 filtVesselDiameter = filtfilt(D,C,normVesselDiameter)*100;
@@ -141,7 +137,7 @@ movementCoherenceStErr = std(movementCoherenceData1,1,1)/sqrt(size(movementCoher
 confInterval = max(cell2mat(confC1));
 confInterval_Y = ones(length(f1),1)*confInterval;
 
-%%
+%% Generate summary figure
 figure;
 % Force sensor
 ax1 = subplot(4,4,1:4);
@@ -211,6 +207,7 @@ ylabel({'Corr. Coefficient';'|Movement| vs. \DeltaD/D'})
 xlim([-25,25])
 ylim([-0.1,0.75])
 set(gca,'box','off')
+pause(1)
 cd ..
 
 end

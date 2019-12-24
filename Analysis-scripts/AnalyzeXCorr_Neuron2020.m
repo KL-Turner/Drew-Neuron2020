@@ -5,15 +5,7 @@ function [ComparisonData] = AnalyzeXCorr_Neuron2020(animalID,ComparisonData)
 % https://github.com/KL-Turner
 %_________________________________________________________________________________________________________________________
 %
-%   Purpose: Analyzes the cross correlation between abs(whiskerAccel) and vessel diameter.
-%________________________________________________________________________________________________________________________
-%
-%   Inputs: animal ID ('T##') [string]
-%           ComparisonData.mat structure to save the results under than animal's ID
-%
-%   Outputs: Updated ComparisonData.mat structure
-%
-%   Last Revised: March 24th, 2019
+%   Purpose: Analyzes the cross correlation between various behavioral states and the vessel diameter.
 %________________________________________________________________________________________________________________________
 
 cd(animalID);     % Change to the subfolder for the current animal
@@ -41,10 +33,10 @@ end
 uniqueVesselIDs = unique(vesselIDs);
 % Whisker angle/velocity/acceleration is processed first with 20 Hz lowpass ZPK
 % Movement data is already processed with these identical parameters in StageTwoProcessing
-filtThreshold = 20;
-filtOrder = 2;
-[z,p,k] = butter(filtOrder,filtThreshold/(wFs/2),'low');
-[sos,g] = zp2sos(z,p,k);
+[z1,p1,k1] = butter(2,20/(wFs/2),'low');
+[sos1,g1] = zp2sos(z1,p1,k1);
+[z2,p2,k2] = butter(2,20/(anFs/2),'low');
+[sos2,g2] = zp2sos(z2,p2,k2);
 % All data is low pass filtered 2 Hz as last processing step
 [B,A] = butter(3,2/(dpFs/2),'low');
 vesselData = cell(length(uniqueVesselIDs),1);          % PreAlloc
@@ -63,18 +55,18 @@ for b = 1:length(uniqueVesselIDs)
             % Process the vesesl diameter. Resample if the original sampling rate is higher than 5 Hz
             vesselData{b,1}(:,d) = detrend(filtfilt(B,A,(MergedData.data.vesselDiameter - MergedData.data.vesselDiameter(1))),'constant');
             % Process the whisker angle/velocity/acceleration data. Resample to match vessel data.
-            whiskerAngleData{b,1}(:,d) = detrend(filtfilt(B,A,resample(filtfilt(sos,g,abs(MergedData.data.rawWhiskerAngle - 135)),dpFs,wFs)),'constant');
-            whiskerVelocityData{b,1}(:,d) = detrend(filtfilt(B,A,resample(filtfilt(sos,g,(abs(diff(MergedData.data.rawWhiskerAngle,1)))),dpFs,wFs)),'constant');
-            whiskerAccelData{b,1}(:,d) = detrend(filtfilt(B,A,resample(filtfilt(sos,g,(abs(diff(MergedData.data.rawWhiskerAngle,2)))),dpFs,wFs)),'constant');
+            whiskerAngleData{b,1}(:,d) = detrend(filtfilt(B,A,resample(filtfilt(sos1,g1,abs(MergedData.data.rawWhiskerAngle - 135)),dpFs,wFs)),'constant');
+            whiskerVelocityData{b,1}(:,d) = detrend(filtfilt(B,A,resample(filtfilt(sos1,g1,(abs(diff(MergedData.data.rawWhiskerAngle,1)))),dpFs,wFs)),'constant');
+            whiskerAccelData{b,1}(:,d) = detrend(filtfilt(B,A,resample(filtfilt(sos1,g1,(abs(diff(MergedData.data.rawWhiskerAngle,2)))),dpFs,wFs)),'constant');
             % Process the movement data. Resample to match vessel data.
-            movementData{b,1}(:,d) = detrend(filtfilt(B,A,resample(filtfilt(sos,g,abs(MergedData.data.rawForceSensorM)),dpFs,anFs)),'constant');
+            movementData{b,1}(:,d) = detrend(filtfilt(B,A,resample(filtfilt(sos2,g2,abs(MergedData.data.rawForceSensorM)),dpFs,anFs)),'constant');
             d = d + 1;
         end
     end
 end
 
 %% Analyze the cross-correlation with +/- 25 seconds of lag time
-lagTime = 50;
+lagTime = 25;
 frequency = dpFs;
 maxLag = lagTime*frequency;
 whiskerAngleXC_Means = cell(length(uniqueVesselIDs),1);    % PreAlloc
@@ -122,7 +114,7 @@ for a = 1:length(uniqueVesselIDs)
         [~,~,~,vID,~] = GetFileInfo2_Neuron2020(mergedDataFiles(b,:));
         if strcmp(uvID, vID)
             timePerVessel{a,1} = t*trialDuration; %#ok<*AGROW>
-            t = t+1;
+            t = t + 1;
         end
     end
     vesselBaselines = [];

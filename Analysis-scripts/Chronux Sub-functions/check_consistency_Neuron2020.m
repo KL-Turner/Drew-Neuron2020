@@ -1,4 +1,4 @@
-function [N,C]=check_consistency_Neuron2020(data1,data2,sp)
+function [N,C] = check_consistency_Neuron2020(data1,data2,sp)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

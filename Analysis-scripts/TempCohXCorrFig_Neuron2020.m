@@ -7,13 +7,6 @@ function TempCohXCorrFig_Neuron2020(ComparisonData)
 %
 %   Purpose: 
 %________________________________________________________________________________________________________________________
-%
-%   Inputs: 
-%
-%   Outputs: 
-%
-%   Last Revised: March 22nd, 2019
-%________________________________________________________________________________________________________________________
 
 %% Extract data from each animal for the cross-correlation averages 
 animalIDs = fields(ComparisonData);

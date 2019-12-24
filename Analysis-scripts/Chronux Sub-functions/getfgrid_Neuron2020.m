@@ -1,4 +1,4 @@
-function [f,findx]=getfgrid_Neuron2020(Fs,nfft,fpass)
+function [f,findx] = getfgrid_Neuron2020(Fs,nfft,fpass)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

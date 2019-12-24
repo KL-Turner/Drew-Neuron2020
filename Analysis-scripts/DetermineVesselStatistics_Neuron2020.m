@@ -1,4 +1,4 @@
-function DetermineVesselStatistics_SlowOscReview2019(ComparisonData)
+function [] = DetermineVesselStatistics_Neuron2020(ComparisonData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -7,13 +7,6 @@ function DetermineVesselStatistics_SlowOscReview2019(ComparisonData)
 %
 %   Purpose: Use the results structure to display how many minutes of time were used in the previous analysis for
 %            each unique vessel.
-%________________________________________________________________________________________________________________________
-%
-%   Inputs: ComparisonData.mat results structure
-%
-%   Outputs: Figure displaying the results in a table.
-%
-%   Last Revised: March 23rd, 2019
 %________________________________________________________________________________________________________________________
 
 animalIDs = fields(ComparisonData);
@@ -29,11 +22,12 @@ for a = 1:length(animalIDs)
         x = x + 1;
     end
 end
+
 % Table
-T = table(animal, vesselID, baselineDiam, minutesPerVessel, 'VariableNames', {'Animal_ID', 'Vessel_ID', ...
-    'Baseline_diameter_um', 'Total_minutes_per_Vessel'});
+T = table(animal,vesselID,baselineDiam,minutesPerVessel,'VariableNames',{'Animal_ID','Vessel_ID','Baseline_diameter_um','Total_minutes_per_Vessel'});
 figure('Name', 'Individual vessel imaging information', 'NumberTitle', 'off')
-u = uitable('Data',T{:,:},'ColumnName',T.Properties.VariableNames,'RowName',T.Properties.RowNames,'Units', 'Normalized', 'Position',[0, 0, 1, 1]);
+u = uitable('Data',T{:,:},'ColumnName',T.Properties.VariableNames,'RowName',T.Properties.RowNames,'Units','Normalized','Position',[0,0,1,1]);
 set(u,'ColumnWidth',{125})
 pause(1)
+
 end

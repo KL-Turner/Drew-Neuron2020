@@ -1,4 +1,4 @@
-function J=mtfftc_Neuron2020(data,tapers,nfft,Fs)
+function J = mtfftc_Neuron2020(data,tapers,nfft,Fs)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

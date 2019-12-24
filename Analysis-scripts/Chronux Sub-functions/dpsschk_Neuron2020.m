@@ -1,4 +1,4 @@
-function [tapers,eigs]=dpsschk_Neuron2020(tapers,N,Fs)
+function [tapers,eigs] = dpsschk_Neuron2020(tapers,N,Fs)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

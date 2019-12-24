@@ -1,4 +1,4 @@
-function [C,phi,S12,S1,S2,f,confC,phistd,Cerr]=coherencyc_Neuron2020(data1,data2,params)
+function [C,phi,S12,S1,S2,f,confC,phistd,Cerr] = coherencyc_Neuron2020(data1,data2,params)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

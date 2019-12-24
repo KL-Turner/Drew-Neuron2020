@@ -1,5 +1,13 @@
-function c = colors_SlowOscReview2019(colorname)
-% colors('amber')
+function c = colors_Neuron2020(colorname)
+%________________________________________________________________________________________________________________________
+% Utilized in analysis by Kevin L. Turner
+% The Pennsylvania State University, Dept. of Biomedical Engineering
+% https://github.com/KL-Turner
+%
+% Written by John Kitchin 
+% https://github.com/jkitchin/matlab-cmu/blob/master/%2Bcmu/colors.m
+%________________________________________________________________________________________________________________________
+
 % returns RGB tuples adapted from
 % http://en.wikipedia.org/wiki/List_of_colors
 color_database = containers.Map();
@@ -788,12 +796,14 @@ color_database('yellow orange')=[1.000000 0.680000 0.260000];
 color_database('zinnwaldite brown')=[0.170000 0.090000 0.030000];
 color_database('zaffre')=[0.000000 0.080000 0.660000];
 if strcmp(colorname,'list')
-k = color_database.keys;
-k'
-return; end
+    k = color_database.keys;
+    k';
+    return; 
+end
+
 try
     c = color_database(lower(colorname));
 catch ex
-    colorname
-    ex
+    colorname;
+    ex;
 end

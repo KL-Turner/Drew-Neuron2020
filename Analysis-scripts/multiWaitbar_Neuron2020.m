@@ -1,4 +1,4 @@
-function cancel = multiWaitbar_SlowOscReview2019(label,varargin)
+function [cancel] = multiWaitbar_Neuron2020(label,varargin)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
