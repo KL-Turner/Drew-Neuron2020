@@ -9,35 +9,26 @@ function [thresh] = CreateForceSensorThreshold_Neuron2020(forceSensor)
 %
 %   Purpose: View the force sensor data and determine what a good value is to binarize movement.
 %________________________________________________________________________________________________________________________
-%
-%   Inputs: Force sensor data.
-%
-%   Outputs: Threshold value.
-%
-%   Last Revised: February 29th, 2019
-%________________________________________________________________________________________________________________________
 
 y = hilbert(diff(forceSensor));
 force = abs(y);
 forceThresh = figure;
 isok = 'n';
-
-while strcmp(isok, 'y') == 0
-    plot(force, 'k');
+while strcmp(isok,'y') == 0
+    plot(force,'k');
     thresh = input('No Threshold to binarize pressure sensor found. Please enter a threshold: '); disp(' ')
     binForceSensor = BinarizeForceSensor_Neuron2020(forceSensor,thresh);
     subplot(3,1,1)
-    plot(forceSensor, 'k') 
+    plot(forceSensor,'k') 
     axis tight
     subplot(3,1,2) 
-    plot(force, 'k')
+    plot(force,'k')
     axis tight
     subplot(3,1,3)
-    plot(binForceSensor, 'k')
+    plot(binForceSensor,'k')
     axis tight
     isok = input('Is this threshold okay? (y/n) ','s'); disp(' ')
 end
-
 close(forceThresh);
 
 end

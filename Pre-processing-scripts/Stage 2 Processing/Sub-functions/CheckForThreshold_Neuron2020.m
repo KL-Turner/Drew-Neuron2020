@@ -1,4 +1,4 @@
-function [ok] = CheckForThreshold_Neuron2020(sfield, animal)
+function [ok] = CheckForThreshold_Neuron2020(sfield,animal)
 %________________________________________________________________________________________________________________________
 % Edited by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -9,13 +9,6 @@ function [ok] = CheckForThreshold_Neuron2020(sfield, animal)
 %
 %   Purpose: Check to see if a threshold has already been created for a given field in a given day.
 %________________________________________________________________________________________________________________________
-%
-%   Inputs: Field name to be checked, animal ID.
-%
-%   Outputs: Logical T/F statement.
-%
-%   Last Revised: February 29th, 2019
-%________________________________________________________________________________________________________________________
 
 % Navigate to Shared Variables folder
 disp(['CheckForThreshold.m: Checking for Threshold field: ' sfield '...']); disp(' ')
@@ -23,7 +16,7 @@ disp(['CheckForThreshold.m: Checking for Threshold field: ' sfield '...']); disp
 ok = 0;
 if exist([animal '_Thresholds.mat'],'file') == 2
     load([animal '_Thresholds.mat']);
-    if isfield(Thresholds, sfield)
+    if isfield(Thresholds,sfield)
         ok = 1;
         disp(['CheckForThreshold.m: Threshold: ' sfield ' found.']); disp(' ')
     else

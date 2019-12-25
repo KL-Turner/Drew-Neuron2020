@@ -1,4 +1,4 @@
-function [ConvertedData, ConvertVer] = ConvertTDMS_Neuron2020(SaveConvertedFile, filename)
+function [ConvertedData,ConvertVer] = ConvertTDMS_Neuron2020(SaveConvertedFile,filename)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

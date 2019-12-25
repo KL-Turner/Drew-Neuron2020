@@ -10,13 +10,6 @@
 %            4) Correct LabVIEW time offset.
 %            5) Combine LabVIEWData and MScan Data files to ceate MergedData. 
 %________________________________________________________________________________________________________________________
-%
-%   Inputs: Scan the workspace for filenames *_LabVIEWData.mat' and '*_MScanData.mat'
-%
-%   Outputs: Updated fields in LabVIEWData.mat, new/updated fields of MScanData.mat and MergedData.mat.       
-%
-%   Last Revised: February 21st, 2019    
-%________________________________________________________________________________________________________________________
 
 %% BLOCK PURPOSE: [0] Load the script's necessary variables and data structures.
 % Clear the workspace variables and command window.
@@ -27,8 +20,6 @@ disp('Analyzing Block [0] Preparing the workspace and loading variables.'); disp
 msExcelDir = dir('*.xlsx');
 msExcelFile = {msExcelDir.name}';
 msExcelFile = char(msExcelFile);
-
-% msExcelFile = uigetfile('*.xlsx');
 
 %% BLOCK PURPOSE: [1] Use ms Excel sheet to create MScanData.mat files with vessel information.
 disp('Analyzing Block [1] Pulling vessel notes from Excel sheet.'); disp(' ')

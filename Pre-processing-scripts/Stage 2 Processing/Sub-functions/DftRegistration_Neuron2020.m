@@ -1,4 +1,4 @@
-function [output, Greg] = DftRegistration_Neuron2020(buf1ft,buf2ft,usfac)
+function [output,Greg] = DftRegistration_Neuron2020(buf1ft,buf2ft,usfac)
 %________________________________________________________________________________________________________________________
 % Utilized in analysis by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

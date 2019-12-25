@@ -176,7 +176,7 @@ plot(f1,accelCoherenceMean + accelCoherenceStErr,'color',colors_Neuron2020('sapp
 plot(f1,accelCoherenceMean - accelCoherenceStErr,'color',colors_Neuron2020('sapphire'),'LineWidth',1)
 conf = plot(f1,confInterval_Y,'--','color','k','LineWidth',1);
 xlabel('Frequency (Hz)')
-ylabel({'Coherence';'Whisker acceleration vs. \DeltaD/D'})
+ylabel({'Coherence';'|Whisker acceleration| vs. \DeltaD/D'})
 xlim([0.05,0.5])
 ylim([0,0.75])
 set(gca,'box','off')
@@ -187,7 +187,7 @@ hold on
 plot(lags,accelXC_Mean + accelXC_StErr,'color',colors_Neuron2020('sapphire'),'LineWidth',1)
 plot(lags,accelXC_Mean - accelXC_StErr,'color',colors_Neuron2020('sapphire'),'LineWidth',1)
 xlabel('Lags (s)')
-ylabel({'Corr. Coefficient';'Whisker acceleration vs. \DeltaD/D'})
+ylabel({'Corr. Coefficient';'|Whisker acceleration| vs. \DeltaD/D'})
 xlim([-25,25])
 ylim([-0.1,0.75])
 set(gca,'box','off')

@@ -5,7 +5,7 @@ function [] = MainScript_Neuron2020()
 % https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: Generates KLT's main and supplemental figs for the 2019 Slow Oscillations review paper. 
+%   Purpose: Generates KLT's main and supplemental figs for the 2020 Slow Oscillations review paper. 
 %
 %            Scripts used to pre-process the original data are located in the folder "Pre-processing-scripts".
 %            Functions that are used in both the analysis and pre-processing are located in the analysis folder.
