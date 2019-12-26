@@ -44,10 +44,6 @@ vesselDiameter = MergedData.data.vesselDiameter;
 normVesselDiameter = (vesselDiameter - RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine)./(RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine);
 filtVesselDiameter = filtfilt(D,C,normVesselDiameter)*100;
 
-%% Yvals for behavior Indices
-whisking_YVals = 1.10*max(detrend(filtVesselDiameter,'constant'))*ones(size(binWhiskers));
-force_YVals = 1.20*max(detrend(filtVesselDiameter,'constant'))*ones(size(binForce));
-
 %% Extract data from each animal for the cross-correlation averages
 animalIDs = fields(ComparisonData);
 x = 1;

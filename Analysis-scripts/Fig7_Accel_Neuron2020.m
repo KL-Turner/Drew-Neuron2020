@@ -1,3 +1,4 @@
+
 function Fig7_Accel_Neuron2020(ComparisonData)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
@@ -5,14 +6,7 @@ function Fig7_Accel_Neuron2020(ComparisonData)
 % https://github.com/KL-Turner
 %________________________________________________________________________________________________________________________
 %
-%   Purpose: 
-%________________________________________________________________________________________________________________________
-%
-%   Inputs: 
-%
-%   Outputs: 
-%
-%   Last Revised: March 22nd, 2019
+%   Purpose: Generates K.L. Turner's portion of the data presented in Figure 7 of Drew, Meteo et al. Neuron 2020.
 %________________________________________________________________________________________________________________________
 
 % Load the RestingBaselines structure from this animal
@@ -50,10 +44,6 @@ binForce = MergedData.data.binForceSensorM;
 vesselDiameter = MergedData.data.vesselDiameter;
 normVesselDiameter = (vesselDiameter - RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine)./(RestingBaselines.(vesselID).(strDay).vesselDiameter.baseLine);
 filtVesselDiameter = filtfilt(D,C,normVesselDiameter)*100;
-
-%% Yvals for behavior Indices
-whisking_YVals = 1.10*max(detrend(filtVesselDiameter,'constant'))*ones(size(binWhiskers));
-force_YVals = 1.20*max(detrend(filtVesselDiameter,'constant'))*ones(size(binForce));
 
 %% Extract data from each animal for the cross-correlation averages
 animalIDs = fields(ComparisonData);

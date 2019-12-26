@@ -24,14 +24,6 @@ end
 % Add root folder to Matlab's working directory.
 addpath(genpath(rootfolder))
 
-% Verify that the User is in the correct working directory. Toss an error msg & end the function if not.
-if ~strcmp(fileparts(end),'Kleinfeld_Review_Neuron2020_Turner_ProcData') && ~strcmp(fileparts(end),'TurnerFigs-Neuron2020')
-    message = 'The current folder does not appear to be Kleinfeld_Review_Neuron2020_Turner_ProcData or TurnerFigs-Neuron2020-master, please cd to the correct folder and re-run';
-    title = 'Incorrect Directory';
-    waitfor(msgbox(message,title,'error'));
-    return
-end
-
 %% Run the data analysis. The progress bars will show the analysis progress.
 dataSummary = dir('ComparisonData.mat');
 % If the analysis structure has already been created, load it and skip the analysis.
