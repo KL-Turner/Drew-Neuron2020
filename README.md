@@ -32,7 +32,7 @@ The single trial example shown in figure 7a is from animal T72, file ID **T72_A1
 
 ### Cross-correlation analysis
 
-Behavioral data (whisker acceleration, piezo sensor) was processed to match the sampling rate and filter characteristics (2 Hz low-pass) of the vessel diameter. The Matlab function *xcorr* was then used between the identical-length signals for each vessel across all days of imaging. The average cross-correlation as a function of lag time was take for each indivial vessel (n = 27 vessels) and then the population average taken across those 27 instances. The standard error (StD/sqrt(27)) is shown above and below the population mean. 
+Behavioral data (whisker acceleration, piezo sensor) was processed to match the sampling rate and filter characteristics (2 Hz low-pass) of the vessel diameter. The Matlab function *xcorr* was then used between the identical-length signals for each vessel across all days of imaging. The average cross-correlation as a function of lag time was take for each indivial vessel (n = 27 vessels) and then the population average taken across those 27 instances. The standard error (StD/sqrt(27)) is shown above and below the population mean. The peak time is shown as the mean and standard deviation of the 27 vessel cross-correlations individual peak times.
 
 ### Spectral coherence analysis
 
