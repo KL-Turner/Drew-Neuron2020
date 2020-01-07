@@ -1,6 +1,6 @@
 # 2019 Slow Oscillations Review
 
-This document outlines the steps necessary to generate Kevin L. Turner's data and code contributions to the Review manuscript "Ultra-slow oscillations in fMRI and resting state connectivity: Known and unknown neurovascular and vascular contributions." by P. J. Drew*, C. Mateo*, K.L. Turner, X. Yu and D. Kleinfeld.
+This document outlines the steps necessary to generate Kevin L. Turner's data and code contributions to the Review manuscript "Ultra-slow oscillations in fMRI and resting-state connectivity: Known and unknown neuronal, vascular, and technical contributions." by P. J. Drew*, C. Mateo*, K.L. Turner, X. Yu and D. Kleinfeld.
 
 ---
 ## Generating the figure
