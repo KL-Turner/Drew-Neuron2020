@@ -50,8 +50,6 @@ DetermineVesselStatistics_Neuron2020(ComparisonData);
 
 %% Individual figures can be re-run after the analysis has completed.
 Fig7_Angle_Neuron2020(ComparisonData)
-Fig7_Accel_Neuron2020(ComparisonData)
-% TempCohXCorrFig_Neuron2020(ComparisonData)
 disp('MainScript Analysis - Complete'); disp(' ')
 end
 

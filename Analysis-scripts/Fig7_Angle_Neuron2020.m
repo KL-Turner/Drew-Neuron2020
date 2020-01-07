@@ -31,7 +31,7 @@ analogFs = 20000;     % Hz
 [z2,p2,k2] = butter(2,20/(analogFs/2),'low');
 [sos2,g2] = zp2sos(z2,p2,k2);
 [B,A] = butter(3,10/(MergedData.notes.dsFs/2),'low');
-filteredWhiskerAngle = filtfilt(B,A,resample(filtfilt(sos1,g1,abs(MergedData.data.rawWhiskerAngle - 135)),dsFs,whiskerCamFs));
+filteredWhiskerAngle = ((filtfilt(B,A,resample(filtfilt(sos1,g1,abs(MergedData.data.rawWhiskerAngle - MergedData.data.rawWhiskerAngle(1))),dsFs,whiskerCamFs)) + MergedData.data.rawWhiskerAngle(1)) + 45);
 filteredWhiskerAcceleration = filtfilt(B,A,resample(filtfilt(sos1,g1,diff(abs(MergedData.data.rawWhiskerAngle - 135),2)),dsFs,whiskerCamFs));
 filtForceSensor = filtfilt(B,A,resample(filtfilt(sos2,g2,MergedData.data.rawForceSensorM),dsFs,analogFs));
 binWhiskers = MergedData.data.binWhiskerAngle;
@@ -66,6 +66,16 @@ accelXC_StErr = std(accelXC,1,1)/sqrt(size(accelXC,1));
 movementXC_Mean = mean(movementXC,1);
 movementXC_StErr = std(movementXC,1,1)/sqrt(size(movementXC,1));
 lags = ComparisonData.(animalID).XCorr.lags;
+for z = 1:size(angleXC,1)
+    [~,anglePeakInd(z,1)] = max(angleXC(z,:));
+    anglePeakTime(z,1) = lags(anglePeakInd(z,1));
+    [~,movementPeakInd(z,1)] = max(movementXC(z,:));
+    movementPeakTime(z,1) = lags(movementPeakInd(z,1));
+end
+meanAnglePeakTime = round(mean(anglePeakTime),1);
+stdErrAnglePeakTime = round(std(anglePeakTime),1);
+meanMovementPeakTime = round(mean(movementPeakTime),1);
+stdErrMovementPeakTime = round(std(movementPeakTime),1);
 
 %% Extract data from each animal for the coherence averages
 x = 1;
@@ -175,6 +185,7 @@ plot(lags,angleXC_Mean,'color',colors_Neuron2020('sapphire'),'LineWidth',2)
 hold on
 plot(lags,angleXC_Mean + angleXC_StErr,'color',colors_Neuron2020('sapphire'),'LineWidth',1)
 plot(lags,angleXC_Mean - angleXC_StErr,'color',colors_Neuron2020('sapphire'),'LineWidth',1)
+title(['Peak lag time:  ' num2str(meanAnglePeakTime) ' +/- ' num2str(stdErrAnglePeakTime) ' sec'])
 xlabel('Lags (s)')
 ylabel({'Corr. Coefficient';'Whisker angle vs. \DeltaD/D'})
 xlim([-25,25])
@@ -198,6 +209,7 @@ plot(lags,movementXC_Mean,'color',colors_Neuron2020('north texas green'),'LineWi
 hold on
 plot(lags,movementXC_Mean + movementXC_StErr,'color',colors_Neuron2020('north texas green'),'LineWidth',1)
 plot(lags,movementXC_Mean - movementXC_StErr,'color',colors_Neuron2020('north texas green'),'LineWidth',1)
+title(['Peak lag time:  ' num2str(meanMovementPeakTime) ' +/- ' num2str(stdErrMovementPeakTime) ' sec'])
 xlabel('Lags (s)')
 ylabel({'Corr. Coefficient';'|Movement| vs. \DeltaD/D'})
 xlim([-25,25])
