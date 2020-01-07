@@ -1,11 +1,11 @@
-# 2019 Slow Oscillations Review
+# 2020 Slow Oscillations Review
 
 This document outlines the steps necessary to generate Kevin L. Turner's data and code contributions to the Review manuscript "Ultra-slow oscillations in fMRI and resting-state connectivity: Known and unknown neuronal, vascular, and technical contributions." by P. J. Drew*, C. Mateo*, K.L. Turner, X. Yu and D. Kleinfeld.
 
 ---
 ## Generating the figure
 ---
-This data and code generates Figure 7a of the manuscript.
+This data and code generates Figure 8a and 8b of the manuscript.
 
 Begin by downloading the entire code repository and (if desired) the data from the following locations:
 * Code repository location: https://github.com/KL-Turner/TurnerFigs-Neuron2020
