@@ -12,13 +12,12 @@ function [imageGrad] = ReadBinFileU8MatrixGradient_Neuron2020(fileName,height,wi
 
 % Calculate pixels per frame for fread
 pixelsPerFrame = width*height;
-% open the file , get file size , back to the begining
+% open the file, get file size, back to the begining
 fid = fopen(fileName);
 fseek(fid,0,'eof');
 fileSize = ftell(fid);
 fseek(fid,0,'bof');
-% Identify the number of frames to read. Each frame has a previously
-% defined width and height (as inputs), U8 has a depth of 1.
+% Identify the number of frames to read. Each frame has a previously defined width and height (as inputs), U8 has a depth of 1.
 nFrameToRead = floor(fileSize/(pixelsPerFrame));
 disp(['ReadBinFileU8MatrixGradient: ' num2str(nFrameToRead) ' frames to read.']); disp(' ')
 % Pre-allocate
@@ -31,4 +30,3 @@ end
 fclose(fid);
 
 end
-

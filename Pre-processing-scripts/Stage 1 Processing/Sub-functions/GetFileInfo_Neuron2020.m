@@ -1,4 +1,4 @@
-function [animalID, hem, fileDate, fileID] = GetFileInfo_Neuron2020(fileName)
+function [animalID,hem,fileDate,fileID] = GetFileInfo_Neuron2020(fileName)
 %________________________________________________________________________________________________________________________
 % Edited by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering

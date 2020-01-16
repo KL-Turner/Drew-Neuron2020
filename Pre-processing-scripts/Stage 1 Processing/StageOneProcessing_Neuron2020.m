@@ -1,4 +1,4 @@
-function StageOneProcessing_Neuron2020(fileNames, trackWhiskers)
+function StageOneProcessing_Neuron2020(fileNames,trackWhiskers)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -35,7 +35,7 @@ end
 disp('Analyzing Block [1] Preparing to create LabVIEWData file(s).'); disp(' ')
 % Load in each file one at a time, looping through the list
 for a = 1:length(fileNames)
-    disp(['Analyzing file ' num2str(a) ' of ' num2str(length(fileNames)) '...']); disp(' ')
+    disp(['Analyzing WhiskerCam file (' num2str(a) ' of ' num2str(length(fileNames)) ')']); disp(' ')
     % Adapt to list or single file. The purpose of this is control the way uigetfile handles an instance of a
     % single file input (character string) vs. multiple files, which it puts in cells
     if iscell(fileNames) == 1
@@ -86,7 +86,6 @@ for a = 1:length(fileNames)
         % Checklist for analysis steps - debugging purposes
         LabVIEWData.notes.checklist.processData = false;
         LabVIEWData.notes.checklist.offsetCorrect = false;
-        
         disp(['File Created. Saving LabVIEWData File ' num2str(a) '...']); disp(' ')
         save([trialData.animalID '_' trialData.imagedHemisphere '_' fileID '_LabVIEWData'], 'LabVIEWData')
     else

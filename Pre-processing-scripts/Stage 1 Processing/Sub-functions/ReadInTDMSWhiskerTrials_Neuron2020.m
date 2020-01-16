@@ -10,7 +10,7 @@ function [TDMSFile] = ReadInTDMSWhiskerTrials_Neuron2020(fileName)
 %   Purpose: Pull the data and notes from the LabVIEW '.tdms' files into a Matlab structure.
 %________________________________________________________________________________________________________________________
 
-%% Convert the .tdms file into something that Matlab understands
+% Convert the .tdms file into something that Matlab understands
 [tempStruct,~] = ConvertTDMS_Neuron2020(0,fileName);
 % Extract Whisker Camera info and transfer from tempStruct
 TDMSFile.experimenter = tempStruct.Data.Root.Experimenter;
@@ -36,4 +36,3 @@ for a = 1:length(tempStruct.Data.MeasuredData)
 end
 
 end
-

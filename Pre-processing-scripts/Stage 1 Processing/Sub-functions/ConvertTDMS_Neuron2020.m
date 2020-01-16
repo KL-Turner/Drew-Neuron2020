@@ -5,8 +5,6 @@ function [ConvertedData,ConvertVer] = ConvertTDMS_Neuron2020(SaveConvertedFile,f
 % https://github.com/KL-Turner
 %
 % Code unchanged with the exception of this title block for record keeping
-%
-%   Last Opened: March 21st, 2019
 %________________________________________________________________________________________________________________________
 %
 %Function to load LabView TDMS data file(s) into variables in the MATLAB workspace.
