@@ -17,6 +17,7 @@ clc;
 clear;
 close all
 disp('Analyzing Block [0] Preparing the workspace and loading variables.'); disp(' ')
+% Character list for Microsoft Excel files
 msExcelDir = dir('*.xlsx');
 msExcelFile = {msExcelDir.name}';
 msExcelFile = char(msExcelFile);
@@ -53,5 +54,6 @@ CorrectLabVIEWOffset_Neuron2020(labviewDataFiles,mscanDataFiles,trimTime)
 disp('Analyzing Block [5] Combing LabVIEWData and MScan Data files to create MergedData.'); disp(' ')
 CombineLabVIEWMScanFiles_Neuron2020(labviewDataFiles,mscanDataFiles)
 
+%% fin.
 disp('Two Photon Stage Two Processing - Complete.'); disp(' ')
  

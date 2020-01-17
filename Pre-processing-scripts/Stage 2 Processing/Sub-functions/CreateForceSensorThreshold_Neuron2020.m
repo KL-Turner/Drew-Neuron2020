@@ -1,6 +1,6 @@
 function [thresh] = CreateForceSensorThreshold_Neuron2020(forceSensor)
 %________________________________________________________________________________________________________________________
-% Edited by Kevin L. Turner
+% Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
 % https://github.com/KL-Turner
 %

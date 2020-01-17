@@ -11,7 +11,7 @@ function [procNeuro,neuroFs] = ProcessNeuro_Neuron2020(MScanData,expectedLength,
 %________________________________________________________________________________________________________________________
 
 %% Thresholds and Neurtype switch
-trimmedNeuro = (1:min(expectedLength,length(MScanData.data.(neuralFieldName))));
+trimmedNeuro = MScanData.data.(neuralFieldName)(1:min(expectedLength,length(MScanData.data.(neuralFieldName))));
 analogFs = MScanData.notes.analogSamplingRate;
 switch neurType
     case 'MUA'

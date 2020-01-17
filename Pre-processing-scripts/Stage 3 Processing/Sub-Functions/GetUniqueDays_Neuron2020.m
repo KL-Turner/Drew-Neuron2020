@@ -1,4 +1,4 @@
-function [UniqueDays, dayIndex, dayID] = GetUniqueDays_Neuron2020(DateList)
+function [uniqueDays,dayIndex,dayID] = GetUniqueDays_Neuron2020(dateList)
 %________________________________________________________________________________________________________________________
 % Edited by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
@@ -10,22 +10,22 @@ function [UniqueDays, dayIndex, dayID] = GetUniqueDays_Neuron2020(DateList)
 %   Purpse: Takes a list of fileDates and determines how many unique individual days there are. 
 %________________________________________________________________________________________________________________________
 
-if iscellstr(DateList) %#ok<ISCLSTR>
-    temp = cell2mat(DateList);
-    DateList = temp;
+if iscellstr(dateList) %#ok<ISCLSTR>
+    temp = cell2mat(dateList);
+    dateList = temp;
 end
-filebreaks = strfind(DateList(1,:),'_');
+filebreaks = strfind(dateList(1,:),'_');
 if isempty(filebreaks)
-    AllDates = DateList;
+    allDates = dateList;
 elseif or(length(filebreaks) == 3,length(filebreaks) == 4)
-    AllDates = DateList(:,1:filebreaks(1) - 1);
+    allDates = dateList(:,1:filebreaks(1) - 1);
 elseif length(filebreaks) == 6
-    date_ind = filebreaks(2) + 1:filebreaks(3) - 1;
-    AllDates = DateList(:,date_ind);
+    dateInd = filebreaks(2) + 1:filebreaks(3) - 1;
+    allDates = dateList(:,dateInd);
 else
     error('Format of the list of dates not recognized...')
 end
-All_days = mat2cell(AllDates,ones(1,size(AllDates,1)));
-[UniqueDays,dayIndex,dayID] = unique(All_days);
+allDays = mat2cell(allDates,ones(1,size(allDates,1)));
+[uniqueDays,dayIndex,dayID] = unique(allDays);
 
 end

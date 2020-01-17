@@ -1,4 +1,4 @@
-function Process2PDataFiles_Neuron2020(labviewDataFiles, mscanDataFiles)
+function [] = Process2PDataFiles_Neuron2020(labviewDataFiles,mscanDataFiles)
 %________________________________________________________________________________________________________________________
 % Written by Kevin L. Turner
 % The Pennsylvania State University, Dept. of Biomedical Engineering
