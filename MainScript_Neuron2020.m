@@ -12,7 +12,7 @@ function [] = MainScript_Neuron2020()
 %________________________________________________________________________________________________________________________
 
 clear; clc; close all
-%% Make sure the current directory is 'TurnerFigs-Neuron2020' and that the code repository is present.
+%% Make sure the current directory is 'Drew_Mateo_Turner_Yu_Kleinfeld_Neuron2020' and that the code repository is present.
 currentFolder = pwd;
 addpath(genpath(currentFolder));
 fileparts = strsplit(currentFolder,filesep);
