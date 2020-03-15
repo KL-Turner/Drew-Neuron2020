@@ -28,7 +28,7 @@ LabVIEW code used to acquire the data can be found at: https://github.com/DrewLa
 
 ### Single trial example
 
-The single trial example shown in figure 8a is from animal T72, file ID **T72_A1_190317_19_21_24_022_MergedData.mat.** A function to conveniently view other individual vessels from any animal is provided: **ViewIndividualVessels_Neuron2020.m.** Simply navigate through the different animal's folders and run this function, which will prompt you to manually select a file. The function will then generate a figure analyzed identically to the representative example in Fig 7a.
+The single trial example shown in figure 8a is from animal T72, file ID **T72_A1_190317_19_21_24_022_MergedData.mat.** A function to conveniently view other individual vessels from any animal is provided: **ViewIndividualVessels_Neuron2020.m.** Simply navigate through the different animal's folders and run this function, which will prompt you to manually select a file. The function will then generate a figure analyzed identically to the representative example in Fig 8a.
 
 ### Cross-correlation analysis
 
