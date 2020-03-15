@@ -11,7 +11,7 @@ Begin by downloading the entire code repository and (if desired) the data from t
 * Code repository location: https://github.com/KL-Turner/TurnerFigs-Neuron2020
 * Data repository location: https://psu.box.com/s/asrvku6m6kpojn9hzz2ndr6azcjjkimh
 
-The github repository contains a pre-analyzed **ComparisonData.mat** structure that can be used to immediately generate the figures without re-analyzing any data. If you would like to view the figure in its final form, simply CD to the code repository's directory (folder) in Matlab and open the file **MainScript_Neuron2020.m**. This file will add all the requisite sub-functions and generate the figure. If you would like to re-analyze the data from the beginning, download each animal's folder (9 total) from the box link. Unzip all 9 folders and put them into the same folder that contains the code repository (TurnerFigs-Neuron2020). Remove or delete the **ComparisonData.mat** structure from this folder, as the code will only run from the beginning if this file is not present. If done correctly, two loading bars should pop up upon execution of **MainScript_Neuron2020.m**. This will take several minutes to run, depending on computer speed and data location.
+The github repository contains a pre-analyzed **ComparisonData.mat** structure that can be used to immediately generate the figures without re-analyzing any data. If you would like to view the figure in its final form, simply CD to the code repository's directory (folder) in Matlab and open the file **MainScript_Neuron2020.m**. This file will add all the requisite sub-functions and generate the figure. If you would like to re-analyze the data from the beginning, download each animal's folder (9 total) from the box link. Unzip all 9 folders and put them into the same folder that contains the code repository (Drew_Mateo_Turner_Yu_Kleinfeld_Neuron2020). Remove or delete the **ComparisonData.mat** structure from this folder, as the code will only run from the beginning if this file is not present. If done correctly, two loading bars should pop up upon execution of **MainScript_Neuron2020.m**. This will take several minutes to run, depending on computer speed and data location.
 
 ---
 ## Original data and pre-processing
@@ -28,7 +28,7 @@ LabVIEW code used to acquire the data can be found at: https://github.com/DrewLa
 
 ### Single trial example
 
-The single trial example shown in figure 8a is from animal T72, file ID **T72_A1_190317_19_21_24_022_MergedData.mat.** A function to conveniently view other individual vessels from any animal is provided: **ViewIndividualVessels_Neuron2020.m.** Simply navigate through the different animal's folders and run this function, which will prompt you to manually select a file. The function will then generate a figure analyzed identically to the representative example in Fig 7a.
+The single trial example shown in figure 8a is from animal T72, file ID **T72_A1_190317_19_21_24_022_MergedData.mat.** A function to conveniently view other individual vessels from any animal is provided: **ViewIndividualVessels_Neuron2020.m.** Simply navigate through the different animal's folders and run this function, which will prompt you to manually select a file. The function will then generate a figure analyzed identically to the representative example in Fig 8a.
 
 ### Cross-correlation analysis
 
