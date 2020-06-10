@@ -5,7 +5,7 @@ This document outlines the steps necessary to generate Kevin L. Turner's data an
 ---
 ## Generating the figures
 ---
-This data and code generates Figure 8a and 8b of the manuscript.
+This data and code generates Figure 7d and 7e of the manuscript.
 
 Begin by downloading the entire code repository and (if desired) the data from the following locations:
 * Code repository location: https://github.com/DrewLab/Drew_Mateo_Turner_Yu_Kleinfeld_Neuron2020
