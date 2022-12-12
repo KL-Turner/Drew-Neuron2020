@@ -8,8 +8,8 @@ This document outlines the steps necessary to generate Kevin L. Turner's data an
 This data and code generates Figure 7d and 7e of the manuscript.
 
 Begin by downloading the entire code repository and (if desired) the data from the following locations:
-* Code repository location: https://github.com/DrewLab/Drew_Mateo_Turner_Yu_Kleinfeld_Neuron2020
-* Data repository location: https://psu.box.com/s/asrvku6m6kpojn9hzz2ndr6azcjjkimh
+* Code repository location: https://github.com/KL-Turner/Drew-Neuron2020
+* Data repository location: https://datadryad.org/stash/dataset/doi:10.5061/dryad.4xgxd2589
 
 The github repository contains a pre-analyzed **ComparisonData.mat** structure that can be used to immediately generate the figures without re-analyzing any data. If you would like to view the figure in its final form, simply CD to the code repository's directory (folder) in Matlab and open the file **MainScript_Neuron2020.m**. This file will add all the requisite sub-functions and generate the figure. If you would like to re-analyze the data from the beginning, download each animal's folder (9 total) from the box link. Unzip all 9 folders and put them into the same folder that contains the code repository (Drew_Mateo_Turner_Yu_Kleinfeld_Neuron2020). Remove or delete the **ComparisonData.mat** structure from this folder, as the code will only run from the beginning if this file is not present. If done correctly, two loading bars should pop up upon execution of **MainScript_Neuron2020.m**. This will take several minutes to run, depending on computer speed and data location.
 
